@@ -25,6 +25,8 @@ import Select from "@mui/material/Select";
 import { FormControlLabel, FormLabel, Radio, RadioGroup } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import GridViewIcon from "@mui/icons-material/GridView";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -45,6 +47,7 @@ const Customer = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [viewType, setViewType] = useState("list");
   const [addData, setAddData] = React.useState({
     fristName: "",
     lastName: "",
@@ -61,39 +64,38 @@ const Customer = () => {
     gender: "",
   });
 
-  function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-  }
-
   const rows = [
     {
       name: "John Doe",
       mobileNo: "9049831815",
       addresses: "kolhapura",
-      joingDate: "Date",
+      joingDate: "27-12-2024",
       remainingAmount: "2000",
       package: "1 month",
       batch: "Morning",
+      renew: "After 10 days",
       img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
     },
     {
       name: "Ashish Shinde",
       mobileNo: "9049831815",
       addresses: "kolhapura",
-      joingDate: "Date",
+      joingDate: "27-12-2024",
       remainingAmount: "2000",
       package: "8 month",
       batch: "Morning",
+      renew: "After 30 days",
       img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
     },
     {
       name: "Mohsin Sayyad",
       mobileNo: "9049831815",
       addresses: "kolhapura",
-      joingDate: "Date",
+      joingDate: "27-12-2024",
       remainingAmount: "2000",
       package: "3 month",
       batch: "Morning",
+      renew: "After 60 days",
       img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
     },
   ];
@@ -168,6 +170,14 @@ const Customer = () => {
   };
 
   const onSeachChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const toggleView = (view) => {
+    setViewType(view);
+  };
+
+  const onSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
 
@@ -445,7 +455,25 @@ const Customer = () => {
           </DialogActions>
         </BootstrapDialog>
 
-        <div className="d-flex justify-content-end">
+        <div className="d-flex justify-content-between align-items-center">
+          <div>
+            <FormatListBulletedIcon
+              className="me-3"
+              onClick={() => toggleView("list")}
+              style={{
+                cursor: "pointer",
+                color: viewType === "list" ? "blue" : "black",
+              }}
+            />
+
+            <GridViewIcon
+              onClick={() => toggleView("card")}
+              style={{
+                cursor: "pointer",
+                color: viewType === "card" ? "blue" : "black",
+              }}
+            />
+          </div>
           <div className="col-md-4">
             <TextField
               id="outlined-basic"
@@ -459,62 +487,67 @@ const Customer = () => {
           </div>
         </div>
 
-        <div className="listDiv">
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Mobile</TableCell>
-                  <TableCell>Address</TableCell>
-                  <TableCell>Joing Date</TableCell>
-                  <TableCell>Remaing Amount</TableCell>
-                  <TableCell>Package</TableCell>
-                  <TableCell>Batch</TableCell>
-                  <TableCell>Action</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {filteredRows.length === 0 ? (
+        {viewType === "list" && (
+          <div className="listDiv">
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableHead>
                   <TableRow>
-                    <TableCell colSpan={8} align="center">
-                      Record not found
-                    </TableCell>
+                    <TableCell>Name</TableCell>
+                    <TableCell>Mobile</TableCell>
+                    <TableCell>Address</TableCell>
+                    <TableCell>Joing Date</TableCell>
+                    <TableCell>Remaining Amount</TableCell>
+                    <TableCell>Package</TableCell>
+                    <TableCell>Batch</TableCell>
+                    <TableCell>Renew Package</TableCell>
+                    <TableCell>Action</TableCell>
                   </TableRow>
-                ) : (
-                  filteredRows.map((row, index) => (
-                    <TableRow key={index}>
-                      <TableCell className="tableImg">
-                        <img className="me-3" src={row.img} />
-                        {row.name}
-                      </TableCell>
-                      <TableCell>{row.mobileNo}</TableCell>
-                      <TableCell>{row.addresses}</TableCell>
-                      <TableCell>{row.joingDate}</TableCell>
-                      <TableCell>{row.remainingAmount}</TableCell>
-                      <TableCell>{row.package}</TableCell>
-                      <TableCell>{row.batch}</TableCell>
-                      <TableCell>
-                        <EditIcon className="me-2" />
-                        <DeleteIcon />
+                </TableHead>
+                <TableBody>
+                  {filteredRows.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={8} align="center">
+                        Record not found
                       </TableCell>
                     </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </div>
+                  ) : (
+                    filteredRows.map((row, index) => (
+                      <TableRow key={index}>
+                        <TableCell className="tableImg">
+                          <img className="me-3" src={row.img} alt="img" />
+                          {row.name}
+                        </TableCell>
+                        <TableCell>{row.mobileNo}</TableCell>
+                        <TableCell>{row.addresses}</TableCell>
+                        <TableCell>{row.joingDate}</TableCell>
+                        <TableCell>{row.remainingAmount}</TableCell>
+                        <TableCell>{row.package}</TableCell>
+                        <TableCell>{row.batch}</TableCell>
+                        <TableCell>{row.renew}</TableCell>
+                        <TableCell>
+                          <EditIcon className="me-2" />
+                          <DeleteIcon />
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </div>
+        )}
 
-        <div className="CardDiv my-5">
-          <div className="row">
-            {filteredRows.length === 0 ? (
-              <p> Record not found </p>
-            ) : (
-              filteredRows.map((row, index) => (
-                <>
-                  <div className="col-md-3">
-                    <div className="card" style={{ width: "18rem" }}>
+        {/* Card view */}
+        {viewType === "card" && (
+          <div className="CardDiv my-5">
+            <div className="row">
+              {filteredRows.length === 0 ? (
+                <p> Record not found </p>
+              ) : (
+                filteredRows.map((row, index) => (
+                  <div className="col-md-2" key={index}>
+                    <div className="card" style={{ width: "100%" }}>
                       <img src={row.img} className="card-img-top" alt="..." />
                       <div className="d-flex justify-content-center p-2">
                         <EditIcon className="me-2" />
@@ -522,15 +555,21 @@ const Customer = () => {
                       </div>
                       <div className="card-body">
                         <h5 className="card-title">{row.name}</h5>
-                        <p className="card-text">{row.joingDate}</p>
+                        <p className="card-text">{row.mobileNo}</p>
+                        <div className="d-flex justify-content-between">
+                          <p className="card-text">
+                            Remaining Amount : {row.remainingAmount}
+                          </p>
+                          <p className="card-text">Package : {row.package}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </>
-              ))
-            )}
+                ))
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </>
   );
