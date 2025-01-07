@@ -124,6 +124,7 @@ const Form = (props) => {
           onClose={handleClose}
           aria-labelledby="customized-dialog-title"
           open={open}
+          TransitionComponent={Transition}
           maxWidth="lg"
         >
           <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
@@ -383,6 +384,7 @@ const Form = (props) => {
           onClose={handleClose}
           aria-labelledby="customized-dialog-title"
           open={open}
+          TransitionComponent={Transition}
           maxWidth="lg"
         >
           <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
