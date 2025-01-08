@@ -32,7 +32,7 @@ import Form from "./Form";
 import CustTable from "./Table";
 import CustCard from "./CustCard";
 
-const Customer = () => {
+const OverdueMemberships = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [viewType, setViewType] = useState("list");
   const [isOpenDialog, setIsOpenDialog] = React.useState(false);
@@ -55,8 +55,8 @@ const Customer = () => {
 
   const rows = [
     {
-      fristName: "John",
-      lastName: "Doe",
+      fristName: "Alex",
+      lastName: "JOhne",
       custId: "1",
       mobileNo: "9049831815",
       addresses: "kolhapura",
@@ -67,11 +67,11 @@ const Customer = () => {
       package: "1 month",
       batch: "Morning",
       renew: "After 10 days",
-      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
+      img: "https://wac-cdn.atlassian.com/dam/jcr:ba03a215-2f45-40f5-8540-b2015223c918/Max-R_Headshot%20(1).jpg?cdnVersion=2480",
     },
     {
-      fristName: "Ashish ",
-      lastName: "Shinde",
+      fristName: "Yogesh ",
+      lastName: "Raut",
       mobileNo: "9049831815",
       custId: "2",
       addresses: "kolhapura",
@@ -82,11 +82,11 @@ const Customer = () => {
       package: "8 month",
       batch: "Morning",
       renew: "After 30 days",
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKMjeeornJdOe6FD8JTzqih-CByVmSWpSD0g&s",
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcg4Y51XjQ-zSf87X4nUPTQzsF83eFdZswTg&s",
     },
     {
-      fristName: "Mohsin ",
-      lastName: "Sayadd",
+      fristName: "Rahul ",
+      lastName: "patil",
       custId: "3",
       mobileNo: "9049831815",
       addresses: "kolhapura",
@@ -97,7 +97,7 @@ const Customer = () => {
       package: "3 month",
       batch: "Morning",
       renew: "After 60 days",
-      img: "https://plus.unsplash.com/premium_photo-1682089892133-556bde898f2c?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c3R1ZGVudCUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D",
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2bcBC2rxeYymW9_yJ1xbxz8tmAn--t7_NCVGlirSsgKXXCff9aCyV82uXVmTSEB8GO-A&usqp=CAU",
     },
   ];
 
@@ -135,20 +135,11 @@ const Customer = () => {
   const onHadelDelete = (row) => {
     console.log(row);
   };
-
   return (
     <>
       <div className="px-4">
         <div className="d-flex justify-content-between align-items-center">
           <div>
-            <Button
-              className="me-3"
-              variant="outlined"
-              onClick={() => onHadelClick(addData, "New")}
-            >
-              Add New Customer
-            </Button>
-
             <FormatListBulletedIcon
               className="me-3"
               onClick={() => toggleView("list")}
@@ -184,7 +175,7 @@ const Customer = () => {
             <CustTable
               filteredRows={filteredRows}
               onHadelClick={onHadelClick}
-              op={"customer"}
+              op={"overdue"}
             />
           </div>
         )}
@@ -197,4 +188,4 @@ const Customer = () => {
   );
 };
 
-export default Customer;
+export default OverdueMemberships;

@@ -221,6 +221,12 @@ const Form = (props) => {
                   onChange={(e) => onInputChange(e)}
                   fullWidth
                 />
+
+                {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DemoContainer components={["DatePicker"]}>
+                    <DatePicker label="Basic date picker" />
+                  </DemoContainer>
+                </LocalizationProvider> */}
               </div>
 
               <div className="col-md-3">
@@ -477,15 +483,11 @@ const Form = (props) => {
                 />
               </div>
               <div className="col-md-3">
-                <TextField
-                  id="outlined-basic"
-                  label="Joing Date"
-                  variant="outlined"
-                  name="joingDate"
-                  value={addUpdateViewRecord.joingDate || ""}
-                  onChange={(e) => onInputChange(e)}
-                  fullWidth
-                />
+                {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DemoContainer components={["DatePicker"]}>
+                    <DatePicker label="Basic date picker" />
+                  </DemoContainer>
+                </LocalizationProvider> */}
               </div>
 
               <div className="col-md-3">

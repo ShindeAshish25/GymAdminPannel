@@ -32,7 +32,7 @@ import Form from "./Form";
 import CustTable from "./Table";
 import CustCard from "./CustCard";
 
-const Customer = () => {
+const OldMemberships = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [viewType, setViewType] = useState("list");
   const [isOpenDialog, setIsOpenDialog] = React.useState(false);
@@ -54,6 +54,51 @@ const Customer = () => {
   });
 
   const rows = [
+    {
+      fristName: "Alex",
+      lastName: "JOhne",
+      custId: "1",
+      mobileNo: "9049831815",
+      addresses: "kolhapura",
+      joingDate: "27-12-2024",
+      totalAmount: "2000",
+      remainingAmount: "2000",
+      email: "kolhapura@gmail.com",
+      package: "1 month",
+      batch: "Morning",
+      renew: "After 10 days",
+      img: "https://wac-cdn.atlassian.com/dam/jcr:ba03a215-2f45-40f5-8540-b2015223c918/Max-R_Headshot%20(1).jpg?cdnVersion=2480",
+    },
+    {
+      fristName: "Yogesh ",
+      lastName: "Raut",
+      mobileNo: "9049831815",
+      custId: "2",
+      addresses: "kolhapura",
+      joingDate: "27-12-2024",
+      totalAmount: "2000",
+      remainingAmount: "2000",
+      email: "kolhapura@gmail.com",
+      package: "8 month",
+      batch: "Morning",
+      renew: "After 30 days",
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcg4Y51XjQ-zSf87X4nUPTQzsF83eFdZswTg&s",
+    },
+    {
+      fristName: "Rahul ",
+      lastName: "patil",
+      custId: "3",
+      mobileNo: "9049831815",
+      addresses: "kolhapura",
+      joingDate: "27-12-2024",
+      totalAmount: "2000",
+      remainingAmount: "2000",
+      email: "kolhapura@gmail.com",
+      package: "3 month",
+      batch: "Morning",
+      renew: "After 60 days",
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2bcBC2rxeYymW9_yJ1xbxz8tmAn--t7_NCVGlirSsgKXXCff9aCyV82uXVmTSEB8GO-A&usqp=CAU",
+    },
     {
       fristName: "John",
       lastName: "Doe",
@@ -141,14 +186,6 @@ const Customer = () => {
       <div className="px-4">
         <div className="d-flex justify-content-between align-items-center">
           <div>
-            <Button
-              className="me-3"
-              variant="outlined"
-              onClick={() => onHadelClick(addData, "New")}
-            >
-              Add New Customer
-            </Button>
-
             <FormatListBulletedIcon
               className="me-3"
               onClick={() => toggleView("list")}
@@ -184,7 +221,7 @@ const Customer = () => {
             <CustTable
               filteredRows={filteredRows}
               onHadelClick={onHadelClick}
-              op={"customer"}
+              op={"old"}
             />
           </div>
         )}
@@ -197,4 +234,4 @@ const Customer = () => {
   );
 };
 
-export default Customer;
+export default OldMemberships;
