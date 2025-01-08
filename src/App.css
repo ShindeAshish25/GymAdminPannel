@@ -41,3 +41,7 @@
     border-radius: 50%;
     object-fit: cover;
 }
+
+.tableDiv p {
+    margin: 0;
+}
