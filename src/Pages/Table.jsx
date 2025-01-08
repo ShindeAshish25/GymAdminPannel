@@ -41,9 +41,9 @@ const CustTable = (props) => {
               <TableCell>Address</TableCell>
               <TableCell>Joing Date</TableCell>
               <TableCell>Remaining Amount</TableCell>
-              <TableCell>Package</TableCell>
+              <TableCell>Memberships</TableCell>
               <TableCell>Batch</TableCell>
-              <TableCell>Renew Package</TableCell>
+              <TableCell>Renew Memberships</TableCell>
               <TableCell>Action</TableCell>
             </TableRow>
           </TableHead>
@@ -65,7 +65,7 @@ const CustTable = (props) => {
                   <TableCell>{row.addresses}</TableCell>
                   <TableCell>{row.joingDate}</TableCell>
                   <TableCell>{row.remainingAmount}</TableCell>
-                  <TableCell>{row.package}</TableCell>
+                  <TableCell>{row.memberships}</TableCell>
                   <TableCell>{row.batch}</TableCell>
                   <TableCell>{row.renew}</TableCell>
                   <TableCell>

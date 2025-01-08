@@ -6,7 +6,7 @@ const CustCard = (props) => {
   return (
     <>
       <div className="CardDiv my-5">
-        <div className="row">
+        <div className="row g-4">
           {props.filteredRows.length === 0 ? (
             <p> Record not found </p>
           ) : (
@@ -28,7 +28,9 @@ const CustCard = (props) => {
                       <p className="card-text">
                         Remaining Amount : {row.remainingAmount}
                       </p>
-                      <p className="card-text">Package : {row.package}</p>
+                      <p className="card-text">
+                        Memberships : {row.memberships}
+                      </p>
                     </div>
                   </div>
                 </div>

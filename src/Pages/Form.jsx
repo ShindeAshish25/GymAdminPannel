@@ -248,13 +248,15 @@ const Form = (props) => {
 
               <div className="col-md-3">
                 <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Package</InputLabel>
+                  <InputLabel id="demo-simple-select-label">
+                    Memberships
+                  </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    name="package"
+                    name="memberships"
                     // value={addData}
-                    label="Package"
+                    label="Memberships"
                     onChange={(e) => onInputChange(e)}
                   >
                     <MenuItem value={"1"}>1 Month</MenuItem>
@@ -510,14 +512,285 @@ const Form = (props) => {
 
               <div className="col-md-3">
                 <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Package</InputLabel>
+                  <InputLabel id="demo-simple-select-label">
+                    Memberships
+                  </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    name="package"
-                    value={addUpdateViewRecord.package || ""}
+                    name="Memberships"
+                    value={addUpdateViewRecord.memberships || ""}
                     // value={addData}
-                    label="Package"
+                    label="Memberships"
+                    onChange={(e) => onInputChange(e)}
+                  >
+                    <MenuItem value={"1"}>1 Month</MenuItem>
+                    <MenuItem value={"2"}>2 Month</MenuItem>
+                    <MenuItem value={"3"}>3 Month</MenuItem>
+                    <MenuItem value={"4"}>4 Month</MenuItem>
+                    <MenuItem value={"5"}>5 Month</MenuItem>
+                    <MenuItem value={"6"}>6 Month</MenuItem>
+                    <MenuItem value={"7"}>7 Month</MenuItem>
+                    <MenuItem value={"8"}>8 Month</MenuItem>
+                    <MenuItem value={"9"}>9 Month</MenuItem>
+                    <MenuItem value={"10"}>10 Month</MenuItem>
+                    <MenuItem value={"11"}>11 Month</MenuItem>
+                    <MenuItem value={"12"}>12 Month</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+              <div className="col-md-3">
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    Training
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    name="training"
+                    // value={addData}
+                    label="Training"
+                    value={addUpdateViewRecord.training || ""}
+                    onChange={(e) => onInputChange(e)}
+                  >
+                    <MenuItem value={"Cardio"}>Cardio</MenuItem>
+                    <MenuItem value={"Strength"}>Strength Training</MenuItem>
+                    <MenuItem value={"Core"}>Core Workouts</MenuItem>
+                    <MenuItem value={"Flexibility"}>
+                      Flexibility and Mobility
+                    </MenuItem>
+                    <MenuItem value={"HIIT"}>
+                      HIIT (High-Intensity Interval Training)
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+              <div className="col-md-3">
+                <TextField
+                  id="outlined-basic"
+                  label="Total Amount"
+                  variant="outlined"
+                  name="totalAmount"
+                  value={addUpdateViewRecord.totalAmount || " "}
+                  onChange={(e) => onInputChange(e)}
+                  fullWidth
+                />
+              </div>
+              <div className="col-md-3">
+                <TextField
+                  id="outlined-basic"
+                  label="Remaining Amount"
+                  variant="outlined"
+                  value={addUpdateViewRecord.remainingAmount || ""}
+                  name="remainingAmount"
+                  onChange={(e) => onInputChange(e)}
+                  fullWidth
+                />
+              </div>
+
+              <div className="col-md-6">
+                <TextField
+                  id="outlined-basic"
+                  label="Addresses"
+                  variant="outlined"
+                  name="addresses"
+                  value={addUpdateViewRecord.addresses || ""}
+                  onChange={(e) => onInputChange(e)}
+                  fullWidth
+                />
+              </div>
+
+              <div className="col-md-3">
+                <FormControl>
+                  <FormLabel id="payment-mode">Payment Mode</FormLabel>
+                  <RadioGroup
+                    row
+                    aria-labelledby="payment-mode"
+                    name="paymentMode"
+                    onChange={(e) => onInputChange(e)}
+                  >
+                    <FormControlLabel
+                      value="UPI"
+                      control={<Radio />}
+                      label="UPI"
+                    />
+                    <FormControlLabel
+                      value="Cash"
+                      control={<Radio />}
+                      label="Cash"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </div>
+              <div className="col-md-3">
+                <FormControl>
+                  <FormLabel id="gender">Gender</FormLabel>
+                  <RadioGroup
+                    row
+                    aria-labelledby="gender"
+                    name="gender"
+                    onChange={(e) => onInputChange(e)}
+                  >
+                    <FormControlLabel
+                      value="female"
+                      control={<Radio />}
+                      label="Female"
+                    />
+                    <FormControlLabel
+                      value="male"
+                      control={<Radio />}
+                      label="Male"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </div>
+            </div>
+          </DialogContent>
+          <DialogActions>
+            <Button autoFocus onClick={onHanddelSave}>
+              Save changes
+            </Button>
+          </DialogActions>
+        </BootstrapDialog>
+      </>
+    );
+  } else if (props.op == "Renewal") {
+    return (
+      <>
+        <BootstrapDialog
+          onClose={handleClose}
+          aria-labelledby="customized-dialog-title"
+          open={open}
+          TransitionComponent={Transition}
+          maxWidth="lg"
+        >
+          <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+            Renewal Memberships
+          </DialogTitle>
+          <IconButton
+            aria-label="close"
+            onClick={handleClose}
+            sx={(theme) => ({
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: theme.palette.grey[500],
+            })}
+          >
+            <CloseIcon />
+          </IconButton>
+          <DialogContent dividers>
+            <div className="row g-4 p-3">
+              <div className="col-md-3">
+                {!isCameraActive && (
+                  <button onClick={startCamera}>Open Camera</button>
+                )}
+                {isCameraActive && (
+                  <>
+                    <video
+                      ref={videoRef}
+                      autoPlay
+                      playsInline
+                      style={{ width: "100%", border: "1px solid #ddd" }}
+                    />
+                    <button onClick={capturePhoto}>Capture Photo</button>
+                  </>
+                )}
+                {imageSrc && (
+                  <>
+                    {/* <h3>Preview</h3> */}
+                    <img
+                      src={imageSrc}
+                      alt="Captured"
+                      style={{ width: "100%" }}
+                    />
+                    <button onClick={savePhoto}>Save Photo</button>
+                  </>
+                )}
+                <canvas ref={canvasRef} style={{ display: "none" }} />
+              </div>
+              <div className="col-md-3">
+                <TextField
+                  id="outlined-basic"
+                  label="Frist Name"
+                  variant="outlined"
+                  name="fristName"
+                  value={addUpdateViewRecord.fristName || ""}
+                  onChange={(e) => onInputChange(e)}
+                  fullWidth
+                />
+              </div>
+              <div className="col-md-3">
+                <TextField
+                  id="outlined-basic"
+                  label="Last Name"
+                  variant="outlined"
+                  name="lastName"
+                  value={addUpdateViewRecord.lastName || ""}
+                  onChange={(e) => onInputChange(e)}
+                  fullWidth
+                />
+              </div>
+              <div className="col-md-3">
+                <TextField
+                  id="outlined-basic"
+                  label="Mobile No"
+                  variant="outlined"
+                  name="mobileNo"
+                  value={addUpdateViewRecord.mobileNo || ""}
+                  onChange={(e) => onInputChange(e)}
+                  fullWidth
+                />
+              </div>
+              <div className="col-md-3">
+                <TextField
+                  id="outlined-basic"
+                  label="Email"
+                  variant="outlined"
+                  name="email"
+                  value={addUpdateViewRecord.email || ""}
+                  onChange={(e) => onInputChange(e)}
+                  fullWidth
+                />
+              </div>
+              <div className="col-md-3">
+                {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DemoContainer components={["DatePicker"]}>
+                    <DatePicker label="Basic date picker" />
+                  </DemoContainer>
+                </LocalizationProvider> */}
+              </div>
+
+              <div className="col-md-3">
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Batch</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    name="batch"
+                    id="demo-simple-select"
+                    // value={addData || ""}
+                    value={addUpdateViewRecord.batch || ""}
+                    label="Batch"
+                    onChange={(e) => onInputChange(e)}
+                  >
+                    <MenuItem value="M">Morning</MenuItem>
+                    <MenuItem value="E">Evenning</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+
+              <div className="col-md-3">
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    Memberships
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    name="Memberships"
+                    value={addUpdateViewRecord.memberships || ""}
+                    // value={addData}
+                    label="Memberships"
                     onChange={(e) => onInputChange(e)}
                   >
                     <MenuItem value={"1"}>1 Month</MenuItem>
