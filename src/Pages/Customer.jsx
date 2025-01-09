@@ -184,6 +184,7 @@ const Customer = () => {
             <CustTable
               filteredRows={filteredRows}
               onHadelClick={onHadelClick}
+              onHadelDelete={onHadelDelete}
               op={"customer"}
             />
           </div>

@@ -34,7 +34,7 @@ const CustTable = (props) => {
   return (
     <>
       <div className="tableDiv">
-        <TableContainer component={Paper} sx={{ maxHeight: "388px" }}>
+        <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
@@ -86,7 +86,7 @@ const CustTable = (props) => {
                         <>
                           <AutorenewIcon
                             className="me-2"
-                            onClick={() => props.onHadelDelete(row, "Renewal")}
+                            onClick={() => props.onHadelClick(row, "Renewal")}
                           />
                           <DeleteIcon
                             className="me-2"

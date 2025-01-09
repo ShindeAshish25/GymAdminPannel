@@ -311,6 +311,7 @@ const OldMemberships = () => {
             <CustTable
               filteredRows={filteredRows}
               onHadelClick={onHadelClick}
+              onHadelDelete={onHadelDelete}
               op={"old"}
             />
           </div>
