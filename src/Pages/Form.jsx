@@ -17,6 +17,10 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { FormControlLabel, FormLabel, Radio, RadioGroup } from "@mui/material";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import dayjs from "dayjs";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -56,14 +60,14 @@ const Form = (props) => {
   };
 
   const onInputChange = (e) => {
-    setAddData({
-      ...addData,
+    setAddUpdateViewRecord({
+      ...addUpdateViewRecord,
       [e.target.name]: e.target.value,
     });
   };
   const onHanddelSave = (e) => {
-    console.log(addData);
-    alert(JSON.stringify(addData));
+    console.log(addUpdateViewRecord);
+    alert(JSON.stringify(addUpdateViewRecord));
   };
 
   const startCamera = () => {
@@ -212,7 +216,7 @@ const Form = (props) => {
                   fullWidth
                 />
               </div>
-              <div className="col-md-3">
+              {/* <div className="col-md-3">
                 <TextField
                   id="outlined-basic"
                   label="Joing Date"
@@ -221,12 +225,30 @@ const Form = (props) => {
                   onChange={(e) => onInputChange(e)}
                   fullWidth
                 />
+              </div> */}
 
-                {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <div className="datepickerClassForBlackColor d-flex col-md-3 pe-3">
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DemoContainer components={["DatePicker"]}>
-                    <DatePicker label="Basic date picker" />
+                    <DatePicker
+                      className="w-100"
+                      label="Payment Date"
+                      name="paymentDate"
+                      value={dayjs(addUpdateViewRecord?.paymentDate || null)}
+                      slotProps={{
+                        textField: {
+                          error: false,
+                        },
+                      }}
+                      format="DD/MM/YYYY"
+                      onChange={(e) => onInputChange(e, "paymentDate")}
+                      // // minDate={dayjs(addData?.startDate)}
+                      // minDate={
+                      //   addData?.startDate ? dayjs(addData?.startDate) : null
+                      // }
+                    />
                   </DemoContainer>
-                </LocalizationProvider> */}
+                </LocalizationProvider>
               </div>
 
               <div className="col-md-3">

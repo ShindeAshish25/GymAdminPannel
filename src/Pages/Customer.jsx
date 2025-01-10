@@ -42,7 +42,7 @@ const Customer = () => {
     lastName: "",
     mobileNo: "",
     email: "",
-    joingDate: "",
+    paymentDate: "",
     batch: "",
     memberships: "",
     training: "",
@@ -60,7 +60,7 @@ const Customer = () => {
       custId: "1",
       mobileNo: "9049831815",
       addresses: "kolhapura",
-      joingDate: "27-12-2024",
+      paymentDate: "27-12-2024",
       totalAmount: "2000",
       remainingAmount: "2000",
       email: "kolhapura@gmail.com",
@@ -75,7 +75,7 @@ const Customer = () => {
       mobileNo: "9049831815",
       custId: "2",
       addresses: "kolhapura",
-      joingDate: "27-12-2024",
+      paymentDate: "27-12-2024",
       totalAmount: "2000",
       remainingAmount: "2000",
       email: "kolhapura@gmail.com",
@@ -90,7 +90,7 @@ const Customer = () => {
       custId: "3",
       mobileNo: "9049831815",
       addresses: "kolhapura",
-      joingDate: "27-12-2024",
+      paymentDate: "27-12-2024",
       totalAmount: "2000",
       remainingAmount: "2000",
       email: "kolhapura@gmail.com",
@@ -120,7 +120,7 @@ const Customer = () => {
       row.lastName.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
       row.mobileNo.startsWith(searchQuery) ||
       row.addresses.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
-      row.joingDate.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
+      row.paymentDate.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
       row.remainingAmount.toString().startsWith(searchQuery) ||
       row.memberships.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
       row.batch.toLowerCase().startsWith(searchQuery.toLowerCase())

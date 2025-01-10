@@ -42,6 +42,7 @@
     object-fit: cover;
 }
 
-.tableDiv p {
+.tableDiv p,
+.CardDiv p {
     margin: 0;
 }
