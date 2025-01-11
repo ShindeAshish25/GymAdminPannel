@@ -74,10 +74,12 @@ const CustTable = (props) => {
                       {props.op === "customer" ? (
                         <>
                           <EditIcon
+                          sx={{color:"#eb3c5a"}}
                             className="me-2"
                             onClick={() => props.onHadelClick(row, "Update")}
                           />
                           <DeleteIcon
+                           sx={{color:"#eb3c5a"}}
                             className="me-2"
                             onClick={() => props.onHadelDelete(row, "Delete")}
                           />
@@ -85,10 +87,12 @@ const CustTable = (props) => {
                       ) : props.op === "overdue" ? (
                         <>
                           <AutorenewIcon
+                           sx={{color:"#eb3c5a"}}
                             className="me-2"
                             onClick={() => props.onHadelClick(row, "Renewal")}
                           />
                           <DeleteIcon
+                           sx={{color:"#eb3c5a"}}
                             className="me-2"
                             onClick={() => props.onHadelDelete(row, "Delete")}
                           />

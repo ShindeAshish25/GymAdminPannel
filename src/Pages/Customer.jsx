@@ -154,7 +154,7 @@ const Customer = () => {
               onClick={() => toggleView("list")}
               style={{
                 cursor: "pointer",
-                color: viewType === "list" ? "#1b90be" : "#b1b4b9",
+                color: viewType === "list" ? "#eb3c5a" : "#b1b4b9",
               }}
             />
 
@@ -162,7 +162,7 @@ const Customer = () => {
               onClick={() => toggleView("card")}
               style={{
                 cursor: "pointer",
-                color: viewType === "card" ? "#1b90be" : "#b1b4b9",
+                color: viewType === "card" ? "#eb3c5a" : "#b1b4b9",
               }}
             />
           </div>

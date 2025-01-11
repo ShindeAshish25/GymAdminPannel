@@ -6,18 +6,53 @@ import Navbar from "./Pages/NavBar";
 import OverdueMemberships from "./Pages/OverdueMemberships";
 import OldMemberships from "./Pages/OldMemberships";
 import "./App.css";
+import LoginPage from "./Pages/LoginPage";
 
-function App() {
+function AuthenticatedLayout({ children }) {
   return (
     <>
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path="/Customer" element={<Customer />} />
-          <Route path="/overduememberships" element={<OverdueMemberships />} />
-          <Route path="/oldmemberships" element={<OldMemberships />} />
-        </Routes>
-      </BrowserRouter>
+      <Navbar />
+      {children}
+    </>
+  );
+}
+
+function App() {
+ 
+  return (
+    <>
+     <BrowserRouter>
+      <Routes>
+        {/* Unauthenticated Routes */}
+        <Route path="/" element={<LoginPage />} />
+        
+        {/* Authenticated Routes */}
+        <Route
+          path="/Customer"
+          element={
+            <AuthenticatedLayout>
+              <Customer />
+            </AuthenticatedLayout>
+          }
+        />
+        <Route
+          path="/overduememberships"
+          element={
+            <AuthenticatedLayout>
+              <OverdueMemberships />
+            </AuthenticatedLayout>
+          }
+        />
+        <Route
+          path="/oldmemberships"
+          element={
+            <AuthenticatedLayout>
+              <OldMemberships />
+            </AuthenticatedLayout>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
     </>
   );
 }
