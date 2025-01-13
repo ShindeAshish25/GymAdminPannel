@@ -69,10 +69,49 @@ const Form = (props) => {
   };
 
   const onInputChange = (e) => {
-    setAddUpdateViewRecord({
-      ...addUpdateViewRecord,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+
+    // Update the specific field in the state
+    setAddUpdateViewRecord((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+
+    // Calculate the remaining amount based on the updated values
+    const total =
+      name === "totalAmount"
+        ? parseFloat(value) || 0
+        : parseFloat(addUpdateViewRecord.totalAmount) || 0;
+    const payable =
+      name === "payableAmount"
+        ? parseFloat(value) || 0
+        : parseFloat(addUpdateViewRecord.payableAmount) || 0;
+    const remaining = total - payable;
+
+    if (total > payable && remaining >= 0) {
+      setAddUpdateViewRecord((prevState) => ({
+        ...prevState,
+        remainingAmount: remaining.toString(),
+      }));
+    } else {
+      // Optional: Show an alert or reset invalid input
+      if (total <= payable) {
+        alert("Total Amount must be greater than Payable Amount.");
+        return;
+      } else if (remaining < 0) {
+        alert("Remaining Amount cannot be negative.");
+      }
+      // setAddUpdateViewRecord((prevState) => ({
+      //   ...prevState,
+      //   remainingAmount: "0",
+      // }));
+    }
+
+    // Update the remainingAmount field
+    setAddUpdateViewRecord((prevState) => ({
+      ...prevState,
+      remainingAmount: remaining.toString(),
+    }));
   };
   const onHanddelSave = (e) => {
     addresses: "";
@@ -523,6 +562,7 @@ const Form = (props) => {
                   label="Remaining Amount"
                   variant="outlined"
                   name="remainingAmount"
+                  value={addUpdateViewRecord.remainingAmount || "0"}
                   onKeyPress={(e) => {
                     if (!/^\d$/.test(e.key)) {
                       e.preventDefault();

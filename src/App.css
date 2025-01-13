@@ -77,3 +77,13 @@ header {
     height: 250px;
     object-fit: cover;
 }
+
+.Footer {
+    padding: 15px;
+    text-align: center;
+    background-color: #a99c95;
+    position: absolute;
+    bottom: 0;
+    width: 100vw;
+    color: #ffffff;
+}
