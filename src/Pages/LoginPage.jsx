@@ -5,7 +5,7 @@ import loginImg from "../assets/loginP.jpg";
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
- 
+
   const navigate = useNavigate(); // For navigation
 
   const handleSubmit = (e) => {
@@ -14,14 +14,13 @@ const LoginPage = () => {
       e.preventDefault();
       return;
     }
- 
-    if (username === "Admin" && password === "Admin") {
+
+    if (username === "admin" && password === "admin") {
       navigate("/customer"); // Navigate to the "/customer" page
     } else {
-     
       alert("Incorrect username or password");
-      setUsername("")
-      setPassword("")
+      setUsername("");
+      setPassword("");
     }
   };
 
@@ -42,7 +41,7 @@ const LoginPage = () => {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
-              <label className={username ? 'active' : ''}>Username</label>
+              <label className={username ? "active" : ""}>Username</label>
               <div className="border1"></div>
             </div>
             <div className="input-cont">
@@ -51,11 +50,9 @@ const LoginPage = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <label className={password ? 'active' : ''}>Password</label>
+              <label className={password ? "active" : ""}>Password</label>
               <div className="border2"></div>
             </div>
-
-           
 
             <input type="submit" value="Login" />
           </form>

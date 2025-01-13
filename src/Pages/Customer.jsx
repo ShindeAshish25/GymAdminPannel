@@ -48,6 +48,7 @@ const Customer = () => {
     training: "",
     totalAmount: "",
     remainingAmount: "",
+    payableAmount: "",
     addresses: "",
     paymentMode: "",
     gender: "",

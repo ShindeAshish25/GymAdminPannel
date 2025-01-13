@@ -21,10 +21,16 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import dayjs from "dayjs";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
+
+function TransitionTop(props) {
+  return <Slide {...props} direction="center" />;
+}
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -44,6 +50,9 @@ const Form = (props) => {
   const [addUpdateViewRecord, setAddUpdateViewRecord] = React.useState({
     ...props.data,
   });
+  const [alertMsg, setAlertMsg] = React.useState(false);
+  const [warningMessage, setWarningMessage] = React.useState("");
+  const [transition, setTransition] = React.useState(undefined);
 
   console.log(addUpdateViewRecord);
   console.log(props.op);
@@ -66,8 +75,120 @@ const Form = (props) => {
     });
   };
   const onHanddelSave = (e) => {
+    addresses: "";
+    batch: "";
+    email: "";
+    fristName: "Ashish";
+    gender: "";
+    lastName: "sd";
+    memberships: "";
+    mobileNo: "";
+    payableAmount: "";
+    paymentDate: "";
+    paymentMode: "";
+    remainingAmount: "";
+    totalAmount: "";
+    training: "";
+    if (
+      addUpdateViewRecord.fristName === "" ||
+      addUpdateViewRecord.fristName === null ||
+      addUpdateViewRecord.fristName === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "First Name' is missing");
+    } else if (
+      addUpdateViewRecord.lastName === "" ||
+      addUpdateViewRecord.lastName === null ||
+      addUpdateViewRecord.lastName === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Last Name' is missing");
+    } else if (
+      addUpdateViewRecord.mobileNo === "" ||
+      addUpdateViewRecord.mobileNo === null ||
+      addUpdateViewRecord.mobileNo === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Mobile No' is missing");
+    } else if (
+      addUpdateViewRecord.email === "" ||
+      addUpdateViewRecord.email === null ||
+      addUpdateViewRecord.email === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Email' is missing");
+    } else if (
+      addUpdateViewRecord.batch === "" ||
+      addUpdateViewRecord.batch === null ||
+      addUpdateViewRecord.batch === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Batch' is missing");
+    } else if (
+      addUpdateViewRecord.memberships === "" ||
+      addUpdateViewRecord.memberships === null ||
+      addUpdateViewRecord.memberships === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Memberships' is missing");
+    } else if (
+      addUpdateViewRecord.training === "" ||
+      addUpdateViewRecord.training === null ||
+      addUpdateViewRecord.training === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Training' is missing");
+    } else if (
+      addUpdateViewRecord.totalAmount === "" ||
+      addUpdateViewRecord.totalAmount === null ||
+      addUpdateViewRecord.totalAmount === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Total Amount' is missing");
+    } else if (
+      addUpdateViewRecord.payableAmount === "" ||
+      addUpdateViewRecord.payableAmount === null ||
+      addUpdateViewRecord.payableAmount === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Payable Amount' is missing");
+    } else if (
+      addUpdateViewRecord.paymentDate === "" ||
+      addUpdateViewRecord.paymentDate === null ||
+      addUpdateViewRecord.paymentDate === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Payment Date' is missing");
+    } else if (
+      addUpdateViewRecord.addresses === "" ||
+      addUpdateViewRecord.addresses === null ||
+      addUpdateViewRecord.addresses === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Addresses' is missing");
+    } else if (
+      addUpdateViewRecord.paymentMode === "" ||
+      addUpdateViewRecord.paymentMode === null ||
+      addUpdateViewRecord.paymentMode === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Payment Mode' is missing");
+    } else if (
+      addUpdateViewRecord.gender === "" ||
+      addUpdateViewRecord.gender === null ||
+      addUpdateViewRecord.gender === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Gender' is missing");
+    }
+
     console.log(addUpdateViewRecord);
-    alert(JSON.stringify(addUpdateViewRecord));
+    // alert(JSON.stringify(addUpdateViewRecord));
+
+    // e.preventDefault();
+    // handleClickLoading();
+    // setNodataFalg("N")
+    // await axios
+    //   .post(mastersUrl + "/getexceptionmastersearch", exceptionSearch, {
+    //     headers,
+    //   })
+    //   .then((response) => {
+    //     setData(response.data);
+    //     handleClickLoading();
+    //     setNodataFalg("Y")
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     handleClickLoading();
+    //     CatchFunction(err, navigate, location?.state);
+    //   });
   };
 
   const startCamera = () => {
@@ -119,6 +240,21 @@ const Form = (props) => {
       console.log("Saving photo: ", imageSrc);
       // Implement your photo saving logic here (e.g., upload to server or save locally)
     }
+  };
+
+  const handleClickAlertMsg = (Transition, warnMsg) => {
+    console.log("handleClickAlertMsg");
+    setAlertMsg(true);
+    setWarningMessage(warnMsg);
+    setTransition(() => Transition);
+  };
+
+  const handleClickAlertMsgClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setAlertMsg(false);
   };
 
   if (props.op == "New") {
@@ -182,8 +318,16 @@ const Form = (props) => {
                   label="Frist Name"
                   variant="outlined"
                   name="fristName"
-                  onChange={(e) => onInputChange(e)}
                   fullWidth
+                  inputProps={{
+                    maxLength: 15,
+                  }}
+                  onKeyPress={(e) => {
+                    if (!/^[a-zA-Z]$/.test(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
+                  onChange={(e) => onInputChange(e)}
                 />
               </div>
               <div className="col-md-3">
@@ -192,8 +336,16 @@ const Form = (props) => {
                   label="Last Name"
                   variant="outlined"
                   name="lastName"
-                  onChange={(e) => onInputChange(e)}
                   fullWidth
+                  inputProps={{
+                    maxLength: 15,
+                  }}
+                  onKeyPress={(e) => {
+                    if (!/^[a-zA-Z]$/.test(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
+                  onChange={(e) => onInputChange(e)}
                 />
               </div>
               <div className="col-md-3">
@@ -202,6 +354,14 @@ const Form = (props) => {
                   label="Mobile No"
                   variant="outlined"
                   name="mobileNo"
+                  inputProps={{
+                    maxLength: 10,
+                  }}
+                  onKeyPress={(e) => {
+                    if (!/^\d$/.test(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
                   onChange={(e) => onInputChange(e)}
                   fullWidth
                 />
@@ -212,20 +372,20 @@ const Form = (props) => {
                   label="Email"
                   variant="outlined"
                   name="email"
-                  onChange={(e) => onInputChange(e)}
+                  inputProps={{
+                    maxLength: 25,
+                  }}
                   fullWidth
+                  onChange={(e) => {
+                    const email = e.target.value;
+                    const emailRegex =
+                      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                    if (emailRegex.test(email)) {
+                      onInputChange(e); // Valid email
+                    }
+                  }}
                 />
               </div>
-              {/* <div className="col-md-3">
-                <TextField
-                  id="outlined-basic"
-                  label="Joing Date"
-                  variant="outlined"
-                  name="joingDate"
-                  onChange={(e) => onInputChange(e)}
-                  fullWidth
-                />
-              </div> */}
 
               <div className="datepickerClassForBlackColor d-flex col-md-3 pe-3">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -327,6 +487,32 @@ const Form = (props) => {
                   label="Total Amount"
                   variant="outlined"
                   name="totalAmount"
+                  inputProps={{
+                    maxLength: 5,
+                  }}
+                  onKeyPress={(e) => {
+                    if (!/^\d$/.test(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
+                  onChange={(e) => onInputChange(e)}
+                  fullWidth
+                />
+              </div>
+              <div className="col-md-3">
+                <TextField
+                  id="outlined-basic"
+                  label="Payable Amount"
+                  variant="outlined"
+                  name="payableAmount"
+                  inputProps={{
+                    maxLength: 5,
+                  }}
+                  onKeyPress={(e) => {
+                    if (!/^\d$/.test(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
                   onChange={(e) => onInputChange(e)}
                   fullWidth
                 />
@@ -337,8 +523,14 @@ const Form = (props) => {
                   label="Remaining Amount"
                   variant="outlined"
                   name="remainingAmount"
+                  onKeyPress={(e) => {
+                    if (!/^\d$/.test(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
                   onChange={(e) => onInputChange(e)}
                   fullWidth
+                  disabled
                 />
               </div>
 
@@ -348,6 +540,9 @@ const Form = (props) => {
                   label="Addresses"
                   variant="outlined"
                   name="addresses"
+                  inputProps={{
+                    maxLength: 50,
+                  }}
                   onChange={(e) => onInputChange(e)}
                   fullWidth
                 />
@@ -400,11 +595,33 @@ const Form = (props) => {
             </div>
           </DialogContent>
           <DialogActions>
-            <Button autoFocus onClick={onHanddelSave}>
-              Save changes
+            <Button
+              autoFocus
+              onClick={() => {
+                onHanddelSave();
+              }}
+            >
+              Save changess
             </Button>
           </DialogActions>
         </BootstrapDialog>
+        <Snackbar
+          open={alertMsg}
+          autoHideDuration={3000}
+          onClose={handleClickAlertMsgClose}
+          TransitionComponent={transition}
+          key={transition ? transition.name : ""}
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        >
+          <Alert
+            onClose={handleClickAlertMsgClose}
+            severity="warning"
+            sx={{ width: "100%", marginTop: "8px", fontWeight: "bold" }}
+          >
+            {warningMessage}
+          </Alert>
+        </Snackbar>
+        ;
       </>
     );
   } else if (props.op == "Update") {
@@ -427,7 +644,7 @@ const Form = (props) => {
               position: "absolute",
               right: 8,
               top: 8,
-              color: theme.palette.grey[500],
+              color: "#ffff",
             })}
           >
             <CloseIcon />
@@ -469,6 +686,11 @@ const Form = (props) => {
                   variant="outlined"
                   name="fristName"
                   value={addUpdateViewRecord.fristName || ""}
+                  onKeyPress={(e) => {
+                    if (!/^[a-zA-Z]$/.test(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
                   onChange={(e) => onInputChange(e)}
                   fullWidth
                 />
@@ -480,6 +702,11 @@ const Form = (props) => {
                   variant="outlined"
                   name="lastName"
                   value={addUpdateViewRecord.lastName || ""}
+                  onKeyPress={(e) => {
+                    if (!/^[a-zA-Z]$/.test(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
                   onChange={(e) => onInputChange(e)}
                   fullWidth
                 />
@@ -491,6 +718,11 @@ const Form = (props) => {
                   variant="outlined"
                   name="mobileNo"
                   value={addUpdateViewRecord.mobileNo || ""}
+                  onKeyPress={(e) => {
+                    if (!/^\d$/.test(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
                   onChange={(e) => onInputChange(e)}
                   fullWidth
                 />
@@ -506,12 +738,28 @@ const Form = (props) => {
                   fullWidth
                 />
               </div>
-              <div className="col-md-3">
-                {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <div className="datepickerClassForBlackColor d-flex col-md-3 pe-3">
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DemoContainer components={["DatePicker"]}>
-                    <DatePicker label="Basic date picker" />
+                    <DatePicker
+                      className="w-100"
+                      label="Payment Date"
+                      name="paymentDate"
+                      value={dayjs(addUpdateViewRecord?.paymentDate || null)}
+                      slotProps={{
+                        textField: {
+                          error: false,
+                        },
+                      }}
+                      format="DD/MM/YYYY"
+                      onChange={(e) => onInputChange(e, "paymentDate")}
+                      // // minDate={dayjs(addData?.startDate)}
+                      // minDate={
+                      //   addData?.startDate ? dayjs(addData?.startDate) : null
+                      // }
+                    />
                   </DemoContainer>
-                </LocalizationProvider> */}
+                </LocalizationProvider>
               </div>
 
               <div className="col-md-3">
@@ -594,6 +842,27 @@ const Form = (props) => {
                   variant="outlined"
                   name="totalAmount"
                   value={addUpdateViewRecord.totalAmount || " "}
+                  onKeyPress={(e) => {
+                    if (!/^\d$/.test(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
+                  onChange={(e) => onInputChange(e)}
+                  fullWidth
+                />
+              </div>
+              <div className="col-md-3">
+                <TextField
+                  id="outlined-basic"
+                  label="Payable Amount"
+                  variant="outlined"
+                  name="payableAmount"
+                  value={addUpdateViewRecord.payableAmount || " "}
+                  onKeyPress={(e) => {
+                    if (!/^\d$/.test(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
                   onChange={(e) => onInputChange(e)}
                   fullWidth
                 />
@@ -605,8 +874,14 @@ const Form = (props) => {
                   variant="outlined"
                   value={addUpdateViewRecord.remainingAmount || ""}
                   name="remainingAmount"
+                  onKeyPress={(e) => {
+                    if (!/^\d$/.test(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
                   onChange={(e) => onInputChange(e)}
                   fullWidth
+                  disabled
                 />
               </div>
 
@@ -670,7 +945,7 @@ const Form = (props) => {
           </DialogContent>
           <DialogActions>
             <Button autoFocus onClick={onHanddelSave}>
-              Save changes
+              Update changes
             </Button>
           </DialogActions>
         </BootstrapDialog>
@@ -696,7 +971,7 @@ const Form = (props) => {
               position: "absolute",
               right: 8,
               top: 8,
-              color: theme.palette.grey[500],
+              color: "#ffff",
             })}
           >
             <CloseIcon />
@@ -740,6 +1015,7 @@ const Form = (props) => {
                   value={addUpdateViewRecord.fristName || ""}
                   onChange={(e) => onInputChange(e)}
                   fullWidth
+                  disabled
                 />
               </div>
               <div className="col-md-3">
@@ -751,6 +1027,7 @@ const Form = (props) => {
                   value={addUpdateViewRecord.lastName || ""}
                   onChange={(e) => onInputChange(e)}
                   fullWidth
+                  disabled
                 />
               </div>
               <div className="col-md-3">
@@ -762,6 +1039,7 @@ const Form = (props) => {
                   value={addUpdateViewRecord.mobileNo || ""}
                   onChange={(e) => onInputChange(e)}
                   fullWidth
+                  disabled
                 />
               </div>
               <div className="col-md-3">
@@ -773,18 +1051,35 @@ const Form = (props) => {
                   value={addUpdateViewRecord.email || ""}
                   onChange={(e) => onInputChange(e)}
                   fullWidth
+                  disabled
                 />
               </div>
-              <div className="col-md-3">
-                {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <div className="datepickerClassForBlackColor d-flex col-md-3 pe-3">
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DemoContainer components={["DatePicker"]}>
-                    <DatePicker label="Basic date picker" />
+                    <DatePicker
+                      className="w-100"
+                      label="Payment Date"
+                      name="paymentDate"
+                      value={dayjs(addUpdateViewRecord?.paymentDate || null)}
+                      slotProps={{
+                        textField: {
+                          error: false,
+                        },
+                      }}
+                      format="DD/MM/YYYY"
+                      onChange={(e) => onInputChange(e, "paymentDate")}
+                      // // minDate={dayjs(addData?.startDate)}
+                      // minDate={
+                      //   addData?.startDate ? dayjs(addData?.startDate) : null
+                      // }
+                    />
                   </DemoContainer>
-                </LocalizationProvider> */}
+                </LocalizationProvider>
               </div>
 
               <div className="col-md-3">
-                <FormControl fullWidth>
+                <FormControl disabled fullWidth>
                   <InputLabel id="demo-simple-select-label">Batch</InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
@@ -802,7 +1097,7 @@ const Form = (props) => {
               </div>
 
               <div className="col-md-3">
-                <FormControl fullWidth>
+                <FormControl disabled fullWidth>
                   <InputLabel id="demo-simple-select-label">
                     Memberships
                   </InputLabel>
@@ -831,7 +1126,7 @@ const Form = (props) => {
                 </FormControl>
               </div>
               <div className="col-md-3">
-                <FormControl fullWidth>
+                <FormControl disabled fullWidth>
                   <InputLabel id="demo-simple-select-label">
                     Training
                   </InputLabel>
@@ -863,6 +1158,27 @@ const Form = (props) => {
                   variant="outlined"
                   name="totalAmount"
                   value={addUpdateViewRecord.totalAmount || " "}
+                  onKeyPress={(e) => {
+                    if (!/^\d$/.test(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
+                  onChange={(e) => onInputChange(e)}
+                  fullWidth
+                />
+              </div>
+              <div className="col-md-3">
+                <TextField
+                  id="outlined-basic"
+                  label="Payable Amount"
+                  variant="outlined"
+                  name="payableAmount"
+                  value={addUpdateViewRecord.payableAmount || " "}
+                  onKeyPress={(e) => {
+                    if (!/^\d$/.test(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
                   onChange={(e) => onInputChange(e)}
                   fullWidth
                 />
@@ -876,6 +1192,7 @@ const Form = (props) => {
                   name="remainingAmount"
                   onChange={(e) => onInputChange(e)}
                   fullWidth
+                  disabled
                 />
               </div>
 
@@ -888,6 +1205,7 @@ const Form = (props) => {
                   value={addUpdateViewRecord.addresses || ""}
                   onChange={(e) => onInputChange(e)}
                   fullWidth
+                  disabled
                 />
               </div>
 
@@ -914,7 +1232,7 @@ const Form = (props) => {
                 </FormControl>
               </div>
               <div className="col-md-3">
-                <FormControl>
+                <FormControl disabled>
                   <FormLabel id="gender">Gender</FormLabel>
                   <RadioGroup
                     row
