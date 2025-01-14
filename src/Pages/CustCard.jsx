@@ -32,7 +32,12 @@ const CustCard = (props) => {
             rowsToDisplay.map((row, index) => (
               <div className="col-md-2" key={index}>
                 <div className="card" style={{ width: "100%" }}>
-                  <img src={row.img} className="card-img-top" alt="..." />
+                  <img
+                    src={row.img}
+                    className="card-img-top"
+                    alt="..."
+                    style={row.active === "Y" ? { border: "4px solid green" } : { border: "4px solid red" }} 
+                     />
                   <div className="d-flex justify-content-center p-2">
                     <EditIcon className="me-2" />
                     <DeleteIcon />
