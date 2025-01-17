@@ -1,0 +1,89 @@
+.tableDiv thead tr {
+    background: linear-gradient(to right, #eb3c5a, #f67831) !important;
+    color: #ffff !important;
+    font-weight: 700 !important;
+}
+
+.css-1orzuox-MuiTableCell-root {
+    color: aliceblue !important;
+}
+
+header {
+    background: linear-gradient(to right, #eb3c5a, #f67831) !important;
+}
+
+
+.card-img-top {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border: 2px solid #afa9a9;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    margin: 0 auto;
+    border-radius: 50%;
+    transform: translateY(-30%);
+}
+
+.card {
+    padding: 0.5em;
+    text-align: center;
+    border-radius: 2em;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+
+.card-title {
+    font-weight: bold;
+    font-size: 1.5em;
+
+}
+
+.btn-primary {
+    border-radius: 2em;
+    padding: 0.5em 1.5em;
+}
+
+.tableImg img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.tableDiv p,
+.CardDiv p {
+    margin: 0;
+}
+
+.css-1fgcw51-MuiTypography-root-MuiDialogTitle-root {
+    background: linear-gradient(to right, #eb3c5a, #f67831) !important;
+    color: #ffffff !important;
+}
+
+.alertImg img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.alertBox {
+    height: 400px;
+    overflow-y: auto;
+}
+
+.alertCard img {
+    width: 300px;
+    height: 250px;
+    object-fit: cover;
+}
+
+.Footer {
+    padding: 15px;
+    text-align: center;
+    background-color: #a99c95;
+    position: absolute;
+    bottom: 0;
+    width: 100vw;
+    color: #ffffff;
+}
