@@ -4,14 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Gutim Template">
-    <meta name="keywords" content="Gutim, unica, creative, html">
+    <meta name="keywords" content="gym, kolhapur gym, o3, fitness, fit, sohel gym, sohel sir, one on one fitness,">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Gutim | Template</title>
+    <title>O3 Fitness</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900&display=swap"
         rel="stylesheet">
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+
+        <!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous">
+        </script>
 
     <!-- Css Styles -->
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
@@ -40,14 +46,12 @@
                 <nav class="mainmenu mobile-menu">
                     <ul>
                         <li class="active"><a href="./index.html">Home</a></li>
-                        <li><a href="./about-us.html">About</a></li>
-                        <li><a href="./classes.html">Classes</a></li>
-                        <li><a href="./blog.html">Blog</a></li>
+                        <li><a href="#aboutus">About</a></li>
                         <li><a href="./gallery.html">Gallery</a></li>
                         <li><a href="./contact.html">Contacts</a></li>
                     </ul>
                 </nav>
-                <a href="http://localhost:5173/" class="primary-btn signup-btn">Sign Up Today</a>
+                <a href="http://localhost:5173/" class="primary-btn signup-btn">LogIn</a>
             </div>
             <div id="mobile-menu-wrap"></div>
         </div>
@@ -55,24 +59,74 @@
     <!-- Header End -->
 
     <!-- Hero Section Begin -->
-    <section class="hero-section set-bg" data-setbg="./myImg/bg4.jpg">
+    <!-- <section class="hero-section set-bg" data-setbg="./myImg/bg2.jpg">
         <div class="container">
             <div class="row">
-                <div class="col-lg-9">
+                <div class="col-lg-10">
                     <div class="hero-text">
                         <span>Elevate Your Strength, Empower Your Life!</span>
                         <h1>Challenge Yourself !! </h1>
-                        <p>Join Us Today. Now Open near you in somvar peth, Kolhapur. </p>
-                        <!-- <a href="#" class="primary-btn">Read More</a> -->
+                        <p>Join Us Today. Now Open near you in Manganwlar Peth, Kolhapur. </p> 
                     </div>
                 </div>
+            </div>
+        </div>
+    </section> -->
+
+    <section class="carousel p-0" id="carousel">
+        <div class="container-fluid hero-section p-0">
+            <div id="carouselExampleCaptions" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+                        aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="./myImg/bg4.jpg" class="d-block w-100" alt="...">
+                        <div class="caption hero-text slide1-text">
+                            <span>Elevate Your Strength, Empower Your Life!</span>
+                            <h1>Challenge Yourself !! </h1>
+                            <p>It’s always the perfect time to crush your goals! Built with determination and fueled by passion, our gym is everything you need to make every day stronger. Begin your journey today!</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="./myImg/bg3.jpg" class="d-block w-100" alt="...">
+                        <div class="caption hero-text slide2-text">
+                            <span>EStronger Every Rep, Every Day!</span>
+                            <h1>Push Your Limits</h1>
+                            <p>Your journey to strength begins here! Empowered by dedication and driven by results, our gym is everything you need to make every workout count. Let’s get started!</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="./myImg/bg5.jpg" class="d-block w-100" alt="...">
+                        <div class="caption hero-text slide3-text">
+                            <span>Fuel Your Fire, Forge Your Future!</span>
+                            <h1>Lift to Win</h1>
+                            <p>Transform your today for a better tomorrow! At our gym, we combine passion with purpose to create workouts that truly matter. Start your story now!</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
         </div>
     </section>
     <!-- Hero Section End -->
 
     <!-- About Section Begin -->
-    <section class="about-section spad">
+    <section class="about-section spad" id="aboutus">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
@@ -469,19 +523,19 @@
                 <div class="col-md-4">
                     <div class="contact-option">
                         <span>Phone</span>
-                        <p>(123) 118 9999 - (123) 118 9999</p>
+                        <p>+91 95959 27282</p>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="contact-option">
                         <span>Address</span>
-                        <p>72 Kangnam, 45 Opal Point Suite 391</p>
+                        <p>Dilbahar Talim, Manganwlar Peth, Kolhapur 416012</p>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="contact-option">
                         <span>Email</span>
-                        <p>contactcompany@Gutim.com</p>
+                        <p>O3fitness@gmail.com</p>
                     </div>
                 </div>
             </div>
