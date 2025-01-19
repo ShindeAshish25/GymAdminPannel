@@ -37,6 +37,7 @@ const Customer = () => {
   const [viewType, setViewType] = useState("list");
   const [isOpenDialog, setIsOpenDialog] = React.useState(false);
   const [dialogComp, setDialogComp] = React.useState();
+  const [activeCust, setActiveCust] = React.useState({});
   const [addData, setAddData] = React.useState({
     fristName: "",
     lastName: "",
@@ -140,6 +141,21 @@ const Customer = () => {
   const onHadelDelete = (row) => {
     console.log(row);
   };
+
+    React.useEffect(() => {
+      getActiveCust()
+    });
+
+  const getActiveCust = () => {
+    //await axios
+    //   .get(baseURL + "/getactivecust")
+    //   .then((response) => {
+    //     setActiveCust(response.data);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+  }
 
   return (
     <>

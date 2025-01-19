@@ -23,6 +23,7 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import dayjs from "dayjs";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import {baseURL} from "./cinfig"
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -113,21 +114,7 @@ const Form = (props) => {
       remainingAmount: remaining.toString(),
     }));
   };
-  const onHanddelSave = (e) => {
-    addresses: "";
-    batch: "";
-    email: "";
-    fristName: "Ashish";
-    gender: "";
-    lastName: "sd";
-    memberships: "";
-    mobileNo: "";
-    payableAmount: "";
-    paymentDate: "";
-    paymentMode: "";
-    remainingAmount: "";
-    totalAmount: "";
-    training: "";
+  const onHanddelSave = (e) => { 
     if (
       addUpdateViewRecord.fristName === "" ||
       addUpdateViewRecord.fristName === null ||
@@ -215,7 +202,7 @@ const Form = (props) => {
     // handleClickLoading();
     // setNodataFalg("N")
     // await axios
-    //   .post(mastersUrl + "/getexceptionmastersearch", exceptionSearch, {
+    //   .post(baseURL + "/getexceptionmastersearch", exceptionSearch, {
     //     headers,
     //   })
     //   .then((response) => {

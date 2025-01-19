@@ -37,6 +37,7 @@ const OverdueMemberships = () => {
   const [viewType, setViewType] = useState("list");
   const [isOpenDialog, setIsOpenDialog] = React.useState(false);
   const [dialogComp, setDialogComp] = React.useState();
+  const [overDueMember, setOverDueMember] = React.useState({});
   const [addData, setAddData] = React.useState({
     fristName: "",
     lastName: "",
@@ -67,7 +68,7 @@ const OverdueMemberships = () => {
       memberships: "1 month",
       batch: "Morning",
       renew: "After 10 days",
-      active:"N",
+      active: "N",
       img: "https://wac-cdn.atlassian.com/dam/jcr:ba03a215-2f45-40f5-8540-b2015223c918/Max-R_Headshot%20(1).jpg?cdnVersion=2480",
     },
     {
@@ -83,7 +84,7 @@ const OverdueMemberships = () => {
       memberships: "8 month",
       batch: "Morning",
       renew: "After 30 days",
-      active:"N",
+      active: "N",
       img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcg4Y51XjQ-zSf87X4nUPTQzsF83eFdZswTg&s",
     },
     {
@@ -99,7 +100,7 @@ const OverdueMemberships = () => {
       memberships: "3 month",
       batch: "Morning",
       renew: "After 60 days",
-      active:"N",
+      active: "N",
       img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2bcBC2rxeYymW9_yJ1xbxz8tmAn--t7_NCVGlirSsgKXXCff9aCyV82uXVmTSEB8GO-A&usqp=CAU",
     },
   ];
@@ -138,6 +139,23 @@ const OverdueMemberships = () => {
   const onHadelDelete = (row) => {
     console.log(row);
   };
+
+
+  React.useEffect(() => {
+    getOverDueMember()
+  });
+
+  const getOverDueMember = () => {
+    //await axios
+    //   .get(baseURL + "/getOverDueMember")
+    //   .then((response) => {
+    //     setOverDueMember(response.data);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+  }
+
   return (
     <>
       <div className="px-4">

@@ -37,6 +37,7 @@ const OldMemberships = () => {
   const [viewType, setViewType] = useState("list");
   const [isOpenDialog, setIsOpenDialog] = React.useState(false);
   const [dialogComp, setDialogComp] = React.useState();
+  const [OldMember, setOldMember] = React.useState({});
   const [addData, setAddData] = React.useState({
     fristName: "",
     lastName: "",
@@ -345,6 +346,21 @@ const OldMemberships = () => {
   const onHadelDelete = (row) => {
     console.log(row);
   };
+
+      React.useEffect(() => {
+        getOldMember()
+      });
+  
+    const getOldMember = () => {
+      //await axios
+      //   .get(baseURL + "/getOldMember")
+      //   .then((response) => {
+      //     setOldMember(response.data);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
+    }
 
   return (
     <>

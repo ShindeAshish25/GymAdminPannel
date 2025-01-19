@@ -33,6 +33,8 @@ function Navbar() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [open, setOpen] = React.useState(false);
   const [data, setData] = React.useState("");
+  //const [alertData, setAlertData] = React.useState({});
+
 
   const handleOpen = (data) => {
     console.log(data);
@@ -123,6 +125,21 @@ function Navbar() {
       name: "Sunny Shinde",
     },
   ];
+
+  React.useEffect(() => {
+    getAlertData()
+  });
+
+  const getAlertData = () => {
+    //await axios
+    //   .get(baseURL + "/getAlertData")
+    //   .then((response) => {
+    //     setAlertData(response.data);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+  }
 
   return (
     <>
