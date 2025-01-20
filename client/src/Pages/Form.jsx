@@ -23,7 +23,11 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import dayjs from "dayjs";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import {baseURL} from "./cinfig"
+import { baseURL } from "./cinfig";
+import axios from "axios";
+import AutorenewIcon from "@mui/icons-material/Autorenew";
+import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
+import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -58,6 +62,10 @@ const Form = (props) => {
   console.log(addUpdateViewRecord);
   console.log(props.op);
 
+  const headers = {
+    "Content-Type": "application/json",
+  };
+
   useEffect(() => {
     handleClickOpen();
   }, []);
@@ -69,7 +77,7 @@ const Form = (props) => {
     setOpen(false);
   };
 
-  const onInputChange = (e) => {
+  const onInputChanges = (e) => {
     const { name, value } = e.target;
 
     // Update the specific field in the state
@@ -114,7 +122,25 @@ const Form = (props) => {
       remainingAmount: remaining.toString(),
     }));
   };
-  const onHanddelSave = (e) => { 
+
+  const onInputChange = (e, field) => {
+    let newsearchData = { ...addUpdateViewRecord };
+    const trimmedValue = e?.target?.value;
+    if (field == "paymentDate") {
+      addUpdateViewRecord = {
+        ...addUpdateViewRecord,
+      };
+    } else {
+      newsearchData = {
+        ...addUpdateViewRecord,
+        [e?.target?.name]: trimmedValue,
+      };
+    }
+    console.log(newsearchData);
+    setAddUpdateViewRecord(newsearchData);
+  };
+
+  const onHanddelSave = async (e) => {
     if (
       addUpdateViewRecord.fristName === "" ||
       addUpdateViewRecord.fristName === null ||
@@ -169,13 +195,15 @@ const Form = (props) => {
       addUpdateViewRecord.payableAmount === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Payable Amount' is missing");
-    } else if (
-      addUpdateViewRecord.paymentDate === "" ||
-      addUpdateViewRecord.paymentDate === null ||
-      addUpdateViewRecord.paymentDate === undefined
-    ) {
-      handleClickAlertMsg(TransitionTop, "Payment Date' is missing");
-    } else if (
+    }
+    // else if (
+    //   addUpdateViewRecord.paymentDate === "" ||
+    //   addUpdateViewRecord.paymentDate === null ||
+    //   addUpdateViewRecord.paymentDate === undefined
+    // ) {
+    //   handleClickAlertMsg(TransitionTop, "Payment Date' is missing");
+    // }
+    else if (
       addUpdateViewRecord.addresses === "" ||
       addUpdateViewRecord.addresses === null ||
       addUpdateViewRecord.addresses === undefined
@@ -196,25 +224,200 @@ const Form = (props) => {
     }
 
     console.log(addUpdateViewRecord);
-    // alert(JSON.stringify(addUpdateViewRecord));
 
-    // e.preventDefault();
-    // handleClickLoading();
-    // setNodataFalg("N")
-    // await axios
-    //   .post(baseURL + "/getexceptionmastersearch", exceptionSearch, {
-    //     headers,
-    //   })
-    //   .then((response) => {
-    //     setData(response.data);
-    //     handleClickLoading();
-    //     setNodataFalg("Y")
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     handleClickLoading();
-    //     CatchFunction(err, navigate, location?.state);
-    //   });
+    await axios
+      .post(baseURL + "/addCust", addUpdateViewRecord, {
+        headers,
+      })
+      .then((response) => {
+        console.log(response.data);
+        if (response.data.respMsg === "success") {
+          handleClickAlertMsg(TransitionTop, response.data.msg);
+          setOpen(false);
+        } else if (response.data.respMsg === "error") {
+          handleClickAlertMsg(TransitionTop, response.data.msg);
+          setOpen(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const onHanddelUpdate = async (e) => {
+    if (
+      addUpdateViewRecord.fristName === "" ||
+      addUpdateViewRecord.fristName === null ||
+      addUpdateViewRecord.fristName === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "First Name' is missing");
+    } else if (
+      addUpdateViewRecord.lastName === "" ||
+      addUpdateViewRecord.lastName === null ||
+      addUpdateViewRecord.lastName === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Last Name' is missing");
+    } else if (
+      addUpdateViewRecord.mobileNo === "" ||
+      addUpdateViewRecord.mobileNo === null ||
+      addUpdateViewRecord.mobileNo === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Mobile No' is missing");
+    } else if (
+      addUpdateViewRecord.email === "" ||
+      addUpdateViewRecord.email === null ||
+      addUpdateViewRecord.email === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Email' is missing");
+    } else if (
+      addUpdateViewRecord.batch === "" ||
+      addUpdateViewRecord.batch === null ||
+      addUpdateViewRecord.batch === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Batch' is missing");
+    } else if (
+      addUpdateViewRecord.memberships === "" ||
+      addUpdateViewRecord.memberships === null ||
+      addUpdateViewRecord.memberships === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Memberships' is missing");
+    } else if (
+      addUpdateViewRecord.training === "" ||
+      addUpdateViewRecord.training === null ||
+      addUpdateViewRecord.training === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Training' is missing");
+    } else if (
+      addUpdateViewRecord.totalAmount === "" ||
+      addUpdateViewRecord.totalAmount === null ||
+      addUpdateViewRecord.totalAmount === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Total Amount' is missing");
+    } else if (
+      addUpdateViewRecord.payableAmount === "" ||
+      addUpdateViewRecord.payableAmount === null ||
+      addUpdateViewRecord.payableAmount === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Payable Amount' is missing");
+    }
+    // else if (
+    //   addUpdateViewRecord.paymentDate === "" ||
+    //   addUpdateViewRecord.paymentDate === null ||
+    //   addUpdateViewRecord.paymentDate === undefined
+    // ) {
+    //   handleClickAlertMsg(TransitionTop, "Payment Date' is missing");
+    // }
+    else if (
+      addUpdateViewRecord.addresses === "" ||
+      addUpdateViewRecord.addresses === null ||
+      addUpdateViewRecord.addresses === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Addresses' is missing");
+    } else if (
+      addUpdateViewRecord.paymentMode === "" ||
+      addUpdateViewRecord.paymentMode === null ||
+      addUpdateViewRecord.paymentMode === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Payment Mode' is missing");
+    } else if (
+      addUpdateViewRecord.gender === "" ||
+      addUpdateViewRecord.gender === null ||
+      addUpdateViewRecord.gender === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Gender' is missing");
+    }
+
+    console.log(addUpdateViewRecord);
+
+    await axios
+      .post(baseURL + "/addCust", addUpdateViewRecord, {
+        headers,
+      })
+      .then((response) => {
+        console.log(response.data);
+        if (response.data.respMsg === "success") {
+          handleClickAlertMsg(TransitionTop, response.data.msg);
+          setOpen(false);
+        } else if (response.data.respMsg === "error") {
+          handleClickAlertMsg(TransitionTop, response.data.msg);
+          setOpen(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const onHanddelRenew = async (e) => {
+    if (
+      addUpdateViewRecord.batch === "" ||
+      addUpdateViewRecord.batch === null ||
+      addUpdateViewRecord.batch === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Batch' is missing");
+    } else if (
+      addUpdateViewRecord.memberships === "" ||
+      addUpdateViewRecord.memberships === null ||
+      addUpdateViewRecord.memberships === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Memberships' is missing");
+    } else if (
+      addUpdateViewRecord.totalAmount === "" ||
+      addUpdateViewRecord.totalAmount === null ||
+      addUpdateViewRecord.totalAmount === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Total Amount' is missing");
+    } else if (
+      addUpdateViewRecord.payableAmount === "" ||
+      addUpdateViewRecord.payableAmount === null ||
+      addUpdateViewRecord.payableAmount === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Payable Amount' is missing");
+    }
+    // else if (
+    //   addUpdateViewRecord.paymentDate === "" ||
+    //   addUpdateViewRecord.paymentDate === null ||
+    //   addUpdateViewRecord.paymentDate === undefined
+    // ) {
+    //   handleClickAlertMsg(TransitionTop, "Payment Date' is missing");
+    // }
+    else if (
+      addUpdateViewRecord.paymentMode === "" ||
+      addUpdateViewRecord.paymentMode === null ||
+      addUpdateViewRecord.paymentMode === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Payment Mode' is missing");
+    }
+
+    const renewMembership = {
+      custId: addUpdateViewRecord.custId,
+      paymentDate: "27-12-2024",
+      payableAmpunt: addUpdateViewRecord.payableAmpunt,
+      totalAmount: addUpdateViewRecord.totalAmount,
+      remainingAmount: addUpdateViewRecord.remainingAmount,
+      memberships: addUpdateViewRecord.memberships,
+      batch: addUpdateViewRecord.batch,
+    };
+
+    console.log(addUpdateViewRecord);
+
+    await axios
+      .post(baseURL + "/renewMembership", renewMembership, {
+        headers,
+      })
+      .then((response) => {
+        console.log(response.data);
+        if (response.data.respMsg === "success") {
+          handleClickAlertMsg(TransitionTop, response.data.msg);
+          setOpen(false);
+        } else if (response.data.respMsg === "error") {
+          handleClickAlertMsg(TransitionTop, response.data.msg);
+          setOpen(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const startCamera = () => {
@@ -623,12 +826,11 @@ const Form = (props) => {
           </DialogContent>
           <DialogActions>
             <Button
-              autoFocus
-              onClick={() => {
-                onHanddelSave();
-              }}
+              onClick={onHanddelSave}
+              variant="outlined"
+              startIcon={<PersonAddAlt1Icon />}
             >
-              Save changess
+              Save Record
             </Button>
           </DialogActions>
         </BootstrapDialog>
@@ -971,8 +1173,12 @@ const Form = (props) => {
             </div>
           </DialogContent>
           <DialogActions>
-            <Button autoFocus onClick={onHanddelSave}>
-              Update changes
+            <Button
+              onClick={onHanddelUpdate}
+              variant="outlined"
+              startIcon={<AutoFixHighIcon />}
+            >
+              Update Record
             </Button>
           </DialogActions>
         </BootstrapDialog>
@@ -1106,7 +1312,7 @@ const Form = (props) => {
               </div>
 
               <div className="col-md-3">
-                <FormControl disabled fullWidth>
+                <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">Batch</InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
@@ -1124,7 +1330,7 @@ const Form = (props) => {
               </div>
 
               <div className="col-md-3">
-                <FormControl disabled fullWidth>
+                <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">
                     Memberships
                   </InputLabel>
@@ -1283,8 +1489,12 @@ const Form = (props) => {
             </div>
           </DialogContent>
           <DialogActions>
-            <Button autoFocus onClick={onHanddelSave}>
-              Save changes
+            <Button
+              onClick={onHanddelRenew}
+              variant="outlined"
+              startIcon={<AutorenewIcon />}
+            >
+              Renewal Memberships
             </Button>
           </DialogActions>
         </BootstrapDialog>

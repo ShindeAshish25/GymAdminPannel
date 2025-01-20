@@ -31,6 +31,8 @@ import AutorenewIcon from "@mui/icons-material/Autorenew";
 import Form from "./Form";
 import CustTable from "./Table";
 import CustCard from "./CustCard";
+import { baseURL } from "./cinfig";
+import axios from "axios";
 
 const OldMemberships = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -68,7 +70,7 @@ const OldMemberships = () => {
       memberships: "1 month",
       batch: "Morning",
       renew: "After 10 days",
-      active:"Y",
+      active: "Y",
       img: "https://wac-cdn.atlassian.com/dam/jcr:ba03a215-2f45-40f5-8540-b2015223c918/Max-R_Headshot%20(1).jpg?cdnVersion=2480",
     },
     {
@@ -84,7 +86,7 @@ const OldMemberships = () => {
       memberships: "8 month",
       batch: "Morning",
       renew: "After 30 days",
-      active:"Y",
+      active: "Y",
       img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcg4Y51XjQ-zSf87X4nUPTQzsF83eFdZswTg&s",
     },
     {
@@ -100,7 +102,7 @@ const OldMemberships = () => {
       memberships: "3 month",
       batch: "Morning",
       renew: "After 60 days",
-      active:"N",
+      active: "N",
       img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2bcBC2rxeYymW9_yJ1xbxz8tmAn--t7_NCVGlirSsgKXXCff9aCyV82uXVmTSEB8GO-A&usqp=CAU",
     },
     {
@@ -116,7 +118,7 @@ const OldMemberships = () => {
       memberships: "1 month",
       batch: "Morning",
       renew: "After 10 days",
-      active:"Y",
+      active: "Y",
       img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
     },
     {
@@ -132,7 +134,7 @@ const OldMemberships = () => {
       memberships: "8 month",
       batch: "Morning",
       renew: "After 30 days",
-      active:"N",
+      active: "N",
       img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKMjeeornJdOe6FD8JTzqih-CByVmSWpSD0g&s",
     },
     {
@@ -148,7 +150,7 @@ const OldMemberships = () => {
       memberships: "3 month",
       batch: "Morning",
       renew: "After 60 days",
-      active:"N",
+      active: "N",
       img: "https://plus.unsplash.com/premium_photo-1682089892133-556bde898f2c?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c3R1ZGVudCUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D",
     },
     {
@@ -164,7 +166,7 @@ const OldMemberships = () => {
       memberships: "1 month",
       batch: "Morning",
       renew: "After 10 days",
-      active:"N",
+      active: "N",
       img: "https://wac-cdn.atlassian.com/dam/jcr:ba03a215-2f45-40f5-8540-b2015223c918/Max-R_Headshot%20(1).jpg?cdnVersion=2480",
     },
     {
@@ -180,7 +182,7 @@ const OldMemberships = () => {
       memberships: "8 month",
       batch: "Morning",
       renew: "After 30 days",
-      active:"Y",
+      active: "Y",
       img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcg4Y51XjQ-zSf87X4nUPTQzsF83eFdZswTg&s",
     },
     {
@@ -196,86 +198,7 @@ const OldMemberships = () => {
       memberships: "3 month",
       batch: "Morning",
       renew: "After 60 days",
-      active:"Y",
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2bcBC2rxeYymW9_yJ1xbxz8tmAn--t7_NCVGlirSsgKXXCff9aCyV82uXVmTSEB8GO-A&usqp=CAU",
-    },
-    {
-      fristName: "John",
-      lastName: "Doe",
-      custId: "1",
-      mobileNo: "9049831815",
-      addresses: "kolhapura",
-      joingDate: "27-12-2024",
-      totalAmount: "2000",
-      remainingAmount: "2000",
-      email: "kolhapura@gmail.com",
-      memberships: "1 month",
-      batch: "Morning",
-      renew: "After 10 days", active:"N",
-      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-    },
-    {
-      fristName: "Ashish ",
-      lastName: "Shinde",
-      mobileNo: "9049831815",
-      custId: "2",
-      addresses: "kolhapura",
-      joingDate: "27-12-2024",
-      totalAmount: "2000",
-      remainingAmount: "2000",
-      email: "kolhapura@gmail.com",
-      memberships: "8 month",
-      batch: "Morning",
-      renew: "After 30 days",
-      active:"Y",
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKMjeeornJdOe6FD8JTzqih-CByVmSWpSD0g&s",
-    },
-    {
-      fristName: "Mohsin ",
-      lastName: "Sayadd",
-      custId: "3",
-      mobileNo: "9049831815",
-      addresses: "kolhapura",
-      joingDate: "27-12-2024",
-      totalAmount: "2000",
-      remainingAmount: "2000",
-      email: "kolhapura@gmail.com",
-      memberships: "3 month",
-      batch: "Morning",
-      renew: "After 60 days",
-      active:"Y",
-      img: "https://plus.unsplash.com/premium_photo-1682089892133-556bde898f2c?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c3R1ZGVudCUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D",
-    },
-    {
-      fristName: "Yogesh ",
-      lastName: "Raut",
-      mobileNo: "9049831815",
-      custId: "2",
-      addresses: "kolhapura",
-      joingDate: "27-12-2024",
-      totalAmount: "2000",
-      remainingAmount: "2000",
-      email: "kolhapura@gmail.com",
-      memberships: "8 month",
-      batch: "Morning",
-      renew: "After 30 days",
-      active:"Y",
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcg4Y51XjQ-zSf87X4nUPTQzsF83eFdZswTg&s",
-    },
-    {
-      fristName: "Rahul ",
-      lastName: "patil",
-      custId: "3",
-      mobileNo: "9049831815",
-      addresses: "kolhapura",
-      joingDate: "27-12-2024",
-      totalAmount: "2000",
-      remainingAmount: "2000",
-      email: "kolhapura@gmail.com",
-      memberships: "3 month",
-      batch: "Morning",
-      renew: "After 60 days",
-      active:"N",
+      active: "Y",
       img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2bcBC2rxeYymW9_yJ1xbxz8tmAn--t7_NCVGlirSsgKXXCff9aCyV82uXVmTSEB8GO-A&usqp=CAU",
     },
     {
@@ -291,7 +214,7 @@ const OldMemberships = () => {
       memberships: "1 month",
       batch: "Morning",
       renew: "After 10 days",
-      active:"N",
+      active: "N",
       img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
     },
     {
@@ -307,7 +230,87 @@ const OldMemberships = () => {
       memberships: "8 month",
       batch: "Morning",
       renew: "After 30 days",
-      active:"N",
+      active: "Y",
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKMjeeornJdOe6FD8JTzqih-CByVmSWpSD0g&s",
+    },
+    {
+      fristName: "Mohsin ",
+      lastName: "Sayadd",
+      custId: "3",
+      mobileNo: "9049831815",
+      addresses: "kolhapura",
+      joingDate: "27-12-2024",
+      totalAmount: "2000",
+      remainingAmount: "2000",
+      email: "kolhapura@gmail.com",
+      memberships: "3 month",
+      batch: "Morning",
+      renew: "After 60 days",
+      active: "Y",
+      img: "https://plus.unsplash.com/premium_photo-1682089892133-556bde898f2c?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c3R1ZGVudCUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D",
+    },
+    {
+      fristName: "Yogesh ",
+      lastName: "Raut",
+      mobileNo: "9049831815",
+      custId: "2",
+      addresses: "kolhapura",
+      joingDate: "27-12-2024",
+      totalAmount: "2000",
+      remainingAmount: "2000",
+      email: "kolhapura@gmail.com",
+      memberships: "8 month",
+      batch: "Morning",
+      renew: "After 30 days",
+      active: "Y",
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcg4Y51XjQ-zSf87X4nUPTQzsF83eFdZswTg&s",
+    },
+    {
+      fristName: "Rahul ",
+      lastName: "patil",
+      custId: "3",
+      mobileNo: "9049831815",
+      addresses: "kolhapura",
+      joingDate: "27-12-2024",
+      totalAmount: "2000",
+      remainingAmount: "2000",
+      email: "kolhapura@gmail.com",
+      memberships: "3 month",
+      batch: "Morning",
+      renew: "After 60 days",
+      active: "N",
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2bcBC2rxeYymW9_yJ1xbxz8tmAn--t7_NCVGlirSsgKXXCff9aCyV82uXVmTSEB8GO-A&usqp=CAU",
+    },
+    {
+      fristName: "John",
+      lastName: "Doe",
+      custId: "1",
+      mobileNo: "9049831815",
+      addresses: "kolhapura",
+      joingDate: "27-12-2024",
+      totalAmount: "2000",
+      remainingAmount: "2000",
+      email: "kolhapura@gmail.com",
+      memberships: "1 month",
+      batch: "Morning",
+      renew: "After 10 days",
+      active: "N",
+      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
+    },
+    {
+      fristName: "Ashish ",
+      lastName: "Shinde",
+      mobileNo: "9049831815",
+      custId: "2",
+      addresses: "kolhapura",
+      joingDate: "27-12-2024",
+      totalAmount: "2000",
+      remainingAmount: "2000",
+      email: "kolhapura@gmail.com",
+      memberships: "8 month",
+      batch: "Morning",
+      renew: "After 30 days",
+      active: "N",
       img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKMjeeornJdOe6FD8JTzqih-CByVmSWpSD0g&s",
     },
   ];
@@ -347,20 +350,27 @@ const OldMemberships = () => {
     console.log(row);
   };
 
-      React.useEffect(() => {
-        getOldMember()
+  const headers = {
+    "Content-Type": "application/json",
+  };
+
+  React.useEffect(() => {
+    getOldMember();
+  }, []);
+
+  const getOldMember = async () => {
+    await axios
+      .get(baseURL + "/getAllMember", {
+        headers,
+      })
+      .then((response) => {
+        setActiveCust(response.data);
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
       });
-  
-    const getOldMember = () => {
-      //await axios
-      //   .get(baseURL + "/getOldMember")
-      //   .then((response) => {
-      //     setOldMember(response.data);
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
-    }
+  };
 
   return (
     <>

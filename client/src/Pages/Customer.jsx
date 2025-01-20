@@ -31,6 +31,8 @@ import AutorenewIcon from "@mui/icons-material/Autorenew";
 import Form from "./Form";
 import CustTable from "./Table";
 import CustCard from "./CustCard";
+import { baseURL } from "./cinfig";
+import axios from "axios";
 
 const Customer = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -53,7 +55,7 @@ const Customer = () => {
     addresses: "",
     paymentMode: "",
     gender: "",
-    active:""
+    active: "",
   });
 
   const rows = [
@@ -70,7 +72,7 @@ const Customer = () => {
       memberships: "1 month",
       batch: "Morning",
       renew: "After 10 days",
-      active:"Y",
+      active: "Y",
       img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
     },
     {
@@ -86,7 +88,7 @@ const Customer = () => {
       memberships: "8 month",
       batch: "Morning",
       renew: "After 30 days",
-      active:"Y",
+      active: "Y",
       img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKMjeeornJdOe6FD8JTzqih-CByVmSWpSD0g&s",
     },
     {
@@ -102,7 +104,7 @@ const Customer = () => {
       memberships: "3 month",
       batch: "Morning",
       renew: "After 60 days",
-      active:"Y",
+      active: "Y",
       img: "https://plus.unsplash.com/premium_photo-1682089892133-556bde898f2c?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c3R1ZGVudCUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D",
     },
   ];
@@ -142,20 +144,27 @@ const Customer = () => {
     console.log(row);
   };
 
-    React.useEffect(() => {
-      getActiveCust()
-    });
+  React.useEffect(() => {
+    getActiveCust();
+  }, []);
 
-  const getActiveCust = () => {
-    //await axios
-    //   .get(baseURL + "/getactivecust")
-    //   .then((response) => {
-    //     setActiveCust(response.data);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-  }
+  const headers = {
+    "Content-Type": "application/json",
+  };
+
+  const getActiveCust = async () => {
+    await axios
+      .get(baseURL + "/getActiveCust", {
+        headers,
+      })
+      .then((response) => {
+        setActiveCust(response.data);
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>

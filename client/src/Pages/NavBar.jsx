@@ -15,6 +15,8 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Modal from "@mui/material/Modal";
 import { Close } from "@mui/icons-material";
+import { baseURL } from "./cinfig";
+import axios from "axios";
 
 const pages = ["Customer", "Overdue Memberships", "Old Memberships"];
 
@@ -33,8 +35,7 @@ function Navbar() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [open, setOpen] = React.useState(false);
   const [data, setData] = React.useState("");
-  //const [alertData, setAlertData] = React.useState({});
-
+  const [alertData, setAlertData] = React.useState([]);
 
   const handleOpen = (data) => {
     console.log(data);
@@ -59,87 +60,88 @@ function Navbar() {
     setAnchorElUser(null);
   };
 
-  const alertData = [
-    {
-      id: "1",
-      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-      name: "Ashish Shinde",
-      mobNo: "9049831815",
-      lastPaymetDate: "27-12-2024",
-      lastMembership: "1 month",
-      membershipDueDate: "27-12-2024",
-    },
-    {
-      id: "2",
-      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-      name: "Yogesh Shinde",
-    },
-    {
-      id: "3",
-      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-      name: "Sunny Shinde",
-    },
-    {
-      id: "1",
-      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-      name: "Ashish Shinde",
-    },
-    {
-      id: "2",
-      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-      name: "Yogesh Shinde",
-    },
-    {
-      id: "3",
-      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-      name: "Sunny Shinde",
-    },
-    {
-      id: "1",
-      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-      name: "Ashish Shinde",
-    },
-    {
-      id: "2",
-      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-      name: "Yogesh Shinde",
-    },
-    {
-      id: "3",
-      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-      name: "Sunny Shinde",
-    },
-    {
-      id: "1",
-      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-      name: "Ashish Shinde",
-    },
-    {
-      id: "2",
-      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-      name: "Yogesh Shinde",
-    },
-    {
-      id: "3",
-      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-      name: "Sunny Shinde",
-    },
-  ];
+  // const alertData = [
+  //   {
+  //     id: "1",
+  //     img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
+  //     name: "Ashish Shinde",
+  //     mobNo: "9049831815",
+  //     lastPaymetDate: "27-12-2024",
+  //     lastMembership: "1 month",
+  //     membershipDueDate: "27-12-2024",
+  //   },
+  //   {
+  //     id: "2",
+  //     img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
+  //     name: "Yogesh Shinde",
+  //   },
+  //   {
+  //     id: "3",
+  //     img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
+  //     name: "Sunny Shinde",
+  //   },
+  //   {
+  //     id: "1",
+  //     img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
+  //     name: "Ashish Shinde",
+  //   },
+  //   {
+  //     id: "2",
+  //     img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
+  //     name: "Yogesh Shinde",
+  //   },
+  //   {
+  //     id: "3",
+  //     img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
+  //     name: "Sunny Shinde",
+  //   },
+  //   {
+  //     id: "1",
+  //     img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
+  //     name: "Ashish Shinde",
+  //   },
+  //   {
+  //     id: "2",
+  //     img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
+  //     name: "Yogesh Shinde",
+  //   },
+  //   {
+  //     id: "3",
+  //     img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
+  //     name: "Sunny Shinde",
+  //   },
+  //   {
+  //     id: "1",
+  //     img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
+  //     name: "Ashish Shinde",
+  //   },
+  //   {
+  //     id: "2",
+  //     img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
+  //     name: "Yogesh Shinde",
+  //   },
+  //   {
+  //     id: "3",
+  //     img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
+  //     name: "Sunny Shinde",
+  //   },
+  // ];
 
   React.useEffect(() => {
-    getAlertData()
-  });
+    getAlertData();
+  }, []);
 
-  const getAlertData = () => {
-    //await axios
-    //   .get(baseURL + "/getAlertData")
-    //   .then((response) => {
-    //     setAlertData(response.data);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-  }
+  const getAlertData = async () => {
+    await axios
+      .get(baseURL + "/getAlertData")
+      .then((response) => {
+        setAlertData(response.data);
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -147,7 +149,7 @@ function Navbar() {
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <Typography
-              variant="h6"
+              variant="h4"
               noWrap
               component="a"
               sx={{
@@ -155,12 +157,12 @@ function Navbar() {
                 display: { xs: "none", md: "flex" },
                 fontFamily: "monospace",
                 fontWeight: 700,
-                letterSpacing: ".3rem",
+                letterSpacing: ".1rem",
                 color: "inherit",
                 textDecoration: "none",
               }}
             >
-              LOGO
+              O3 Fitness
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -207,7 +209,7 @@ function Navbar() {
             </Box>
 
             <Typography
-              variant="h5"
+              variant="h4"
               noWrap
               component="a"
               sx={{
@@ -216,12 +218,12 @@ function Navbar() {
                 flexGrow: 1,
                 fontFamily: "monospace",
                 fontWeight: 700,
-                letterSpacing: ".3rem",
+                letterSpacing: ".1rem",
                 color: "inherit",
                 textDecoration: "none",
               }}
             >
-              LOGO
+              O3 Fitness
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
@@ -276,18 +278,18 @@ function Navbar() {
                   <MenuItem
                     className=""
                     key={index}
-                    // onClick={handleCloseUserMenu}
                     onClick={() => {
                       handleCloseUserMenu();
                       handleOpen(alertData);
                     }}
                   >
-                    {/* {setting} */}
                     <div className="d-flex align-items-center border-bottom pb-2 ">
                       <div className="alertImg">
                         <img src={alertData.img} alt="" />
                       </div>
-                      <div className="alertText ms-3">{alertData.name}</div>
+                      <div className="alertText ms-3">
+                        {alertData.firstName + " " + alertData.lastName}
+                      </div>
                     </div>
                   </MenuItem>
                 ))}
