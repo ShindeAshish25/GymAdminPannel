@@ -162,7 +162,7 @@ function Navbar() {
                 textDecoration: "none",
               }}
             >
-              O3 Fitness
+              O3 Fitnesss
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
