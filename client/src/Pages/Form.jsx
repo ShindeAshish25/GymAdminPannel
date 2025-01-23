@@ -58,6 +58,9 @@ const Form = (props) => {
   const [alertMsg, setAlertMsg] = React.useState(false);
   const [warningMessage, setWarningMessage] = React.useState("");
   const [transition, setTransition] = React.useState(undefined);
+  const [image, setImage] = React.useState(
+    "https://img.freepik.com/premium-vector/man-professional-business-casual-young-avatar-icon-illustration_1277826-622.jpg?semt=ais_hybrid"
+  );
 
   console.log(addUpdateViewRecord);
   console.log(props.op);
@@ -123,19 +126,47 @@ const Form = (props) => {
     }));
   };
 
+  // const onInputChange = (value, field) => {
+  //   let newsearchData = { ...addUpdateViewRecord };
+
+  //   if (field === "paymentDate") {
+  //     newsearchData.paymentDate = value ? value.format("DD-MM-YYYY") : null;
+  //   } else {
+  //     const trimmedValue = value?.target?.value;
+  //     newsearchData = {
+  //       ...addUpdateViewRecord,
+  //       [value?.target?.name]: trimmedValue,
+  //     };
+  //   }
+
+  //   console.log(newsearchData);
+  //   setAddUpdateViewRecord(newsearchData);
+  // };
+
   const onInputChange = (e, field) => {
     let newsearchData = { ...addUpdateViewRecord };
-    const trimmedValue = e?.target?.value;
-    if (field == "paymentDate") {
-      addUpdateViewRecord = {
-        ...addUpdateViewRecord,
+
+    if (field === "paymentDate") {
+      // Handle payment date change
+      newsearchData.paymentDate = e ? e.format("DD-MM-YYYY") : null;
+    } else if (field === "custImg" && e?.target?.files && e.target.files[0]) {
+      // Handle image upload
+      const reader = new FileReader();
+      reader.onload = (fileEvent) => {
+        newsearchData.custImg = fileEvent.target.result; // Save the base64 image data
+        setAddUpdateViewRecord(newsearchData);
+        console.log(newsearchData); // Log the updated object
       };
+      reader.readAsDataURL(e.target.files[0]); // Read the selected file as base64
     } else {
+      // Handle other input fields
+      const trimmedValue = e?.target?.value;
       newsearchData = {
         ...addUpdateViewRecord,
         [e?.target?.name]: trimmedValue,
       };
     }
+
     console.log(newsearchData);
     setAddUpdateViewRecord(newsearchData);
   };
@@ -486,6 +517,16 @@ const Form = (props) => {
     setAlertMsg(false);
   };
 
+  const handleImageChange = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setImage(e.target.result);
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  };
+
   if (props.op == "New") {
     return (
       <>
@@ -513,7 +554,7 @@ const Form = (props) => {
           </IconButton>
           <DialogContent dividers>
             <div className="row g-4 p-3">
-              <div className="col-md-3">
+              {/* <div className="col-md-3">
                 {!isCameraActive && (
                   <button onClick={startCamera}>Open Camera</button>
                 )}
@@ -529,8 +570,7 @@ const Form = (props) => {
                   </>
                 )}
                 {imageSrc && (
-                  <>
-                    {/* <h3>Preview</h3> */}
+                  <> 
                     <img
                       src={imageSrc}
                       alt="Captured"
@@ -540,7 +580,8 @@ const Form = (props) => {
                   </>
                 )}
                 <canvas ref={canvasRef} style={{ display: "none" }} />
-              </div>
+              </div> */}
+
               <div className="col-md-3">
                 <TextField
                   id="outlined-basic"
@@ -630,11 +671,7 @@ const Form = (props) => {
                         },
                       }}
                       format="DD/MM/YYYY"
-                      onChange={(e) => onInputChange(e, "paymentDate")}
-                      // // minDate={dayjs(addData?.startDate)}
-                      // minDate={
-                      //   addData?.startDate ? dayjs(addData?.startDate) : null
-                      // }
+                      onChange={(value) => onInputChange(value, "paymentDate")}
                     />
                   </DemoContainer>
                 </LocalizationProvider>
@@ -821,6 +858,26 @@ const Form = (props) => {
                     />
                   </RadioGroup>
                 </FormControl>
+              </div>
+
+              <div className="col-md-2">
+                <div className="avatar-upload">
+                  <div className="avatar-edit">
+                    <input
+                      type="file"
+                      id="imageUpload"
+                      accept=".png, .jpg, .jpeg"
+                      onChange={(e) => onInputChange(e, "custImg")}
+                    />
+                    <label htmlFor="imageUpload"></label>
+                  </div>
+                  <div className="avatar-preview">
+                    <div
+                      id="imagePreview"
+                      style={{ backgroundImage: `url(${image})` }}
+                    ></div>
+                  </div>
+                </div>
               </div>
             </div>
           </DialogContent>
