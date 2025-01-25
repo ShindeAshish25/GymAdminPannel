@@ -8,6 +8,7 @@ import OldMemberships from "./Pages/OldMemberships";
 import "./App.css";
 import LoginPage from "./Pages/LoginPage";
 import Footer from "./Pages/Footer";
+import Report from "./Pages/Report";
 
 function AuthenticatedLayout({ children }) {
   return (
@@ -49,6 +50,14 @@ function App() {
             element={
               <AuthenticatedLayout>
                 <OldMemberships />
+              </AuthenticatedLayout>
+            }
+          />
+          <Route
+            path="/Report"
+            element={
+              <AuthenticatedLayout>
+                <Report />
               </AuthenticatedLayout>
             }
           />

@@ -56,6 +56,7 @@ const Customer = () => {
     paymentMode: "",
     gender: "",
     active: "",
+    custImg: "",
   });
 
   const rows = [

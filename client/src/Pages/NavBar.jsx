@@ -18,7 +18,7 @@ import { Close } from "@mui/icons-material";
 import { baseURL } from "./cinfig";
 import axios from "axios";
 
-const pages = ["Customer", "Overdue Memberships", "Old Memberships"];
+const pages = ["Customer", "Overdue Memberships", "Old Memberships", "Report"];
 
 const style = {
   position: "absolute",
@@ -162,7 +162,7 @@ function Navbar() {
                 textDecoration: "none",
               }}
             >
-              O3 Fitness
+              O3 Fitnesss
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
