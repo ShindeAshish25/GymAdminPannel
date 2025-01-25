@@ -52,7 +52,7 @@ const Form = (props) => {
   const [imageSrc, setImageSrc] = useState(null);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
-  const [addUpdateViewRecord, setAddUpdateViewRecord] = React.useState({
+  let [addUpdateViewRecord, setAddUpdateViewRecord] = React.useState({
     ...props.data,
   });
   const [alertMsg, setAlertMsg] = React.useState(false);

@@ -22,13 +22,32 @@ const getAllCustomers = async (req, res) => {
 const getActiveCustomers = async (req, res) => {
     try {
         const customers = await Customer.find({ isActive: true }).lean(); // Fetch all customers from DB
-        customers.forEach(customer => customer.id = customer._id);
+        customers.forEach(customer => customer.custId = customer._id);
 
         if (!customers.length) {
             return res.status(404).json({ status: false, msg: 'No customers found' });
         }
 
         res.status(200).json({ status: true, msg: 'Active customers retrieved successfully', customers })
+
+    } catch (error) {
+        res.status(500).json({ status: false })
+    }
+}
+
+////list of All OverdDue Customers
+const getOverdDueCustomers = async (req, res) => {
+    try {
+
+        const today = new Date();
+        const dueCustomers = await Customer.find({ paymentDate: { $lt: today } }).lean();// Fetch all customers from DB
+        dueCustomers.forEach(customer => customer.custId = customer._id);
+
+        if (!dueCustomers.length) {
+            return res.status(404).json({ status: false, msg: 'No customers found' });
+        }
+
+        res.status(200).json({ status: true, msg: 'Active customers retrieved successfully', dueCustomers })
 
     } catch (error) {
         res.status(500).json({ status: false })
@@ -56,7 +75,7 @@ const createCustomer = async (req, res) => {
             totalAmount, remainingAmount, paidAmount, address, paymentMode, gender
         })
 
-        res.status(201).json({ status: true, msg: 'customer created succesfully' })
+        res.status(201).json({ respMsg: "success", msg: 'customer created succesfully' })
 
     } catch (error) {
 
@@ -67,6 +86,44 @@ const createCustomer = async (req, res) => {
 //show Customer Details
 
 //update Customer
+const updateCustomer = async (req, res) => {
+    try {
+        const { custId } = req.body;
+
+        //update customer 
+        const updatedCustomer = await User.findByIdAndUpdate(custId, req.body, { new: true });
+
+        // console.log(updatedCustomer);
+
+        res.status(200).json({
+            respMsg: "success", msg: "Record Update successfully..!!"
+        })
+
+    } catch (error) {
+
+        res.status(500).json({ respMsg: "fail", msg: 'internal server error' });
+    }
+}
+
+//renew customer Membership
+const renewCustomerMembership = async (req, res) => {
+    try {
+        const { custId } = req.body;
+
+        //update customer 
+        const renewedCustomer = await User.findByIdAndUpdate(custId, req.body, { new: true });
+
+        // console.log(renewedCustomer);
+
+        res.status(200).json({
+            respMsg: "success", msg: "Renew membership successfully..!!"
+        })
+
+    } catch (error) {
+
+        res.status(500).json({ respMsg: "fail", msg: 'internal server error' });
+    }
+}
 
 //delete Customers
 
@@ -78,5 +135,8 @@ const createCustomer = async (req, res) => {
 module.exports = {
     getAllCustomers,
     getActiveCustomers,
-    createCustomer
+    getOverdDueCustomers,
+    createCustomer,
+    updateCustomer,
+    renewCustomerMembership,
 }

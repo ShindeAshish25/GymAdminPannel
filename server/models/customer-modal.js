@@ -21,7 +21,11 @@ const customerSchema = mongoose.Schema({
         type: String,
         require: true
     },
-    joiningDate: {
+    paymentDate: {
+        type: Date,
+        require: true
+    },
+    memberships: {
         type: String,
         require: true
     },
@@ -62,8 +66,8 @@ const customerSchema = mongoose.Schema({
         require: true
     },
     isActive: {
-        type: Boolean,
-        default: true
+        type: String,
+        default: 'Y'
     },
 })
 
