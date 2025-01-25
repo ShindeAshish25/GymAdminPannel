@@ -35,7 +35,7 @@ function Navbar() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [open, setOpen] = React.useState(false);
   const [data, setData] = React.useState("");
-  const [alertData, setAlertData] = React.useState([]);
+  // const [alertData, setAlertData] = React.useState([]);
 
   const handleOpen = (data) => {
     console.log(data);
@@ -60,72 +60,84 @@ function Navbar() {
     setAnchorElUser(null);
   };
 
-  // const alertData = [
-  //   {
-  //     id: "1",
-  //     img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-  //     name: "Ashish Shinde",
-  //     mobNo: "9049831815",
-  //     lastPaymetDate: "27-12-2024",
-  //     lastMembership: "1 month",
-  //     membershipDueDate: "27-12-2024",
-  //   },
-  //   {
-  //     id: "2",
-  //     img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-  //     name: "Yogesh Shinde",
-  //   },
-  //   {
-  //     id: "3",
-  //     img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-  //     name: "Sunny Shinde",
-  //   },
-  //   {
-  //     id: "1",
-  //     img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-  //     name: "Ashish Shinde",
-  //   },
-  //   {
-  //     id: "2",
-  //     img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-  //     name: "Yogesh Shinde",
-  //   },
-  //   {
-  //     id: "3",
-  //     img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-  //     name: "Sunny Shinde",
-  //   },
-  //   {
-  //     id: "1",
-  //     img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-  //     name: "Ashish Shinde",
-  //   },
-  //   {
-  //     id: "2",
-  //     img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-  //     name: "Yogesh Shinde",
-  //   },
-  //   {
-  //     id: "3",
-  //     img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-  //     name: "Sunny Shinde",
-  //   },
-  //   {
-  //     id: "1",
-  //     img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-  //     name: "Ashish Shinde",
-  //   },
-  //   {
-  //     id: "2",
-  //     img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-  //     name: "Yogesh Shinde",
-  //   },
-  //   {
-  //     id: "3",
-  //     img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-  //     name: "Sunny Shinde",
-  //   },
-  // ];
+   const alertData = [
+    {
+      id: "1",
+      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
+      firstName: "Ashish ",
+      lastName:"Shinde",
+      mobNo: "9049831815",
+      lastPaymetDate: "27-12-2024",
+      lastMembership: "1 month",
+      membershipDueDate: "27-12-2024",
+    },
+    {
+      id: "2",
+      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
+      firstName: "Yogesh ",
+      lastName:"Shinde",
+    },
+    {
+      id: "3",
+      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
+      firstName: "Sunny ",
+      lastName:"Shinde",
+    },
+    {
+      id: "1",
+      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
+      firstName: "Ashish ",
+      lastName:"Shinde",
+    },
+    {
+      id: "2",
+      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
+      firstName: "Yogesh ",
+      lastName:"Shinde",
+    },
+    {
+      id: "3",
+      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
+      firstName: "Sunny ",
+      lastName:"Shinde",
+    },
+    {
+      id: "1",
+      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
+      firstName: "Ashish ",
+      lastName:"Shinde",
+    },
+    {
+      id: "2",
+      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
+      firstName: "Yogesh ",
+      lastName:"Shinde",
+    },
+    {
+      id: "3",
+      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
+      firstName: "Sunny ",
+      lastName:"Shinde",
+    },
+    {
+      id: "1",
+      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
+      firstName: "Ashish ",
+      lastName:"Shinde",
+    },
+    {
+      id: "2",
+      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
+      firstName: "Yogesh ",
+      lastName:"Shinde",
+    },
+    {
+      id: "3",
+      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
+      firstName: "Sunny ",
+      lastName:"Shinde",
+    },
+  ];
 
   React.useEffect(() => {
     getAlertData();
@@ -319,7 +331,7 @@ function Navbar() {
                   variant="h4"
                   component="h4"
                 >
-                  {data.name}
+                  {data.firstName + data.lastName}
                 </Typography>
 
                 <p>

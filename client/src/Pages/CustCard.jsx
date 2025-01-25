@@ -30,7 +30,7 @@ const CustCard = (props) => {
             <p> Record not found </p>
           ) : (
             rowsToDisplay.map((row, index) => (
-              <div className="col-md-2" key={index}>
+              <div className="col-md-4 col-sm-12 col-lg-4 col-xl-3" key={index}>
                 <div className="card" style={{ width: "100%" }}>
                   <img
                     src={row.img}
