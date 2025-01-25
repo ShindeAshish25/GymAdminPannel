@@ -65,7 +65,7 @@ const CustTable = (props) => {
                     </TableCell>
                     <TableCell>{row.mobileNo}</TableCell>
                     <TableCell>{row.addresses}</TableCell>
-                    <TableCell>{row.joingDate}</TableCell>
+                    <TableCell>{row.paymentDate}</TableCell>
                     <TableCell>{row.remainingAmount}</TableCell>
                     <TableCell>{row.memberships}</TableCell>
                     <TableCell>{row.batch}</TableCell>
