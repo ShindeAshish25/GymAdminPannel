@@ -31,7 +31,7 @@ import AutorenewIcon from "@mui/icons-material/Autorenew";
 import Form from "./Form";
 import CustTable from "./Table";
 import CustCard from "./CustCard";
-import { baseURL } from "./cinfig";
+import { baseURL } from "./config";
 import axios from "axios";
 
 const Customer = () => {
@@ -39,9 +39,9 @@ const Customer = () => {
   const [viewType, setViewType] = useState("list");
   const [isOpenDialog, setIsOpenDialog] = React.useState(false);
   const [dialogComp, setDialogComp] = React.useState();
-  const [activeCust, setActiveCust] = React.useState({});
+  const [activeCust, setActiveCust] = React.useState([]);
   const [addData, setAddData] = React.useState({
-    fristName: "",
+    firstName: "",
     lastName: "",
     mobileNo: "",
     email: "",
@@ -52,7 +52,7 @@ const Customer = () => {
     totalAmount: "",
     remainingAmount: "",
     payableAmount: "",
-    addresses: "",
+    address: "",
     paymentMode: "",
     gender: "",
     active: "",
@@ -61,11 +61,11 @@ const Customer = () => {
 
   const rows = [
     {
-      fristName: "Ashish ",
+      firstName: "Ashish ",
       lastName: "Shinde",
       custId: "1",
       mobileNo: "9049831815",
-      addresses: "kolhapura",
+      address: "kolhapura",
       paymentDate: "27-12-2024",
       totalAmount: "2000",
       remainingAmount: "2000",
@@ -77,11 +77,11 @@ const Customer = () => {
       img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
     },
     {
-      fristName: "Sunny ",
+      firstName: "Sunny ",
       lastName: "Shinde",
       mobileNo: "123456789",
       custId: "2",
-      addresses: "Somvar peth",
+      address: "Somvar peth",
       paymentDate: "27-12-2024",
       totalAmount: "2000",
       remainingAmount: "2000",
@@ -93,11 +93,11 @@ const Customer = () => {
       img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKMjeeornJdOe6FD8JTzqih-CByVmSWpSD0g&s",
     },
     {
-      fristName: "Sohel ",
+      firstName: "Sohel ",
       lastName: "Sayadd",
       custId: "3",
       mobileNo: "9049831815",
-      addresses: "Hujur Galli",
+      address: "Hujur Galli",
       paymentDate: "27-12-2024",
       totalAmount: "2000",
       remainingAmount: "2000",
@@ -123,12 +123,12 @@ const Customer = () => {
   };
 
   // Filter rows based on search query
-  const filteredRows = rows.filter((row) => {
+  const filteredRows = activeCust.filter((row) => {
     return (
-      row.fristName.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
+      row.firstName.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
       row.lastName.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
       row.mobileNo.startsWith(searchQuery) ||
-      row.addresses.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
+      row.address.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
       row.paymentDate.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
       row.remainingAmount.toString().startsWith(searchQuery) ||
       row.memberships.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
@@ -136,7 +136,7 @@ const Customer = () => {
     );
   });
 
-  const onHadelClick = (data, operation) => {
+  const onHandleClick = (data, operation) => {
     setIsOpenDialog((isOpenDialog) => !isOpenDialog);
     setDialogComp(<Form data={data} op={operation} />);
     console.log(data + operation);
@@ -159,8 +159,8 @@ const Customer = () => {
         headers,
       })
       .then((response) => {
-        setActiveCust(response.data);
-        console.log(response.data);
+        setActiveCust(response.data.customers);
+        console.log(response.data.customers);
       })
       .catch((err) => {
         console.log(err);
@@ -175,7 +175,7 @@ const Customer = () => {
             <Button
               className="me-3"
               variant="outlined"
-              onClick={() => onHadelClick(addData, "New")}
+              onClick={() => onHandleClick(addData, "New")}
             >
               Add New Customer
             </Button>
@@ -214,7 +214,7 @@ const Customer = () => {
           <div className="listDiv">
             <CustTable
               filteredRows={filteredRows}
-              onHadelClick={onHadelClick}
+              onHandleClick={onHandleClick}
               onHadelDelete={onHadelDelete}
               op={"customer"}
             />

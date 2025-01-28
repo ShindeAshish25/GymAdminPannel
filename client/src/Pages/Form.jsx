@@ -23,7 +23,7 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import dayjs from "dayjs";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import { baseURL } from "./cinfig";
+import { baseURL } from "./config";
 import axios from "axios";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
@@ -62,8 +62,8 @@ const Form = (props) => {
     "https://img.freepik.com/premium-vector/man-professional-business-casual-young-avatar-icon-illustration_1277826-622.jpg?semt=ais_hybrid"
   );
 
-  console.log(addUpdateViewRecord);
-  console.log(props.op);
+  // console.log(addUpdateViewRecord);
+  // console.log(props.op);
 
   const headers = {
     "Content-Type": "application/json",
@@ -155,7 +155,7 @@ const Form = (props) => {
       reader.onload = (fileEvent) => {
         newsearchData.custImg = fileEvent.target.result; // Save the base64 image data
         setAddUpdateViewRecord(newsearchData);
-        console.log(newsearchData); // Log the updated object
+        // console.log(newsearchData); // Log the updated object
       };
       reader.readAsDataURL(e.target.files[0]); // Read the selected file as base64
     } else {
@@ -167,15 +167,15 @@ const Form = (props) => {
       };
     }
 
-    console.log(newsearchData);
+    // console.log(newsearchData);
     setAddUpdateViewRecord(newsearchData);
   };
 
   const onHanddelSave = async (e) => {
     if (
-      addUpdateViewRecord.fristName === "" ||
-      addUpdateViewRecord.fristName === null ||
-      addUpdateViewRecord.fristName === undefined
+      addUpdateViewRecord.firstName === "" ||
+      addUpdateViewRecord.firstName === null ||
+      addUpdateViewRecord.firstName === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "First Name' is missing");
     } else if (
@@ -235,9 +235,9 @@ const Form = (props) => {
     //   handleClickAlertMsg(TransitionTop, "Payment Date' is missing");
     // }
     else if (
-      addUpdateViewRecord.addresses === "" ||
-      addUpdateViewRecord.addresses === null ||
-      addUpdateViewRecord.addresses === undefined
+      addUpdateViewRecord.address === "" ||
+      addUpdateViewRecord.address === null ||
+      addUpdateViewRecord.address === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Addresses' is missing");
     } else if (
@@ -254,7 +254,7 @@ const Form = (props) => {
       handleClickAlertMsg(TransitionTop, "Gender' is missing");
     }
 
-    console.log(addUpdateViewRecord);
+    // console.log(addUpdateViewRecord);
 
     await axios
       .post(baseURL + "/addCust", addUpdateViewRecord, {
@@ -277,9 +277,9 @@ const Form = (props) => {
 
   const onHanddelUpdate = async (e) => {
     if (
-      addUpdateViewRecord.fristName === "" ||
-      addUpdateViewRecord.fristName === null ||
-      addUpdateViewRecord.fristName === undefined
+      addUpdateViewRecord.firstName === "" ||
+      addUpdateViewRecord.firstName === null ||
+      addUpdateViewRecord.firstName === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "First Name' is missing");
     } else if (
@@ -339,9 +339,9 @@ const Form = (props) => {
     //   handleClickAlertMsg(TransitionTop, "Payment Date' is missing");
     // }
     else if (
-      addUpdateViewRecord.addresses === "" ||
-      addUpdateViewRecord.addresses === null ||
-      addUpdateViewRecord.addresses === undefined
+      addUpdateViewRecord.address === "" ||
+      addUpdateViewRecord.address === null ||
+      addUpdateViewRecord.address === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Addresses' is missing");
     } else if (
@@ -587,7 +587,7 @@ const Form = (props) => {
                   id="outlined-basic"
                   label="Frist Name"
                   variant="outlined"
-                  name="fristName"
+                  name="firstName"
                   fullWidth
                   inputProps={{
                     maxLength: 15,
@@ -806,7 +806,7 @@ const Form = (props) => {
                   id="outlined-basic"
                   label="Addresses"
                   variant="outlined"
-                  name="addresses"
+                  name="address"
                   inputProps={{
                     maxLength: 50,
                   }}
@@ -970,8 +970,8 @@ const Form = (props) => {
                   id="outlined-basic"
                   label="Frist Name"
                   variant="outlined"
-                  name="fristName"
-                  value={addUpdateViewRecord.fristName || ""}
+                  name="firstName"
+                  value={addUpdateViewRecord.firstName || ""}
                   onKeyPress={(e) => {
                     if (!/^[a-zA-Z]$/.test(e.key)) {
                       e.preventDefault();
@@ -1176,8 +1176,8 @@ const Form = (props) => {
                   id="outlined-basic"
                   label="Addresses"
                   variant="outlined"
-                  name="addresses"
-                  value={addUpdateViewRecord.addresses || ""}
+                  name="address"
+                  value={addUpdateViewRecord.address || ""}
                   onChange={(e) => onInputChange(e)}
                   fullWidth
                 />
@@ -1301,8 +1301,8 @@ const Form = (props) => {
                   id="outlined-basic"
                   label="Frist Name"
                   variant="outlined"
-                  name="fristName"
-                  value={addUpdateViewRecord.fristName || ""}
+                  name="firstName"
+                  value={addUpdateViewRecord.firstName || ""}
                   onChange={(e) => onInputChange(e)}
                   fullWidth
                   disabled
@@ -1491,8 +1491,8 @@ const Form = (props) => {
                   id="outlined-basic"
                   label="Addresses"
                   variant="outlined"
-                  name="addresses"
-                  value={addUpdateViewRecord.addresses || ""}
+                  name="address"
+                  value={addUpdateViewRecord.address || ""}
                   onChange={(e) => onInputChange(e)}
                   fullWidth
                   disabled

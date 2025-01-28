@@ -31,7 +31,7 @@ import AutorenewIcon from "@mui/icons-material/Autorenew";
 import Form from "./Form";
 import CustTable from "./Table";
 import CustCard from "./CustCard";
-import { baseURL } from "./cinfig";
+import { baseURL } from "./config";
 import axios from "axios";
 
 const OldMemberships = () => {

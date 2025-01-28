@@ -76,7 +76,7 @@ const CustTable = (props) => {
                           <EditIcon
                           sx={{color:"#eb3c5a"}}
                             className="me-2"
-                            onClick={() => props.onHadelClick(row, "Update")}
+                            onClick={() => props.onHandleClick(row, "Update")}
                           />
                           <DeleteIcon
                            sx={{color:"#eb3c5a"}}
@@ -89,7 +89,7 @@ const CustTable = (props) => {
                           <AutorenewIcon
                            sx={{color:"#eb3c5a"}}
                             className="me-2"
-                            onClick={() => props.onHadelClick(row, "Renewal")}
+                            onClick={() => props.onHandleClick(row, "Renewal")}
                           />
                           <DeleteIcon
                            sx={{color:"#eb3c5a"}}

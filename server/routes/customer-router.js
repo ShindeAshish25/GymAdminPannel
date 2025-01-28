@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
+//controller
 const customerControllers = require('../controllers/customer-controller');
 
 // get All Customer Data
@@ -13,14 +14,15 @@ router.get('/getActiveCust', customerControllers.getActiveCustomers)
 router.get('/getOverdDueMember', customerControllers.getOverdDueCustomers)
 
 // create Customer 
-router.post('/create', customerControllers.createCustomer)
+router.post('/addCust', customerControllers.createCustomer)
 
 //Update Customer
 router.post('/updateCust', customerControllers.updateCustomer)
 
-
 // renew Customer Membership 
 router.post('/renewMembership', customerControllers.renewCustomerMembership)
+
+
 
 
 module.exports = router;

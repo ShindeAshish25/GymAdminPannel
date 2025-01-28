@@ -21,6 +21,18 @@ const customerSchema = mongoose.Schema({
         type: String,
         require: true
     },
+    gender: {
+        type: String,
+        require: true
+    },
+    address: {
+        type: String,
+        require: true
+    },
+    joiningDate: {
+        type: Date,
+        require: true
+    },
     paymentDate: {
         type: Date,
         require: true
@@ -53,19 +65,11 @@ const customerSchema = mongoose.Schema({
         type: String,
         require: true
     },
-    address: {
-        type: String,
-        require: true
-    },
     paymentMode: {
         type: String,
         require: true
     },
-    gender: {
-        type: String,
-        require: true
-    },
-    isActive: {
+    active: {
         type: String,
         default: 'Y'
     },

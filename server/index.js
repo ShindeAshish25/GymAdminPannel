@@ -8,7 +8,9 @@ const connectDB = require('./config/db')
 const customerRoutes = require('./routes/customer-router')
 
 //middlewares
-app.use(cors())
+app.use(cors({
+    "origin": "*",
+}))
 app.use(express.json())
 
 

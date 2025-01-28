@@ -5,7 +5,7 @@ const Customer = require('../models/customer-modal')
 const getAllCustomers = async (req, res) => {
     try {
         const customers = await Customer.find().lean(); // Fetch all customers from DB
-        customers.forEach(customer => customer.id = customer._id);
+        customers.forEach(customer => customer.custId = customer._id);
 
         if (!customers.length) {
             return res.status(404).json({ status: false, msg: 'No customers found' });
@@ -21,7 +21,7 @@ const getAllCustomers = async (req, res) => {
 //list of All Active Customers
 const getActiveCustomers = async (req, res) => {
     try {
-        const customers = await Customer.find({ isActive: true }).lean(); // Fetch all customers from DB
+        const customers = await Customer.find({ active: 'Y' }).lean(); // Fetch all customers from DB
         customers.forEach(customer => customer.custId = customer._id);
 
         if (!customers.length) {
@@ -47,7 +47,7 @@ const getOverdDueCustomers = async (req, res) => {
             return res.status(404).json({ status: false, msg: 'No customers found' });
         }
 
-        res.status(200).json({ status: true, msg: 'Active customers retrieved successfully', dueCustomers })
+        res.status(200).json({ status: true, msg: 'OverdDue customers retrieved successfully', dueCustomers })
 
     } catch (error) {
         res.status(500).json({ status: false })
@@ -57,11 +57,13 @@ const getOverdDueCustomers = async (req, res) => {
 //createCustomer
 
 const createCustomer = async (req, res) => {
+
     try {
-        const {
-            photo, firstName, lastName, mobileNo, email, joiningDate, batch, package, training,
-            totalAmount, remainingAmount, paidAmount, address, paymentMode, gender
-        } = req.body;
+        const { email, joiningDate, paymentDate } = req.body;
+        const joiningDateObj = new Date(joiningDate.split("-").reverse().join("-"));
+        const paymentDateObj = new Date(paymentDate.split("-").reverse().join("-"));
+
+        const body = { ...req.body, joiningDate: joiningDateObj, paymentDate: paymentDateObj };
 
         //check customer is present or not
         const customerExists = await Customer.findOne({ email });
@@ -70,16 +72,13 @@ const createCustomer = async (req, res) => {
         }
 
         //create customer record
-        const createdCustomer = await Customer.create({
-            photo, firstName, lastName, mobileNo, email, joiningDate, batch, package, training,
-            totalAmount, remainingAmount, paidAmount, address, paymentMode, gender
-        })
+        const createdCustomer = await Customer.create(body)
 
         res.status(201).json({ respMsg: "success", msg: 'customer created succesfully' })
 
     } catch (error) {
 
-        res.status(500).json({ status: false, msg: 'internal server error' });
+        res.status(500).json({ status: false, msg: 'internal server error', error });
     }
 }
 
@@ -88,30 +87,40 @@ const createCustomer = async (req, res) => {
 //update Customer
 const updateCustomer = async (req, res) => {
     try {
-        const { custId } = req.body;
+        const { custId, joiningDate, paymentDate } = req.body;
+
+        const body = req.body
+
+        if (joiningDate) body.joiningDate = new Date(joiningDate.split("-").reverse().join("-"));
+        if (paymentDate) body.paymentDate = new Date(paymentDate.split("-").reverse().join("-"));
 
         //update customer 
-        const updatedCustomer = await User.findByIdAndUpdate(custId, req.body, { new: true });
-
-        // console.log(updatedCustomer);
+        const updatedCustomer = await Customer.findByIdAndUpdate(custId, body, { new: true });
 
         res.status(200).json({
-            respMsg: "success", msg: "Record Update successfully..!!"
+            respMsg: "success", msg: "Record Update successfully..!!",
+            customer: updatedCustomer
         })
 
     } catch (error) {
+        console.log(error);
 
-        res.status(500).json({ respMsg: "fail", msg: 'internal server error' });
+        res.status(500).json({ respMsg: "fail", msg: 'internal server error', error });
     }
 }
 
 //renew customer Membership
 const renewCustomerMembership = async (req, res) => {
     try {
-        const { custId } = req.body;
+        const { custId, joiningDate, paymentDate } = req.body;
+
+        const body = req.body
+
+        if (joiningDate) body.joiningDate = new Date(joiningDate.split("-").reverse().join("-"));
+        if (paymentDate) body.paymentDate = new Date(paymentDate.split("-").reverse().join("-"));
 
         //update customer 
-        const renewedCustomer = await User.findByIdAndUpdate(custId, req.body, { new: true });
+        const renewedCustomer = await User.findByIdAndUpdate(custId, body, { new: true });
 
         // console.log(renewedCustomer);
 

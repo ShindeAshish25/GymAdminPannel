@@ -15,7 +15,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Modal from "@mui/material/Modal";
 import { Close } from "@mui/icons-material";
-import { baseURL } from "./cinfig";
+import { baseURL } from "./config";
 import axios from "axios";
 
 const pages = ["Customer", "Overdue Memberships", "Old Memberships", "Report"];
