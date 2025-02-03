@@ -11,7 +11,7 @@ const customerRoutes = require('./routes/customer-router')
 app.use(cors({
     "origin": "*",
 }))
-app.use(express.json())
+app.use(express.json());
 
 
 // API Routes

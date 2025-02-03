@@ -4,6 +4,9 @@ const router = express.Router();
 //controller
 const customerControllers = require('../controllers/customer-controller');
 
+// create Customer 
+router.post('/addCust', customerControllers.createCustomer)
+
 // get All Customer Data
 router.get('/', customerControllers.getAllCustomers)
 
@@ -11,17 +14,16 @@ router.get('/', customerControllers.getAllCustomers)
 router.get('/getActiveCust', customerControllers.getActiveCustomers)
 
 //get OverdDueMember
-router.get('/getOverdDueMember', customerControllers.getOverdDueCustomers)
-
-// create Customer 
-router.post('/addCust', customerControllers.createCustomer)
+router.get('/getOverDueMember', customerControllers.getOverdDueCustomers)
 
 //Update Customer
 router.post('/updateCust', customerControllers.updateCustomer)
 
-// renew Customer Membership 
-router.post('/renewMembership', customerControllers.renewCustomerMembership)
+//renewMemberShip
+router.post('/renewMemberShip', customerControllers.updateCustomer)
 
+// getAlertData
+router.get('/getAlertData', customerControllers.getAlertData)
 
 
 

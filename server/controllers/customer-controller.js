@@ -1,5 +1,60 @@
-const Customer = require('../models/customer-modal')
+const moment = require('moment-timezone');
+const Customer = require('../models/customer-modal');
+const { dateStringToDate } = require('../utils/helper');
 
+//createCustomer
+const createCustomer = async (req, res) => {
+
+    try {
+        const { email, mobileNo, joiningDate, paymentDate } = req.body;
+
+        //check customer is present or not
+        const customerExists = await Customer.findOne({ $or: [{ email: email }, { mobileNo: mobileNo }] });
+        if (customerExists) {
+            return res.status(409).json({ status: false, message: 'customer already exists' });
+        }
+
+        // Convert the date string to a Date object in Asia/Kolkata timezone
+        const joiningDateObject = dateStringToDate(joiningDate);
+        const paymentDateObject = dateStringToDate(paymentDate);
+        const body = { ...req.body, joiningDate: joiningDateObject, paymentDate: paymentDateObject }
+
+        //create customer record
+        const createdCustomer = await Customer.create(body)
+
+        res.status(201).json({ status: true, message: 'customer created succesfully', data: createdCustomer })
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ status: false, message: 'internal server error', });
+    }
+}
+
+//update Customer
+const updateCustomer = async (req, res) => {
+    try {
+        const { custId, joiningDate, paymentDate } = req.body;
+
+        const body = req.body
+
+        // Convert the date string to a Date object in Asia/Kolkata timezone
+        if (joiningDate) body.joiningDate = dateStringToDate(joiningDate);
+        if (paymentDate) body.paymentDate = dateStringToDate(paymentDate);
+
+        //update customer 
+        const updatedCustomer = await Customer.findByIdAndUpdate(custId, body, { new: true });
+
+        res.status(200).json({
+            respMsg: "success", message: "Record Update successfully..!!",
+            customer: updatedCustomer
+        })
+
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json({ respMsg: "fail", message: 'internal server error', error });
+    }
+}
 
 //list of All Customers
 const getAllCustomers = async (req, res) => {
@@ -8,13 +63,14 @@ const getAllCustomers = async (req, res) => {
         customers.forEach(customer => customer.custId = customer._id);
 
         if (!customers.length) {
-            return res.status(404).json({ status: false, msg: 'No customers found' });
+            return res.status(404).json({ status: false, message: 'No customers data found' });
         }
 
-        res.status(200).json({ status: true, msg: 'Customers retrieved successfully', customers })
+        res.status(200).json({ status: true, message: 'Customers retrieved successfully', data: customers })
 
     } catch (error) {
-        res.status(500).json({ status: false })
+        console.log(error);
+        res.status(500).json({ status: false, message: 'Internal server error' })
     }
 }
 
@@ -25,13 +81,14 @@ const getActiveCustomers = async (req, res) => {
         customers.forEach(customer => customer.custId = customer._id);
 
         if (!customers.length) {
-            return res.status(404).json({ status: false, msg: 'No customers found' });
+            return res.status(404).json({ status: false, message: 'No customers data found' });
         }
 
-        res.status(200).json({ status: true, msg: 'Active customers retrieved successfully', customers })
+        res.status(200).json({ status: true, message: 'Active customers retrieved successfully', data: customers })
 
     } catch (error) {
-        res.status(500).json({ status: false })
+        console.log(error);
+        res.status(500).json({ status: false, message: 'Internal server error' })
     }
 }
 
@@ -39,102 +96,57 @@ const getActiveCustomers = async (req, res) => {
 const getOverdDueCustomers = async (req, res) => {
     try {
 
-        const today = new Date();
+        // Get today's date in Asia/Singapore timezone
+        const today = moment.tz('Asia/Singapore').startOf('day').toDate(); // Start of the day
+
         const dueCustomers = await Customer.find({ paymentDate: { $lt: today } }).lean();// Fetch all customers from DB
         dueCustomers.forEach(customer => customer.custId = customer._id);
 
         if (!dueCustomers.length) {
-            return res.status(404).json({ status: false, msg: 'No customers found' });
+            return res.status(404).json({ status: false, message: 'No customers data found' });
         }
 
-        res.status(200).json({ status: true, msg: 'OverdDue customers retrieved successfully', dueCustomers })
+        res.status(200).json({ status: true, message: 'OverdDue customers retrieved successfully', data: dueCustomers })
 
     } catch (error) {
-        res.status(500).json({ status: false })
+        res.status(500).json({ status: false, message: 'Internal server error' })
     }
 }
 
-//createCustomer
 
-const createCustomer = async (req, res) => {
-
-    try {
-        const { email, joiningDate, paymentDate } = req.body;
-        const joiningDateObj = new Date(joiningDate.split("-").reverse().join("-"));
-        const paymentDateObj = new Date(paymentDate.split("-").reverse().join("-"));
-
-        const body = { ...req.body, joiningDate: joiningDateObj, paymentDate: paymentDateObj };
-
-        //check customer is present or not
-        const customerExists = await Customer.findOne({ email });
-        if (customerExists) {
-            return res.status(400).json({ status: false, msg: 'customer already exists' });
-        }
-
-        //create customer record
-        const createdCustomer = await Customer.create(body)
-
-        res.status(201).json({ respMsg: "success", msg: 'customer created succesfully' })
-
-    } catch (error) {
-
-        res.status(500).json({ status: false, msg: 'internal server error', error });
-    }
-}
 
 //show Customer Details
 
-//update Customer
-const updateCustomer = async (req, res) => {
+
+
+//renew customer Membership
+const getAlertData = async (req, res) => {
     try {
-        const { custId, joiningDate, paymentDate } = req.body;
+        // Get today's date in Asia/Singapore timezone
+        const today = moment.tz('Asia/Singapore').startOf('day').toDate(); // Start of the day
+        
+        // Calculate the date that is 2 days from today
+        const twoDaysFromNow = moment(today).add(3, 'days').startOf('day').toDate(); // strat of the day
 
-        const body = req.body
+        // Fetch all customers from DB  
+        const customers = await Customer.find({ paymentDate: { $gte: today, $lte: twoDaysFromNow } }).lean();
+        customers.forEach(customer => customer.custId = customer._id);
 
-        if (joiningDate) body.joiningDate = new Date(joiningDate.split("-").reverse().join("-"));
-        if (paymentDate) body.paymentDate = new Date(paymentDate.split("-").reverse().join("-"));
+        if (!customers.length) {
+            return res.status(404).json({ status: false, message: 'No customers data found' });
+        }
 
-        //update customer 
-        const updatedCustomer = await Customer.findByIdAndUpdate(custId, body, { new: true });
-
-        res.status(200).json({
-            respMsg: "success", msg: "Record Update successfully..!!",
-            customer: updatedCustomer
-        })
+        res.status(200).json({ status: true, message: 'Alert customers retrieved successfully', data: customers })
 
     } catch (error) {
         console.log(error);
 
-        res.status(500).json({ respMsg: "fail", msg: 'internal server error', error });
+        res.status(500).json({ status: false, message: 'internal server error' });
     }
 }
 
-//renew customer Membership
-const renewCustomerMembership = async (req, res) => {
-    try {
-        const { custId, joiningDate, paymentDate } = req.body;
 
-        const body = req.body
 
-        if (joiningDate) body.joiningDate = new Date(joiningDate.split("-").reverse().join("-"));
-        if (paymentDate) body.paymentDate = new Date(paymentDate.split("-").reverse().join("-"));
-
-        //update customer 
-        const renewedCustomer = await User.findByIdAndUpdate(custId, body, { new: true });
-
-        // console.log(renewedCustomer);
-
-        res.status(200).json({
-            respMsg: "success", msg: "Renew membership successfully..!!"
-        })
-
-    } catch (error) {
-
-        res.status(500).json({ respMsg: "fail", msg: 'internal server error' });
-    }
-}
-
-//delete Customers
 
 
 
@@ -145,7 +157,7 @@ module.exports = {
     getAllCustomers,
     getActiveCustomers,
     getOverdDueCustomers,
+    getAlertData,
     createCustomer,
     updateCustomer,
-    renewCustomerMembership,
 }

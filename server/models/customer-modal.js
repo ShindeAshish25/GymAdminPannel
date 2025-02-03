@@ -15,10 +15,13 @@ const customerSchema = mongoose.Schema({
     },
     mobileNo: {
         type: String,
+        unique: true,
         require: true
     },
     email: {
         type: String,
+        unique: true,
+        trim: '',
         require: true
     },
     gender: {
@@ -73,7 +76,10 @@ const customerSchema = mongoose.Schema({
         type: String,
         default: 'Y'
     },
-})
+
+},
+    { timestamps: true }
+)
 
 //define the modal or the collection name
 const Customer = new mongoose.model('Customer', customerSchema)
