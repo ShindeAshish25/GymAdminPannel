@@ -8,10 +8,9 @@ const connectDB = require('./config/db')
 const customerRoutes = require('./routes/customer-router')
 
 //middlewares
-app.use(cors({
-    "origin": "*",
-}))
+app.use(cors())
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 
 // API Routes
