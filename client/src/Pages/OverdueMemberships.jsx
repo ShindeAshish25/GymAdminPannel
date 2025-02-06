@@ -28,6 +28,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import GridViewIcon from "@mui/icons-material/GridView";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
+import { baseURL } from "./config";
 import axios from "axios";
 import Form from "./Form";
 import CustTable from "./Table";
@@ -74,7 +75,7 @@ const OverdueMemberships = () => {
   // Filter rows based on search query
   const filteredRows = overDueMember?.filter((row) => {
     return (
-      row.fristName.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
+      row.firstName.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
       row.lastName.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
       row.mobileNo.startsWith(searchQuery) ||
       row.addresses.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
@@ -109,6 +110,7 @@ const OverdueMemberships = () => {
       });
   };
 
+  console.log("overDueMember");
   return (
     <>
       <div className="px-4">
