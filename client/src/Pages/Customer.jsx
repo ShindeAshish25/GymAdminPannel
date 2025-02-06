@@ -46,6 +46,7 @@ const Customer = () => {
     mobileNo: "",
     email: "",
     paymentDate: "",
+    joiningDate: "",
     batch: "",
     memberships: "",
     training: "",
@@ -56,59 +57,8 @@ const Customer = () => {
     paymentMode: "",
     gender: "",
     active: "",
-    custImg: "",
+    photo: "",
   });
-
-  const rows = [
-    {
-      firstName: "Ashish ",
-      lastName: "Shinde",
-      custId: "1",
-      mobileNo: "9049831815",
-      address: "kolhapura",
-      paymentDate: "27-12-2024",
-      totalAmount: "2000",
-      remainingAmount: "2000",
-      email: "ashish@gmail.com",
-      memberships: "1 month",
-      batch: "Morning",
-      renew: "After 10 days",
-      active: "Y",
-      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-    },
-    {
-      firstName: "Sunny ",
-      lastName: "Shinde",
-      mobileNo: "123456789",
-      custId: "2",
-      address: "Somvar peth",
-      paymentDate: "27-12-2024",
-      totalAmount: "2000",
-      remainingAmount: "2000",
-      email: "sunny@gmail.com",
-      memberships: "8 month",
-      batch: "Morning",
-      renew: "After 30 days",
-      active: "Y",
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKMjeeornJdOe6FD8JTzqih-CByVmSWpSD0g&s",
-    },
-    {
-      firstName: "Sohel ",
-      lastName: "Sayadd",
-      custId: "3",
-      mobileNo: "9049831815",
-      address: "Hujur Galli",
-      paymentDate: "27-12-2024",
-      totalAmount: "2000",
-      remainingAmount: "2000",
-      email: "sohel@gmail.com",
-      memberships: "3 month",
-      batch: "Morning",
-      renew: "After 60 days",
-      active: "Y",
-      img: "https://plus.unsplash.com/premium_photo-1682089892133-556bde898f2c?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c3R1ZGVudCUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D",
-    },
-  ];
 
   const onSeachChange = (e) => {
     setSearchQuery(e.target.value);
@@ -123,7 +73,7 @@ const Customer = () => {
   };
 
   // Filter rows based on search query
-  const filteredRows = activeCust.filter((row) => {
+  const filteredRows = activeCust?.filter((row) => {
     return (
       row.firstName.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
       row.lastName.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
@@ -138,7 +88,9 @@ const Customer = () => {
 
   const onHandleClick = (data, operation) => {
     setIsOpenDialog((isOpenDialog) => !isOpenDialog);
-    setDialogComp(<Form data={data} op={operation} />);
+    setDialogComp(
+      <Form data={data} op={operation} getActiveCustomer={getActiveCust} />
+    );
     console.log(data + operation);
   };
   const onHadelDelete = (row) => {
@@ -159,8 +111,8 @@ const Customer = () => {
         headers,
       })
       .then((response) => {
-        setActiveCust(response.data.customers);
-        console.log(response.data.customers);
+        setActiveCust(response.data.data);
+        console.log(response.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -171,7 +123,7 @@ const Customer = () => {
     <>
       <div className="px-4">
         <div className="d-flex justify-content-between align-items-center">
-          <div>
+          <div className="d-flex">
             <Button
               className="me-3"
               variant="outlined"
@@ -196,6 +148,7 @@ const Customer = () => {
                 color: viewType === "card" ? "#eb3c5a" : "#b1b4b9",
               }}
             />
+            <p>Active Members</p>
           </div>
           <div className="col-md-4">
             <TextField
@@ -216,6 +169,7 @@ const Customer = () => {
               filteredRows={filteredRows}
               onHandleClick={onHandleClick}
               onHadelDelete={onHadelDelete}
+              getActiveCustomer={getActiveCust}
               op={"customer"}
             />
           </div>

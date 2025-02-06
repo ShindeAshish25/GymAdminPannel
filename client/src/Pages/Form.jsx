@@ -149,11 +149,15 @@ const Form = (props) => {
     if (field === "paymentDate") {
       // Handle payment date change
       newsearchData.paymentDate = e ? e.format("DD-MM-YYYY") : null;
-    } else if (field === "custImg" && e?.target?.files && e.target.files[0]) {
+    } else if (field === "joiningDate") {
+      // Handle joiningDate date change
+      newsearchData.joiningDate = e ? e.format("DD-MM-YYYY") : null;
+    } else if (field === "photo" && e?.target?.files && e.target.files[0]) {
       // Handle image upload
       const reader = new FileReader();
       reader.onload = (fileEvent) => {
-        newsearchData.custImg = fileEvent.target.result; // Save the base64 image data
+        newsearchData.photo = fileEvent.target.result; // Save the base64 image data
+        setImage(newsearchData.photo);
         setAddUpdateViewRecord(newsearchData);
         // console.log(newsearchData); // Log the updated object
       };
@@ -178,80 +182,100 @@ const Form = (props) => {
       addUpdateViewRecord.firstName === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "First Name' is missing");
+      return;
+      return;
     } else if (
       addUpdateViewRecord.lastName === "" ||
       addUpdateViewRecord.lastName === null ||
       addUpdateViewRecord.lastName === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Last Name' is missing");
+      return;
+      return;
     } else if (
       addUpdateViewRecord.mobileNo === "" ||
       addUpdateViewRecord.mobileNo === null ||
       addUpdateViewRecord.mobileNo === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Mobile No' is missing");
+      return;
     } else if (
       addUpdateViewRecord.email === "" ||
       addUpdateViewRecord.email === null ||
       addUpdateViewRecord.email === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Email' is missing");
+      return;
     } else if (
       addUpdateViewRecord.batch === "" ||
       addUpdateViewRecord.batch === null ||
       addUpdateViewRecord.batch === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Batch' is missing");
+      return;
     } else if (
       addUpdateViewRecord.memberships === "" ||
       addUpdateViewRecord.memberships === null ||
       addUpdateViewRecord.memberships === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Memberships' is missing");
+      return;
     } else if (
       addUpdateViewRecord.training === "" ||
       addUpdateViewRecord.training === null ||
       addUpdateViewRecord.training === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Training' is missing");
+      return;
     } else if (
       addUpdateViewRecord.totalAmount === "" ||
       addUpdateViewRecord.totalAmount === null ||
       addUpdateViewRecord.totalAmount === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Total Amount' is missing");
+      return;
     } else if (
       addUpdateViewRecord.payableAmount === "" ||
       addUpdateViewRecord.payableAmount === null ||
       addUpdateViewRecord.payableAmount === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Payable Amount' is missing");
-    }
-    // else if (
-    //   addUpdateViewRecord.paymentDate === "" ||
-    //   addUpdateViewRecord.paymentDate === null ||
-    //   addUpdateViewRecord.paymentDate === undefined
-    // ) {
-    //   handleClickAlertMsg(TransitionTop, "Payment Date' is missing");
-    // }
-    else if (
+      return;
+    } else if (
+      addUpdateViewRecord.paymentDate === "" ||
+      addUpdateViewRecord.paymentDate === null ||
+      addUpdateViewRecord.paymentDate === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Payment Date' is missing");
+      return;
+    } else if (
+      addUpdateViewRecord.joiningDate === "" ||
+      addUpdateViewRecord.joiningDate === null ||
+      addUpdateViewRecord.joiningDate === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Joining  Date' is missing");
+      return;
+    } else if (
       addUpdateViewRecord.address === "" ||
       addUpdateViewRecord.address === null ||
       addUpdateViewRecord.address === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Addresses' is missing");
+      return;
     } else if (
       addUpdateViewRecord.paymentMode === "" ||
       addUpdateViewRecord.paymentMode === null ||
       addUpdateViewRecord.paymentMode === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Payment Mode' is missing");
+      return;
     } else if (
       addUpdateViewRecord.gender === "" ||
       addUpdateViewRecord.gender === null ||
       addUpdateViewRecord.gender === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Gender' is missing");
+      return;
     }
 
     // console.log(addUpdateViewRecord);
@@ -262,11 +286,12 @@ const Form = (props) => {
       })
       .then((response) => {
         console.log(response.data);
-        if (response.data.respMsg === "success") {
-          handleClickAlertMsg(TransitionTop, response.data.msg);
+        if (response.data.status === true) {
+          handleClickAlertMsg(TransitionTop, response.data.message);
           setOpen(false);
-        } else if (response.data.respMsg === "error") {
-          handleClickAlertMsg(TransitionTop, response.data.msg);
+          props.getActiveCustomer();
+        } else if (response.data.status === false) {
+          handleClickAlertMsg(TransitionTop, response.data.message);
           setOpen(false);
         }
       })
@@ -282,80 +307,98 @@ const Form = (props) => {
       addUpdateViewRecord.firstName === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "First Name' is missing");
+      return;
     } else if (
       addUpdateViewRecord.lastName === "" ||
       addUpdateViewRecord.lastName === null ||
       addUpdateViewRecord.lastName === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Last Name' is missing");
+      return;
     } else if (
       addUpdateViewRecord.mobileNo === "" ||
       addUpdateViewRecord.mobileNo === null ||
       addUpdateViewRecord.mobileNo === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Mobile No' is missing");
+      return;
     } else if (
       addUpdateViewRecord.email === "" ||
       addUpdateViewRecord.email === null ||
       addUpdateViewRecord.email === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Email' is missing");
+      return;
     } else if (
       addUpdateViewRecord.batch === "" ||
       addUpdateViewRecord.batch === null ||
       addUpdateViewRecord.batch === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Batch' is missing");
+      return;
     } else if (
       addUpdateViewRecord.memberships === "" ||
       addUpdateViewRecord.memberships === null ||
       addUpdateViewRecord.memberships === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Memberships' is missing");
+      return;
     } else if (
       addUpdateViewRecord.training === "" ||
       addUpdateViewRecord.training === null ||
       addUpdateViewRecord.training === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Training' is missing");
+      return;
     } else if (
       addUpdateViewRecord.totalAmount === "" ||
       addUpdateViewRecord.totalAmount === null ||
       addUpdateViewRecord.totalAmount === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Total Amount' is missing");
+      return;
     } else if (
       addUpdateViewRecord.payableAmount === "" ||
       addUpdateViewRecord.payableAmount === null ||
       addUpdateViewRecord.payableAmount === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Payable Amount' is missing");
-    }
-    // else if (
-    //   addUpdateViewRecord.paymentDate === "" ||
-    //   addUpdateViewRecord.paymentDate === null ||
-    //   addUpdateViewRecord.paymentDate === undefined
-    // ) {
-    //   handleClickAlertMsg(TransitionTop, "Payment Date' is missing");
-    // }
-    else if (
+      return;
+    } else if (
+      addUpdateViewRecord.paymentDate === "" ||
+      addUpdateViewRecord.paymentDate === null ||
+      addUpdateViewRecord.paymentDate === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Payment Date' is missing");
+      return;
+    } else if (
+      addUpdateViewRecord.joiningDate === "" ||
+      addUpdateViewRecord.joiningDate === null ||
+      addUpdateViewRecord.joiningDate === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Joining  Date' is missing");
+      return;
+    } else if (
       addUpdateViewRecord.address === "" ||
       addUpdateViewRecord.address === null ||
       addUpdateViewRecord.address === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Addresses' is missing");
+      return;
     } else if (
       addUpdateViewRecord.paymentMode === "" ||
       addUpdateViewRecord.paymentMode === null ||
       addUpdateViewRecord.paymentMode === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Payment Mode' is missing");
+      return;
     } else if (
       addUpdateViewRecord.gender === "" ||
       addUpdateViewRecord.gender === null ||
       addUpdateViewRecord.gender === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Gender' is missing");
+      return;
     }
 
     console.log(addUpdateViewRecord);
@@ -366,11 +409,11 @@ const Form = (props) => {
       })
       .then((response) => {
         console.log(response.data);
-        if (response.data.respMsg === "success") {
-          handleClickAlertMsg(TransitionTop, response.data.msg);
+        if (response.data.status === true) {
+          handleClickAlertMsg(TransitionTop, response.data.message);
           setOpen(false);
-        } else if (response.data.respMsg === "error") {
-          handleClickAlertMsg(TransitionTop, response.data.msg);
+        } else if (response.data.status === false) {
+          handleClickAlertMsg(TransitionTop, response.data.message);
           setOpen(false);
         }
       })
@@ -386,38 +429,49 @@ const Form = (props) => {
       addUpdateViewRecord.batch === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Batch' is missing");
+      return;
     } else if (
       addUpdateViewRecord.memberships === "" ||
       addUpdateViewRecord.memberships === null ||
       addUpdateViewRecord.memberships === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Memberships' is missing");
+      return;
     } else if (
       addUpdateViewRecord.totalAmount === "" ||
       addUpdateViewRecord.totalAmount === null ||
       addUpdateViewRecord.totalAmount === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Total Amount' is missing");
+      return;
     } else if (
       addUpdateViewRecord.payableAmount === "" ||
       addUpdateViewRecord.payableAmount === null ||
       addUpdateViewRecord.payableAmount === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Payable Amount' is missing");
-    }
-    // else if (
-    //   addUpdateViewRecord.paymentDate === "" ||
-    //   addUpdateViewRecord.paymentDate === null ||
-    //   addUpdateViewRecord.paymentDate === undefined
-    // ) {
-    //   handleClickAlertMsg(TransitionTop, "Payment Date' is missing");
-    // }
-    else if (
+      return;
+    } else if (
+      addUpdateViewRecord.paymentDate === "" ||
+      addUpdateViewRecord.paymentDate === null ||
+      addUpdateViewRecord.paymentDate === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Payment Date' is missing");
+      return;
+    } else if (
+      addUpdateViewRecord.joiningDate === "" ||
+      addUpdateViewRecord.joiningDate === null ||
+      addUpdateViewRecord.joiningDate === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Joining  Date' is missing");
+      return;
+    } else if (
       addUpdateViewRecord.paymentMode === "" ||
       addUpdateViewRecord.paymentMode === null ||
       addUpdateViewRecord.paymentMode === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Payment Mode' is missing");
+      return;
     }
 
     const renewMembership = {
@@ -438,11 +492,11 @@ const Form = (props) => {
       })
       .then((response) => {
         console.log(response.data);
-        if (response.data.respMsg === "success") {
-          handleClickAlertMsg(TransitionTop, response.data.msg);
+        if (response.data.status === true) {
+          handleClickAlertMsg(TransitionTop, response.data.message);
           setOpen(false);
-        } else if (response.data.respMsg === "error") {
-          handleClickAlertMsg(TransitionTop, response.data.msg);
+        } else if (response.data.status === false) {
+          handleClickAlertMsg(TransitionTop, response.data.message);
           setOpen(false);
         }
       })
@@ -677,6 +731,26 @@ const Form = (props) => {
                 </LocalizationProvider>
               </div>
 
+              <div className="datepickerClassForBlackColor d-flex col-md-3 pe-3">
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DemoContainer components={["DatePicker"]}>
+                    <DatePicker
+                      className="w-100"
+                      label="joining Date"
+                      name="joiningDate"
+                      value={dayjs(addUpdateViewRecord?.joiningDate || null)}
+                      slotProps={{
+                        textField: {
+                          error: false,
+                        },
+                      }}
+                      format="DD/MM/YYYY"
+                      onChange={(value) => onInputChange(value, "joiningDate")}
+                    />
+                  </DemoContainer>
+                </LocalizationProvider>
+              </div>
+
               <div className="col-md-3">
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">Batch</InputLabel>
@@ -867,9 +941,12 @@ const Form = (props) => {
                       type="file"
                       id="imageUpload"
                       accept=".png, .jpg, .jpeg"
-                      onChange={(e) => onInputChange(e, "custImg")}
+                      onChange={(e) => onInputChange(e, "photo")}
                     />
-                    <label htmlFor="imageUpload"></label>
+                    <label htmlFor="imageUpload">
+                      {" "}
+                      <PersonAddAlt1Icon />
+                    </label>
                   </div>
                   <div className="avatar-preview">
                     <div
@@ -1048,6 +1125,26 @@ const Form = (props) => {
                 </LocalizationProvider>
               </div>
 
+              <div className="datepickerClassForBlackColor d-flex col-md-3 pe-3">
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DemoContainer components={["DatePicker"]}>
+                    <DatePicker
+                      className="w-100"
+                      label="joining Date"
+                      name="joiningDate"
+                      value={dayjs(addUpdateViewRecord?.joiningDate || null)}
+                      slotProps={{
+                        textField: {
+                          error: false,
+                        },
+                      }}
+                      format="DD/MM/YYYY"
+                      onChange={(value) => onInputChange(value, "joiningDate")}
+                    />
+                  </DemoContainer>
+                </LocalizationProvider>
+              </div>
+
               <div className="col-md-3">
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">Batch</InputLabel>
@@ -1190,6 +1287,7 @@ const Form = (props) => {
                     row
                     aria-labelledby="payment-mode"
                     name="paymentMode"
+                    value={addUpdateViewRecord.paymentMode || ""}
                     onChange={(e) => onInputChange(e)}
                   >
                     <FormControlLabel
@@ -1363,6 +1461,26 @@ const Form = (props) => {
                       // minDate={
                       //   addData?.startDate ? dayjs(addData?.startDate) : null
                       // }
+                    />
+                  </DemoContainer>
+                </LocalizationProvider>
+              </div>
+
+              <div className="datepickerClassForBlackColor d-flex col-md-3 pe-3">
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DemoContainer components={["DatePicker"]}>
+                    <DatePicker
+                      className="w-100"
+                      label="joining Date"
+                      name="joiningDate"
+                      value={dayjs(addUpdateViewRecord?.joiningDate || null)}
+                      slotProps={{
+                        textField: {
+                          error: false,
+                        },
+                      }}
+                      format="DD/MM/YYYY"
+                      onChange={(value) => onInputChange(value, "joiningDate")}
                     />
                   </DemoContainer>
                 </LocalizationProvider>

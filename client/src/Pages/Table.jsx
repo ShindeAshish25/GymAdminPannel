@@ -26,7 +26,7 @@ const CustTable = (props) => {
   };
 
   // Calculate the rows to display based on the current page and rows per page
-  const rowsToDisplay = props.filteredRows.slice(
+  const rowsToDisplay = props?.filteredRows?.slice(
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
   );
@@ -50,18 +50,18 @@ const CustTable = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rowsToDisplay.length === 0 ? (
+              {rowsToDisplay?.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={9} align="center">
                     Record not found
                   </TableCell>
                 </TableRow>
               ) : (
-                rowsToDisplay.map((row, index) => (
+                rowsToDisplay?.map((row, index) => (
                   <TableRow key={index}>
                     <TableCell className="tableImg">
-                      <img className="me-3" src={row.img} alt="img" />
-                      {row.fristName + row.lastName}
+                      <img className="me-3" src={row.photo} alt="img" />
+                      {row.firstName + " " + row.lastName}
                     </TableCell>
                     <TableCell>{row.mobileNo}</TableCell>
                     <TableCell>{row.addresses}</TableCell>
@@ -74,12 +74,12 @@ const CustTable = (props) => {
                       {props.op === "customer" ? (
                         <>
                           <EditIcon
-                          sx={{color:"#eb3c5a"}}
+                            sx={{ color: "#eb3c5a" }}
                             className="me-2"
                             onClick={() => props.onHandleClick(row, "Update")}
                           />
                           <DeleteIcon
-                           sx={{color:"#eb3c5a"}}
+                            sx={{ color: "#eb3c5a" }}
                             className="me-2"
                             onClick={() => props.onHadelDelete(row, "Delete")}
                           />
@@ -87,12 +87,12 @@ const CustTable = (props) => {
                       ) : props.op === "overdue" ? (
                         <>
                           <AutorenewIcon
-                           sx={{color:"#eb3c5a"}}
+                            sx={{ color: "#eb3c5a" }}
                             className="me-2"
                             onClick={() => props.onHandleClick(row, "Renewal")}
                           />
                           <DeleteIcon
-                           sx={{color:"#eb3c5a"}}
+                            sx={{ color: "#eb3c5a" }}
                             className="me-2"
                             onClick={() => props.onHadelDelete(row, "Delete")}
                           />
@@ -107,7 +107,7 @@ const CustTable = (props) => {
           <TablePagination
             rowsPerPageOptions={[5, 10, 15]}
             component="div"
-            count={props.filteredRows.length}
+            count={props?.filteredRows?.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

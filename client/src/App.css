@@ -120,7 +120,7 @@ header {
                     border-color: #d6d6d6;
                 }
 
-                &:after {
+                /* &:after {
                     content: "\f040";
                     font-family: 'FontAwesome';
                     color: #757575;
@@ -130,7 +130,7 @@ header {
                     right: 0;
                     text-align: center;
                     margin: auto;
-                }
+                } */
             }
         }
     }

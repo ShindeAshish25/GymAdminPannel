@@ -39,7 +39,7 @@ const OldMemberships = () => {
   const [viewType, setViewType] = useState("list");
   const [isOpenDialog, setIsOpenDialog] = React.useState(false);
   const [dialogComp, setDialogComp] = React.useState();
-  const [OldMember, setOldMember] = React.useState({});
+  const [OldMember, setOldMember] = React.useState([]);
   const [addData, setAddData] = React.useState({
     fristName: "",
     lastName: "",
@@ -328,7 +328,7 @@ const OldMemberships = () => {
   };
 
   // Filter rows based on search query
-  const filteredRows = rows.filter((row) => {
+  const filteredRows = OldMember?.filter((row) => {
     return (
       row.fristName.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
       row.lastName.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
@@ -364,7 +364,7 @@ const OldMemberships = () => {
         headers,
       })
       .then((response) => {
-        setActiveCust(response.data);
+        setOldMember(response?.data.data);
         console.log(response.data);
       })
       .catch((err) => {
@@ -376,7 +376,7 @@ const OldMemberships = () => {
     <>
       <div className="px-4">
         <div className="d-flex justify-content-between align-items-center">
-          <div>
+          <div className="d-flex">
             <FormatListBulletedIcon
               className="me-3"
               onClick={() => toggleView("list")}
@@ -393,6 +393,7 @@ const OldMemberships = () => {
                 color: viewType === "card" ? "#eb3c5a" : "#b1b4b9",
               }}
             />
+            <p>All Members</p>
           </div>
           <div className="col-md-4">
             <TextField

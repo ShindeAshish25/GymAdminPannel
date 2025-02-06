@@ -35,7 +35,7 @@ function Navbar() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [open, setOpen] = React.useState(false);
   const [data, setData] = React.useState("");
-  // const [alertData, setAlertData] = React.useState([]);
+  const [alertData, setAlertData] = React.useState([]);
 
   const handleOpen = (data) => {
     console.log(data);
@@ -60,12 +60,12 @@ function Navbar() {
     setAnchorElUser(null);
   };
 
-   const alertData = [
+  const alertDataa = [
     {
       id: "1",
       img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
       firstName: "Ashish ",
-      lastName:"Shinde",
+      lastName: "Shinde",
       mobNo: "9049831815",
       lastPaymetDate: "27-12-2024",
       lastMembership: "1 month",
@@ -75,67 +75,67 @@ function Navbar() {
       id: "2",
       img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
       firstName: "Yogesh ",
-      lastName:"Shinde",
+      lastName: "Shinde",
     },
     {
       id: "3",
       img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
       firstName: "Sunny ",
-      lastName:"Shinde",
+      lastName: "Shinde",
     },
     {
       id: "1",
       img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
       firstName: "Ashish ",
-      lastName:"Shinde",
+      lastName: "Shinde",
     },
     {
       id: "2",
       img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
       firstName: "Yogesh ",
-      lastName:"Shinde",
+      lastName: "Shinde",
     },
     {
       id: "3",
       img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
       firstName: "Sunny ",
-      lastName:"Shinde",
+      lastName: "Shinde",
     },
     {
       id: "1",
       img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
       firstName: "Ashish ",
-      lastName:"Shinde",
+      lastName: "Shinde",
     },
     {
       id: "2",
       img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
       firstName: "Yogesh ",
-      lastName:"Shinde",
+      lastName: "Shinde",
     },
     {
       id: "3",
       img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
       firstName: "Sunny ",
-      lastName:"Shinde",
+      lastName: "Shinde",
     },
     {
       id: "1",
       img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
       firstName: "Ashish ",
-      lastName:"Shinde",
+      lastName: "Shinde",
     },
     {
       id: "2",
       img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
       firstName: "Yogesh ",
-      lastName:"Shinde",
+      lastName: "Shinde",
     },
     {
       id: "3",
       img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
       firstName: "Sunny ",
-      lastName:"Shinde",
+      lastName: "Shinde",
     },
   ];
 
@@ -147,8 +147,9 @@ function Navbar() {
     await axios
       .get(baseURL + "/getAlertData")
       .then((response) => {
-        setAlertData(response.data);
-        console.log(response.data);
+        if (response?.data?.status === true) {
+          setAlertData(response?.data?.data);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -263,7 +264,7 @@ function Navbar() {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Over Due Memberships customer">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Badge badgeContent={alertData.length} color="error">
+                  <Badge badgeContent={alertData?.length} color="error">
                     <MailIcon sx={{ color: "white" }} color="action" />
                   </Badge>
                 </IconButton>
@@ -286,7 +287,7 @@ function Navbar() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {alertData.map((alertData, index) => (
+                {alertData?.map((alertData, index) => (
                   <MenuItem
                     className=""
                     key={index}
@@ -297,10 +298,10 @@ function Navbar() {
                   >
                     <div className="d-flex align-items-center border-bottom pb-2 ">
                       <div className="alertImg">
-                        <img src={alertData.img} alt="" />
+                        <img src={alertData?.photo} alt="" />
                       </div>
                       <div className="alertText ms-3">
-                        {alertData.firstName + " " + alertData.lastName}
+                        {alertData?.firstName + " " + alertData?.lastName}
                       </div>
                     </div>
                   </MenuItem>
@@ -322,7 +323,7 @@ function Navbar() {
           <Typography id="modal-modal-description">
             <div className="row">
               <div className="col-md-6 ">
-                <img src={data.img} alt="" />
+                <img src={data.photo} alt="" />
               </div>
               <div className="col-md-6">
                 <Typography
@@ -331,24 +332,28 @@ function Navbar() {
                   variant="h4"
                   component="h4"
                 >
-                  {data.firstName + data.lastName}
+                  {data.firstName + " " + data.lastName}
                 </Typography>
 
                 <p>
                   <b className="me-3">Last Paymet Date :</b>
-                  {data.lastPaymetDate}
+                  {data.paymentDate}
                 </p>
                 <p>
                   <b className="me-3">Last Membership :</b>
-                  {data.lastMembership}
+                  {data.memberships} month
                 </p>
                 <p>
                   <b className="me-3"> Due Date:</b>
                   {data.membershipDueDate}
                 </p>
                 <p>
+                  <b className="me-3"> Remaining Amount:</b>
+                  {data.remainingAmount}
+                </p>
+                <p>
                   <b className="me-3">Mobile No :</b>
-                  {data.mobNo}
+                  {data.mobileNo}
                 </p>
                 <div className="text-end mt-3">
                   <Button
