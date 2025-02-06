@@ -8,7 +8,7 @@ const customerControllers = require('../controllers/customer-controller');
 router.post('/addCust', customerControllers.createCustomer)
 
 // get All Customer Data
-router.get('/', customerControllers.getAllCustomers)
+router.get('/getAllMember', customerControllers.getAllCustomers)
 
 // get All Active Customer Data
 router.get('/getActiveCust', customerControllers.getActiveCustomers)

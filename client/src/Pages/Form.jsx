@@ -404,7 +404,7 @@ const Form = (props) => {
     console.log(addUpdateViewRecord);
 
     await axios
-      .post(baseURL + "/addCust", addUpdateViewRecord, {
+      .post(baseURL + "/updateCust", addUpdateViewRecord, {
         headers,
       })
       .then((response) => {
@@ -487,7 +487,7 @@ const Form = (props) => {
     console.log(addUpdateViewRecord);
 
     await axios
-      .post(baseURL + "/renewMembership", renewMembership, {
+      .post(baseURL + "/renewMemberShip", renewMembership, {
         headers,
       })
       .then((response) => {

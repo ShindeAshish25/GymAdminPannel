@@ -330,7 +330,7 @@ const OldMemberships = () => {
   // Filter rows based on search query
   const filteredRows = OldMember?.filter((row) => {
     return (
-      row.fristName.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
+      row.firstName.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
       row.lastName.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
       row.mobileNo.startsWith(searchQuery) ||
       row.addresses.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
