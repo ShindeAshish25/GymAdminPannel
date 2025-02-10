@@ -56,7 +56,6 @@ const Customer = () => {
     address: "",
     paymentMode: "",
     gender: "",
-    active: "",
     photo: "",
   });
 
