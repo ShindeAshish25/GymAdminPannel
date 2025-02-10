@@ -28,6 +28,8 @@ import axios from "axios";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
+import EditIcon from "@mui/icons-material/Edit";
+import Swal from "sweetalert2";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -95,9 +97,9 @@ const Form = (props) => {
         ? parseFloat(value) || 0
         : parseFloat(addUpdateViewRecord.totalAmount) || 0;
     const payable =
-      name === "payableAmount"
+      name === "paidAmount"
         ? parseFloat(value) || 0
-        : parseFloat(addUpdateViewRecord.payableAmount) || 0;
+        : parseFloat(addUpdateViewRecord.paidAmount) || 0;
     const remaining = total - payable;
 
     if (total > payable && remaining >= 0) {
@@ -108,7 +110,7 @@ const Form = (props) => {
     } else {
       // Optional: Show an alert or reset invalid input
       if (total <= payable) {
-        alert("Total Amount must be greater than Payable Amount.");
+        alert("Total Amount must be greater than Paid Amount.");
         return;
       } else if (remaining < 0) {
         alert("Remaining Amount cannot be negative.");
@@ -171,7 +173,7 @@ const Form = (props) => {
       };
     }
 
-    // console.log(newsearchData);
+    console.log(newsearchData);
     setAddUpdateViewRecord(newsearchData);
   };
 
@@ -235,11 +237,11 @@ const Form = (props) => {
       handleClickAlertMsg(TransitionTop, "Total Amount' is missing");
       return;
     } else if (
-      addUpdateViewRecord.payableAmount === "" ||
-      addUpdateViewRecord.payableAmount === null ||
-      addUpdateViewRecord.payableAmount === undefined
+      addUpdateViewRecord.paidAmount === "" ||
+      addUpdateViewRecord.paidAmount === null ||
+      addUpdateViewRecord.paidAmount === undefined
     ) {
-      handleClickAlertMsg(TransitionTop, "Payable Amount' is missing");
+      handleClickAlertMsg(TransitionTop, "Paid Amount' is missing");
       return;
     } else if (
       addUpdateViewRecord.paymentDate === "" ||
@@ -287,16 +289,39 @@ const Form = (props) => {
       .then((response) => {
         console.log(response.data);
         if (response.data.status === true) {
-          handleClickAlertMsg(TransitionTop, response.data.message);
+          // handleClickAlertMsg(TransitionTop, response.data.message);
+          Swal.fire({
+            title: "Success",
+            icon: "success",
+            text: response.data.message,
+            draggable: true,
+            timer: 2000,
+          });
           setOpen(false);
           props.getActiveCustomer();
         } else if (response.data.status === false) {
+          Swal.fire({
+            title: "error",
+            icon: "Oppss..",
+            text: response.data.message,
+            draggable: true,
+            timer: 2000,
+          });
           handleClickAlertMsg(TransitionTop, response.data.message);
           setOpen(false);
         }
       })
       .catch((err) => {
-        console.log(err);
+        // Explicitly handle 409 Conflict
+        if (err.response && err.response.status === 409) {
+          console.log("Conflict: The customer might already exist.");
+          handleClickAlertMsg(
+            TransitionTop,
+            "Conflict: Customer already exists."
+          );
+        } else {
+          console.log(err);
+        }
       });
   };
 
@@ -358,11 +383,11 @@ const Form = (props) => {
       handleClickAlertMsg(TransitionTop, "Total Amount' is missing");
       return;
     } else if (
-      addUpdateViewRecord.payableAmount === "" ||
-      addUpdateViewRecord.payableAmount === null ||
-      addUpdateViewRecord.payableAmount === undefined
+      addUpdateViewRecord.paidAmount === "" ||
+      addUpdateViewRecord.paidAmount === null ||
+      addUpdateViewRecord.paidAmount === undefined
     ) {
-      handleClickAlertMsg(TransitionTop, "Payable Amount' is missing");
+      handleClickAlertMsg(TransitionTop, "Paid Amount' is missing");
       return;
     } else if (
       addUpdateViewRecord.paymentDate === "" ||
@@ -409,11 +434,26 @@ const Form = (props) => {
       })
       .then((response) => {
         console.log(response.data);
-        if (response.data.status === true) {
-          handleClickAlertMsg(TransitionTop, response.data.message);
+        if (response.data.respMsg === "success") {
+          // handleClickAlertMsg(TransitionTop, response.data.message);
+          Swal.fire({
+            title: "Success",
+            icon: "success",
+            text: response.data.message,
+            draggable: true,
+            timer: 2000,
+          });
           setOpen(false);
-        } else if (response.data.status === false) {
-          handleClickAlertMsg(TransitionTop, response.data.message);
+          props.getActiveCustomer();
+        } else {
+          // handleClickAlertMsg(TransitionTop, response.data.message);
+          Swal.fire({
+            title: "Oppss...",
+            icon: "error",
+            text: response.data.message,
+            draggable: true,
+            timer: 2000,
+          });
           setOpen(false);
         }
       })
@@ -445,11 +485,11 @@ const Form = (props) => {
       handleClickAlertMsg(TransitionTop, "Total Amount' is missing");
       return;
     } else if (
-      addUpdateViewRecord.payableAmount === "" ||
-      addUpdateViewRecord.payableAmount === null ||
-      addUpdateViewRecord.payableAmount === undefined
+      addUpdateViewRecord.paidAmount === "" ||
+      addUpdateViewRecord.paidAmount === null ||
+      addUpdateViewRecord.paidAmount === undefined
     ) {
-      handleClickAlertMsg(TransitionTop, "Payable Amount' is missing");
+      handleClickAlertMsg(TransitionTop, "Paid Amount' is missing");
       return;
     } else if (
       addUpdateViewRecord.paymentDate === "" ||
@@ -492,68 +532,32 @@ const Form = (props) => {
       })
       .then((response) => {
         console.log(response.data);
-        if (response.data.status === true) {
-          handleClickAlertMsg(TransitionTop, response.data.message);
+        if (response.data.respMsg === "success") {
+          // handleClickAlertMsg(TransitionTop, response.data.message);
+          Swal.fire({
+            title: "Success",
+            icon: "success",
+            text: response.data.message,
+            draggable: true,
+            timer: 2000,
+          });
           setOpen(false);
-        } else if (response.data.status === false) {
-          handleClickAlertMsg(TransitionTop, response.data.message);
+          props.getActiveCustomer();
+        } else {
+          // handleClickAlertMsg(TransitionTop, response.data.message);
+          Swal.fire({
+            title: "Oops...",
+            icon: "success",
+            text: response.data.message,
+            draggable: true,
+            timer: 2000,
+          });
           setOpen(false);
         }
       })
       .catch((err) => {
         console.log(err);
       });
-  };
-
-  const startCamera = () => {
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices
-        .getUserMedia({ video: { facingMode: "environment" } })
-        .then((stream) => {
-          videoRef.current.srcObject = stream;
-          setIsCameraActive(true);
-        })
-        .catch((err) => {
-          console.error("Error accessing the camera: ", err);
-        });
-    }
-  };
-
-  // Capture the photo
-  const capturePhoto = () => {
-    const canvas = canvasRef.current;
-    const video = videoRef.current;
-    const context = canvas.getContext("2d");
-
-    // Set canvas size to match video
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-
-    // Draw the current frame of the video onto the canvas
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-    // Convert canvas to image
-    const photoData = canvas.toDataURL("image/png");
-    setImageSrc(photoData);
-    stopCamera();
-  };
-
-  // Stop the camera stream
-  const stopCamera = () => {
-    const stream = videoRef.current.srcObject;
-    if (stream) {
-      const tracks = stream.getTracks();
-      tracks.forEach((track) => track.stop());
-    }
-    setIsCameraActive(false);
-  };
-
-  // Save the photo (for demonstration, just log it)
-  const savePhoto = () => {
-    if (imageSrc) {
-      console.log("Saving photo: ", imageSrc);
-      // Implement your photo saving logic here (e.g., upload to server or save locally)
-    }
   };
 
   const handleClickAlertMsg = (Transition, warnMsg) => {
@@ -569,16 +573,6 @@ const Form = (props) => {
     }
 
     setAlertMsg(false);
-  };
-
-  const handleImageChange = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setImage(e.target.result);
-      };
-      reader.readAsDataURL(event.target.files[0]);
-    }
   };
 
   if (props.op == "New") {
@@ -608,33 +602,28 @@ const Form = (props) => {
           </IconButton>
           <DialogContent dividers>
             <div className="row g-4 p-3">
-              {/* <div className="col-md-3">
-                {!isCameraActive && (
-                  <button onClick={startCamera}>Open Camera</button>
-                )}
-                {isCameraActive && (
-                  <>
-                    <video
-                      ref={videoRef}
-                      autoPlay
-                      playsInline
-                      style={{ width: "100%", border: "1px solid #ddd" }}
+              <div className="col-md-12">
+                <div className="avatar-upload">
+                  <div className="avatar-edit">
+                    <input
+                      type="file"
+                      id="imageUpload"
+                      accept=".png, .jpg, .jpeg"
+                      onChange={(e) => onInputChange(e, "photo")}
                     />
-                    <button onClick={capturePhoto}>Capture Photo</button>
-                  </>
-                )}
-                {imageSrc && (
-                  <> 
-                    <img
-                      src={imageSrc}
-                      alt="Captured"
-                      style={{ width: "100%" }}
-                    />
-                    <button onClick={savePhoto}>Save Photo</button>
-                  </>
-                )}
-                <canvas ref={canvasRef} style={{ display: "none" }} />
-              </div> */}
+                    <label htmlFor="imageUpload">
+                      {" "}
+                      <EditIcon />
+                    </label>
+                  </div>
+                  <div className="avatar-preview">
+                    <div
+                      id="imagePreview"
+                      style={{ backgroundImage: `url(${image})` }}
+                    ></div>
+                  </div>
+                </div>
+              </div>
 
               <div className="col-md-3">
                 <TextField
@@ -710,7 +699,34 @@ const Form = (props) => {
                   }}
                 />
               </div>
-
+              <div className="datepickerClassForBlackColor d-flex col-md-3 pe-3">
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DemoContainer components={["DatePicker"]}>
+                    <DatePicker
+                      className="w-100"
+                      label="Joining Date"
+                      name="joiningDate"
+                      value={
+                        dayjs(
+                          addUpdateViewRecord?.joiningDate || null
+                        ).isValid()
+                          ? dayjs(
+                              addUpdateViewRecord?.joiningDate,
+                              "DD-MM-YYYY"
+                            )
+                          : null
+                      } // Ensure the value is properly formatted
+                      slotProps={{
+                        textField: {
+                          error: false,
+                        },
+                      }}
+                      format="DD-MM-YYYY" // Ensuring the DatePicker uses this format
+                      onChange={(value) => onInputChange(value, "joiningDate")}
+                    />
+                  </DemoContainer>
+                </LocalizationProvider>
+              </div>
               <div className="datepickerClassForBlackColor d-flex col-md-3 pe-3">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DemoContainer components={["DatePicker"]}>
@@ -718,34 +734,27 @@ const Form = (props) => {
                       className="w-100"
                       label="Payment Date"
                       name="paymentDate"
-                      value={dayjs(addUpdateViewRecord?.paymentDate || null)}
+                      value={
+                        dayjs(
+                          addUpdateViewRecord?.paymentDate || null
+                        ).isValid()
+                          ? dayjs(
+                              addUpdateViewRecord?.paymentDate,
+                              "DD-MM-YYYY"
+                            )
+                          : null
+                      }
                       slotProps={{
                         textField: {
                           error: false,
+                          // Ensure the date format is explicitly set here
+                          inputProps: {
+                            format: "DD-MM-YYYY",
+                          },
                         },
                       }}
-                      format="DD/MM/YYYY"
+                      format="DD-MM-YYYY" // Ensuring the DatePicker uses this format
                       onChange={(value) => onInputChange(value, "paymentDate")}
-                    />
-                  </DemoContainer>
-                </LocalizationProvider>
-              </div>
-
-              <div className="datepickerClassForBlackColor d-flex col-md-3 pe-3">
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DemoContainer components={["DatePicker"]}>
-                    <DatePicker
-                      className="w-100"
-                      label="joining Date"
-                      name="joiningDate"
-                      value={dayjs(addUpdateViewRecord?.joiningDate || null)}
-                      slotProps={{
-                        textField: {
-                          error: false,
-                        },
-                      }}
-                      format="DD/MM/YYYY"
-                      onChange={(value) => onInputChange(value, "joiningDate")}
                     />
                   </DemoContainer>
                 </LocalizationProvider>
@@ -842,9 +851,9 @@ const Form = (props) => {
               <div className="col-md-3">
                 <TextField
                   id="outlined-basic"
-                  label="Payable Amount"
+                  label="Paid Amount"
                   variant="outlined"
-                  name="payableAmount"
+                  name="paidAmount"
                   inputProps={{
                     maxLength: 5,
                   }}
@@ -933,29 +942,6 @@ const Form = (props) => {
                   </RadioGroup>
                 </FormControl>
               </div>
-
-              <div className="col-md-2">
-                <div className="avatar-upload">
-                  <div className="avatar-edit">
-                    <input
-                      type="file"
-                      id="imageUpload"
-                      accept=".png, .jpg, .jpeg"
-                      onChange={(e) => onInputChange(e, "photo")}
-                    />
-                    <label htmlFor="imageUpload">
-                      {" "}
-                      <PersonAddAlt1Icon />
-                    </label>
-                  </div>
-                  <div className="avatar-preview">
-                    <div
-                      id="imagePreview"
-                      style={{ backgroundImage: `url(${image})` }}
-                    ></div>
-                  </div>
-                </div>
-              </div>
             </div>
           </DialogContent>
           <DialogActions>
@@ -1014,33 +1000,31 @@ const Form = (props) => {
           </IconButton>
           <DialogContent dividers>
             <div className="row g-4 p-3">
-              <div className="col-md-3">
-                {!isCameraActive && (
-                  <button onClick={startCamera}>Open Camera</button>
-                )}
-                {isCameraActive && (
-                  <>
-                    <video
-                      ref={videoRef}
-                      autoPlay
-                      playsInline
-                      style={{ width: "100%", border: "1px solid #ddd" }}
+              <div className="col-md-12">
+                <div className="avatar-upload">
+                  <div className="avatar-edit">
+                    <input
+                      type="file"
+                      id="imageUpload"
+                      accept=".png, .jpg, .jpeg"
+                      onChange={(e) => onInputChange(e, "photo")}
                     />
-                    <button onClick={capturePhoto}>Capture Photo</button>
-                  </>
-                )}
-                {imageSrc && (
-                  <>
-                    {/* <h3>Preview</h3> */}
-                    <img
-                      src={imageSrc}
-                      alt="Captured"
-                      style={{ width: "100%" }}
-                    />
-                    <button onClick={savePhoto}>Save Photo</button>
-                  </>
-                )}
-                <canvas ref={canvasRef} style={{ display: "none" }} />
+                    <label htmlFor="imageUpload">
+                      {" "}
+                      <EditIcon />
+                    </label>
+                  </div>
+                  <div className="avatar-preview">
+                    <div
+                      id="imagePreview"
+                      style={{
+                        backgroundImage: addUpdateViewRecord.photo
+                          ? `url(${addUpdateViewRecord.photo})`
+                          : "none",
+                      }}
+                    ></div>
+                  </div>
+                </div>
               </div>
               <div className="col-md-3">
                 <TextField
@@ -1049,13 +1033,16 @@ const Form = (props) => {
                   variant="outlined"
                   name="firstName"
                   value={addUpdateViewRecord.firstName || ""}
+                  fullWidth
+                  inputProps={{
+                    maxLength: 15,
+                  }}
                   onKeyPress={(e) => {
                     if (!/^[a-zA-Z]$/.test(e.key)) {
                       e.preventDefault();
                     }
                   }}
                   onChange={(e) => onInputChange(e)}
-                  fullWidth
                 />
               </div>
               <div className="col-md-3">
@@ -1065,13 +1052,16 @@ const Form = (props) => {
                   variant="outlined"
                   name="lastName"
                   value={addUpdateViewRecord.lastName || ""}
+                  fullWidth
+                  inputProps={{
+                    maxLength: 15,
+                  }}
                   onKeyPress={(e) => {
                     if (!/^[a-zA-Z]$/.test(e.key)) {
                       e.preventDefault();
                     }
                   }}
                   onChange={(e) => onInputChange(e)}
-                  fullWidth
                 />
               </div>
               <div className="col-md-3">
@@ -1081,6 +1071,9 @@ const Form = (props) => {
                   variant="outlined"
                   name="mobileNo"
                   value={addUpdateViewRecord.mobileNo || ""}
+                  inputProps={{
+                    maxLength: 10,
+                  }}
                   onKeyPress={(e) => {
                     if (!/^\d$/.test(e.key)) {
                       e.preventDefault();
@@ -1097,9 +1090,46 @@ const Form = (props) => {
                   variant="outlined"
                   name="email"
                   value={addUpdateViewRecord.email || ""}
-                  onChange={(e) => onInputChange(e)}
+                  inputProps={{
+                    maxLength: 25,
+                  }}
                   fullWidth
+                  onChange={(e) => {
+                    const email = e.target.value;
+                    const emailRegex =
+                      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                    if (emailRegex.test(email)) {
+                      onInputChange(e); // Valid email
+                    }
+                  }}
                 />
+              </div>
+              <div className="datepickerClassForBlackColor d-flex col-md-3 pe-3">
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DemoContainer components={["DatePicker"]}>
+                    <DatePicker
+                      className="w-100"
+                      label="Joining Date"
+                      name="joiningDate"
+                      value={
+                        addUpdateViewRecord?.joiningDate
+                          ? dayjs(addUpdateViewRecord.joiningDate) // Convert ISO string to Dayjs object
+                          : null
+                      }
+                      slotProps={{
+                        textField: {
+                          error: false,
+                        },
+                      }}
+                      format="DD-MM-YYYY"
+                      onChange={(value) => {
+                        if (value) {
+                          onInputChange(value.toISOString(), "joiningDate"); // Store in ISO format
+                        }
+                      }}
+                    />
+                  </DemoContainer>
+                </LocalizationProvider>
               </div>
               <div className="datepickerClassForBlackColor d-flex col-md-3 pe-3">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -1108,43 +1138,26 @@ const Form = (props) => {
                       className="w-100"
                       label="Payment Date"
                       name="paymentDate"
-                      value={dayjs(addUpdateViewRecord?.paymentDate || null)}
+                      value={
+                        addUpdateViewRecord?.paymentDate
+                          ? dayjs(addUpdateViewRecord.paymentDate) // Convert ISO string to Dayjs object
+                          : null
+                      }
                       slotProps={{
                         textField: {
                           error: false,
+                          // Ensure the date format is explicitly set here
+                          inputProps: {
+                            format: "DD-MM-YYYY",
+                          },
                         },
                       }}
-                      format="DD/MM/YYYY"
-                      onChange={(e) => onInputChange(e, "paymentDate")}
-                      // // minDate={dayjs(addData?.startDate)}
-                      // minDate={
-                      //   addData?.startDate ? dayjs(addData?.startDate) : null
-                      // }
+                      format="DD-MM-YYYY" // Ensuring the DatePicker uses this format
+                      onChange={(value) => onInputChange(value, "paymentDate")}
                     />
                   </DemoContainer>
                 </LocalizationProvider>
               </div>
-
-              <div className="datepickerClassForBlackColor d-flex col-md-3 pe-3">
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DemoContainer components={["DatePicker"]}>
-                    <DatePicker
-                      className="w-100"
-                      label="joining Date"
-                      name="joiningDate"
-                      value={dayjs(addUpdateViewRecord?.joiningDate || null)}
-                      slotProps={{
-                        textField: {
-                          error: false,
-                        },
-                      }}
-                      format="DD/MM/YYYY"
-                      onChange={(value) => onInputChange(value, "joiningDate")}
-                    />
-                  </DemoContainer>
-                </LocalizationProvider>
-              </div>
-
               <div className="col-md-3">
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">Batch</InputLabel>
@@ -1152,7 +1165,6 @@ const Form = (props) => {
                     labelId="demo-simple-select-label"
                     name="batch"
                     id="demo-simple-select"
-                    // value={addData || ""}
                     value={addUpdateViewRecord.batch || ""}
                     label="Batch"
                     onChange={(e) => onInputChange(e)}
@@ -1162,7 +1174,6 @@ const Form = (props) => {
                   </Select>
                 </FormControl>
               </div>
-
               <div className="col-md-3">
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">
@@ -1171,9 +1182,8 @@ const Form = (props) => {
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    name="Memberships"
+                    name="memberships"
                     value={addUpdateViewRecord.memberships || ""}
-                    // value={addData}
                     label="Memberships"
                     onChange={(e) => onInputChange(e)}
                   >
@@ -1201,9 +1211,8 @@ const Form = (props) => {
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     name="training"
-                    // value={addData}
-                    label="Training"
                     value={addUpdateViewRecord.training || ""}
+                    label="Training"
                     onChange={(e) => onInputChange(e)}
                   >
                     <MenuItem value={"Cardio"}>Cardio</MenuItem>
@@ -1224,7 +1233,10 @@ const Form = (props) => {
                   label="Total Amount"
                   variant="outlined"
                   name="totalAmount"
-                  value={addUpdateViewRecord.totalAmount || " "}
+                  value={addUpdateViewRecord.totalAmount || ""}
+                  inputProps={{
+                    maxLength: 5,
+                  }}
                   onKeyPress={(e) => {
                     if (!/^\d$/.test(e.key)) {
                       e.preventDefault();
@@ -1237,10 +1249,13 @@ const Form = (props) => {
               <div className="col-md-3">
                 <TextField
                   id="outlined-basic"
-                  label="Payable Amount"
+                  label="Paid Amount"
                   variant="outlined"
-                  name="payableAmount"
-                  value={addUpdateViewRecord.payableAmount || " "}
+                  name="paidAmount"
+                  value={addUpdateViewRecord.paidAmount || ""}
+                  inputProps={{
+                    maxLength: 5,
+                  }}
                   onKeyPress={(e) => {
                     if (!/^\d$/.test(e.key)) {
                       e.preventDefault();
@@ -1255,8 +1270,8 @@ const Form = (props) => {
                   id="outlined-basic"
                   label="Remaining Amount"
                   variant="outlined"
-                  value={addUpdateViewRecord.remainingAmount || ""}
                   name="remainingAmount"
+                  value={addUpdateViewRecord.remainingAmount || ""}
                   onKeyPress={(e) => {
                     if (!/^\d$/.test(e.key)) {
                       e.preventDefault();
@@ -1267,7 +1282,6 @@ const Form = (props) => {
                   disabled
                 />
               </div>
-
               <div className="col-md-6">
                 <TextField
                   id="outlined-basic"
@@ -1275,11 +1289,13 @@ const Form = (props) => {
                   variant="outlined"
                   name="address"
                   value={addUpdateViewRecord.address || ""}
+                  inputProps={{
+                    maxLength: 50,
+                  }}
                   onChange={(e) => onInputChange(e)}
                   fullWidth
                 />
               </div>
-
               <div className="col-md-3">
                 <FormControl>
                   <FormLabel id="payment-mode">Payment Mode</FormLabel>
@@ -1287,8 +1303,8 @@ const Form = (props) => {
                     row
                     aria-labelledby="payment-mode"
                     name="paymentMode"
-                    value={addUpdateViewRecord.paymentMode || ""}
                     onChange={(e) => onInputChange(e)}
+                    value={addUpdateViewRecord.paymentMode || ""}
                   >
                     <FormControlLabel
                       value="UPI"
@@ -1311,6 +1327,7 @@ const Form = (props) => {
                     aria-labelledby="gender"
                     name="gender"
                     onChange={(e) => onInputChange(e)}
+                    value={addUpdateViewRecord.gender || ""}
                   >
                     <FormControlLabel
                       value="female"
@@ -1366,33 +1383,32 @@ const Form = (props) => {
           </IconButton>
           <DialogContent dividers>
             <div className="row g-4 p-3">
-              <div className="col-md-3">
-                {!isCameraActive && (
-                  <button onClick={startCamera}>Open Camera</button>
-                )}
-                {isCameraActive && (
-                  <>
-                    <video
-                      ref={videoRef}
-                      autoPlay
-                      playsInline
-                      style={{ width: "100%", border: "1px solid #ddd" }}
+              <div className="col-md-12">
+                <div className="avatar-upload">
+                  <div className="avatar-edit">
+                    <input
+                      type="file"
+                      id="imageUpload"
+                      accept=".png, .jpg, .jpeg"
+                      onChange={(e) => onInputChange(e, "photo")}
+                      disabled
                     />
-                    <button onClick={capturePhoto}>Capture Photo</button>
-                  </>
-                )}
-                {imageSrc && (
-                  <>
-                    {/* <h3>Preview</h3> */}
-                    <img
-                      src={imageSrc}
-                      alt="Captured"
-                      style={{ width: "100%" }}
-                    />
-                    <button onClick={savePhoto}>Save Photo</button>
-                  </>
-                )}
-                <canvas ref={canvasRef} style={{ display: "none" }} />
+                    <label htmlFor="imageUpload">
+                      {" "}
+                      <EditIcon disabled />
+                    </label>
+                  </div>
+                  <div className="avatar-preview">
+                    <div
+                      id="imagePreview"
+                      style={{
+                        backgroundImage: addUpdateViewRecord.photo
+                          ? `url(${addUpdateViewRecord.photo})`
+                          : "none",
+                      }}
+                    ></div>
+                  </div>
+                </div>
               </div>
               <div className="col-md-3">
                 <TextField
@@ -1401,9 +1417,17 @@ const Form = (props) => {
                   variant="outlined"
                   name="firstName"
                   value={addUpdateViewRecord.firstName || ""}
-                  onChange={(e) => onInputChange(e)}
-                  fullWidth
                   disabled
+                  fullWidth
+                  inputProps={{
+                    maxLength: 15,
+                  }}
+                  onKeyPress={(e) => {
+                    if (!/^[a-zA-Z]$/.test(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
+                  onChange={(e) => onInputChange(e)}
                 />
               </div>
               <div className="col-md-3">
@@ -1413,9 +1437,17 @@ const Form = (props) => {
                   variant="outlined"
                   name="lastName"
                   value={addUpdateViewRecord.lastName || ""}
-                  onChange={(e) => onInputChange(e)}
-                  fullWidth
                   disabled
+                  fullWidth
+                  inputProps={{
+                    maxLength: 15,
+                  }}
+                  onKeyPress={(e) => {
+                    if (!/^[a-zA-Z]$/.test(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
+                  onChange={(e) => onInputChange(e)}
                 />
               </div>
               <div className="col-md-3">
@@ -1425,9 +1457,17 @@ const Form = (props) => {
                   variant="outlined"
                   name="mobileNo"
                   value={addUpdateViewRecord.mobileNo || ""}
+                  disabled
+                  inputProps={{
+                    maxLength: 10,
+                  }}
+                  onKeyPress={(e) => {
+                    if (!/^\d$/.test(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
                   onChange={(e) => onInputChange(e)}
                   fullWidth
-                  disabled
                 />
               </div>
               <div className="col-md-3">
@@ -1437,10 +1477,48 @@ const Form = (props) => {
                   variant="outlined"
                   name="email"
                   value={addUpdateViewRecord.email || ""}
-                  onChange={(e) => onInputChange(e)}
-                  fullWidth
                   disabled
+                  inputProps={{
+                    maxLength: 25,
+                  }}
+                  fullWidth
+                  onChange={(e) => {
+                    const email = e.target.value;
+                    const emailRegex =
+                      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                    if (emailRegex.test(email)) {
+                      onInputChange(e); // Valid email
+                    }
+                  }}
                 />
+              </div>
+              <div className="datepickerClassForBlackColor d-flex col-md-3 pe-3">
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DemoContainer components={["DatePicker"]}>
+                    <DatePicker
+                      className="w-100"
+                      label="Joining Date"
+                      name="joiningDate"
+                      disabled
+                      value={
+                        addUpdateViewRecord?.joiningDate
+                          ? dayjs(addUpdateViewRecord.joiningDate) // Convert ISO string to Dayjs object
+                          : null
+                      }
+                      slotProps={{
+                        textField: {
+                          error: false,
+                        },
+                      }}
+                      format="DD-MM-YYYY"
+                      onChange={(value) => {
+                        if (value) {
+                          onInputChange(value.toISOString(), "joiningDate"); // Store in ISO format
+                        }
+                      }}
+                    />
+                  </DemoContainer>
+                </LocalizationProvider>
               </div>
               <div className="datepickerClassForBlackColor d-flex col-md-3 pe-3">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -1449,43 +1527,26 @@ const Form = (props) => {
                       className="w-100"
                       label="Payment Date"
                       name="paymentDate"
-                      value={dayjs(addUpdateViewRecord?.paymentDate || null)}
+                      value={
+                        addUpdateViewRecord?.paymentDate
+                          ? dayjs(addUpdateViewRecord.paymentDate) // Convert ISO string to Dayjs object
+                          : null
+                      }
                       slotProps={{
                         textField: {
                           error: false,
+                          // Ensure the date format is explicitly set here
+                          inputProps: {
+                            format: "DD-MM-YYYY",
+                          },
                         },
                       }}
-                      format="DD/MM/YYYY"
-                      onChange={(e) => onInputChange(e, "paymentDate")}
-                      // // minDate={dayjs(addData?.startDate)}
-                      // minDate={
-                      //   addData?.startDate ? dayjs(addData?.startDate) : null
-                      // }
+                      format="DD-MM-YYYY" // Ensuring the DatePicker uses this format
+                      onChange={(value) => onInputChange(value, "paymentDate")}
                     />
                   </DemoContainer>
                 </LocalizationProvider>
               </div>
-
-              <div className="datepickerClassForBlackColor d-flex col-md-3 pe-3">
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DemoContainer components={["DatePicker"]}>
-                    <DatePicker
-                      className="w-100"
-                      label="joining Date"
-                      name="joiningDate"
-                      value={dayjs(addUpdateViewRecord?.joiningDate || null)}
-                      slotProps={{
-                        textField: {
-                          error: false,
-                        },
-                      }}
-                      format="DD/MM/YYYY"
-                      onChange={(value) => onInputChange(value, "joiningDate")}
-                    />
-                  </DemoContainer>
-                </LocalizationProvider>
-              </div>
-
               <div className="col-md-3">
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">Batch</InputLabel>
@@ -1493,7 +1554,6 @@ const Form = (props) => {
                     labelId="demo-simple-select-label"
                     name="batch"
                     id="demo-simple-select"
-                    // value={addData || ""}
                     value={addUpdateViewRecord.batch || ""}
                     label="Batch"
                     onChange={(e) => onInputChange(e)}
@@ -1503,7 +1563,6 @@ const Form = (props) => {
                   </Select>
                 </FormControl>
               </div>
-
               <div className="col-md-3">
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">
@@ -1512,9 +1571,8 @@ const Form = (props) => {
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    name="Memberships"
+                    name="memberships"
                     value={addUpdateViewRecord.memberships || ""}
-                    // value={addData}
                     label="Memberships"
                     onChange={(e) => onInputChange(e)}
                   >
@@ -1534,7 +1592,7 @@ const Form = (props) => {
                 </FormControl>
               </div>
               <div className="col-md-3">
-                <FormControl disabled fullWidth>
+                <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">
                     Training
                   </InputLabel>
@@ -1542,9 +1600,8 @@ const Form = (props) => {
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     name="training"
-                    // value={addData}
-                    label="Training"
                     value={addUpdateViewRecord.training || ""}
+                    label="Training"
                     onChange={(e) => onInputChange(e)}
                   >
                     <MenuItem value={"Cardio"}>Cardio</MenuItem>
@@ -1565,7 +1622,10 @@ const Form = (props) => {
                   label="Total Amount"
                   variant="outlined"
                   name="totalAmount"
-                  value={addUpdateViewRecord.totalAmount || " "}
+                  value={addUpdateViewRecord.totalAmount || ""}
+                  inputProps={{
+                    maxLength: 5,
+                  }}
                   onKeyPress={(e) => {
                     if (!/^\d$/.test(e.key)) {
                       e.preventDefault();
@@ -1578,10 +1638,13 @@ const Form = (props) => {
               <div className="col-md-3">
                 <TextField
                   id="outlined-basic"
-                  label="Payable Amount"
+                  label="Paid Amount"
                   variant="outlined"
-                  name="payableAmount"
-                  value={addUpdateViewRecord.payableAmount || " "}
+                  name="paidAmount"
+                  value={addUpdateViewRecord.paidAmount || ""}
+                  inputProps={{
+                    maxLength: 5,
+                  }}
                   onKeyPress={(e) => {
                     if (!/^\d$/.test(e.key)) {
                       e.preventDefault();
@@ -1596,14 +1659,18 @@ const Form = (props) => {
                   id="outlined-basic"
                   label="Remaining Amount"
                   variant="outlined"
-                  value={addUpdateViewRecord.remainingAmount || ""}
                   name="remainingAmount"
+                  value={addUpdateViewRecord.remainingAmount || ""}
+                  onKeyPress={(e) => {
+                    if (!/^\d$/.test(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
                   onChange={(e) => onInputChange(e)}
                   fullWidth
                   disabled
                 />
               </div>
-
               <div className="col-md-6">
                 <TextField
                   id="outlined-basic"
@@ -1611,12 +1678,14 @@ const Form = (props) => {
                   variant="outlined"
                   name="address"
                   value={addUpdateViewRecord.address || ""}
+                  inputProps={{
+                    maxLength: 50,
+                  }}
                   onChange={(e) => onInputChange(e)}
                   fullWidth
                   disabled
                 />
               </div>
-
               <div className="col-md-3">
                 <FormControl>
                   <FormLabel id="payment-mode">Payment Mode</FormLabel>
@@ -1625,6 +1694,7 @@ const Form = (props) => {
                     aria-labelledby="payment-mode"
                     name="paymentMode"
                     onChange={(e) => onInputChange(e)}
+                    value={addUpdateViewRecord.paymentMode || ""}
                   >
                     <FormControlLabel
                       value="UPI"
@@ -1640,13 +1710,15 @@ const Form = (props) => {
                 </FormControl>
               </div>
               <div className="col-md-3">
-                <FormControl disabled>
+                <FormControl>
                   <FormLabel id="gender">Gender</FormLabel>
                   <RadioGroup
                     row
                     aria-labelledby="gender"
                     name="gender"
                     onChange={(e) => onInputChange(e)}
+                    value={addUpdateViewRecord.gender || ""}
+                    disabled
                   >
                     <FormControlLabel
                       value="female"

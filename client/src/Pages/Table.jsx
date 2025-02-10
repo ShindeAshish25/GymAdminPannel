@@ -89,7 +89,9 @@ const CustTable = (props) => {
                           <AutorenewIcon
                             sx={{ color: "#eb3c5a" }}
                             className="me-2"
-                            onClick={() => props.onHandleClick(row, "Renewal")}
+                            onClick={() =>
+                              props.onHandleClick?.(row, "Renewal")
+                            }
                           />
                           <DeleteIcon
                             sx={{ color: "#eb3c5a" }}

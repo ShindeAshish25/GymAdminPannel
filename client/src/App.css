@@ -90,8 +90,8 @@ header {
 
 .avatar-upload {
     position: relative;
-    max-width: 205px;
-    margin: 50px auto;
+    max-width: 190px;
+    margin: auto;
 
     .avatar-edit {
         position: absolute;

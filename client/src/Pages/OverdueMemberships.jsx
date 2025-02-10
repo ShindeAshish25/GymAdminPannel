@@ -86,7 +86,7 @@ const OverdueMemberships = () => {
     );
   });
 
-  const onHadelClick = (data, operation) => {
+  const onHandleClick = (data, operation) => {
     setIsOpenDialog((isOpenDialog) => !isOpenDialog);
     setDialogComp(<Form data={data} op={operation} />);
     console.log(data + operation);
@@ -152,7 +152,7 @@ const OverdueMemberships = () => {
           <div className="listDiv">
             <CustTable
               filteredRows={filteredRows}
-              onHadelClick={onHadelClick}
+              onHandleClick={onHandleClick}
               onHadelDelete={onHadelDelete}
               op={"overdue"}
             />
