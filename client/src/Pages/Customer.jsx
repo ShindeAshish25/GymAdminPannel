@@ -121,61 +121,68 @@ const Customer = () => {
   return (
     <>
       <div className="px-4">
-        <div className="d-flex justify-content-between align-items-center">
-          <div className="d-flex">
-            <Button
-              className="me-3"
-              variant="outlined"
-              onClick={() => onHandleClick(addData, "New")}
-            >
-              Add New Customer
-            </Button>
+        <div className="cardBox">
+          <div className="CardHeader">
+            <span className="cardTitle"> Active Members</span>
+            <div>
+              <FormatListBulletedIcon
+                className="me-3"
+                onClick={() => toggleView("list")}
+                style={{
+                  cursor: "pointer",
+                  color: viewType === "list" ? "#eb3c5a" : "#b1b4b9",
+                }}
+              />
 
-            <FormatListBulletedIcon
-              className="me-3"
-              onClick={() => toggleView("list")}
-              style={{
-                cursor: "pointer",
-                color: viewType === "list" ? "#eb3c5a" : "#b1b4b9",
-              }}
-            />
-
-            <GridViewIcon
-              onClick={() => toggleView("card")}
-              style={{
-                cursor: "pointer",
-                color: viewType === "card" ? "#eb3c5a" : "#b1b4b9",
-              }}
-            />
-            <p>Active Members</p>
+              <GridViewIcon
+                onClick={() => toggleView("card")}
+                style={{
+                  cursor: "pointer",
+                  color: viewType === "card" ? "#eb3c5a" : "#b1b4b9",
+                }}
+              />
+            </div>
           </div>
-          <div className="col-md-4">
-            <TextField
-              id="outlined-basic"
-              variant="outlined"
-              name="search"
-              placeholder="search..."
-              onChange={(e) => onSeachChange(e)}
-              fullWidth
-              className="my-3"
-            />
+          <div className="CardBody">
+            <div className="d-flex justify-content-between align-items-center">
+              <div className="d-flex">
+                <Button
+                  className="me-3"
+                  variant="outlined"
+                  onClick={() => onHandleClick(addData, "New")}
+                >
+                  Add New Customer
+                </Button>
+              </div>
+              <div className="col-md-4">
+                <TextField
+                  id="outlined-basic"
+                  variant="outlined"
+                  name="search"
+                  placeholder="search..."
+                  onChange={(e) => onSeachChange(e)}
+                  fullWidth
+                  className="my-3"
+                />
+              </div>
+            </div>
+
+            {viewType === "list" && (
+              <div className="listDiv">
+                <CustTable
+                  filteredRows={filteredRows}
+                  onHandleClick={onHandleClick}
+                  onHadelDelete={onHadelDelete}
+                  getActiveCustomer={getActiveCust}
+                  op={"customer"}
+                />
+              </div>
+            )}
+
+            {/* Card view */}
+            {viewType === "card" && <CustCard filteredRows={filteredRows} />}
           </div>
         </div>
-
-        {viewType === "list" && (
-          <div className="listDiv">
-            <CustTable
-              filteredRows={filteredRows}
-              onHandleClick={onHandleClick}
-              onHadelDelete={onHadelDelete}
-              getActiveCustomer={getActiveCust}
-              op={"customer"}
-            />
-          </div>
-        )}
-
-        {/* Card view */}
-        {viewType === "card" && <CustCard filteredRows={filteredRows} />}
       </div>
       {isOpenDialog ? dialogComp : ""}
     </>

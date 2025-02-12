@@ -185,7 +185,6 @@ const Form = (props) => {
     ) {
       handleClickAlertMsg(TransitionTop, "First Name' is missing");
       return;
-      return;
     } else if (
       addUpdateViewRecord.lastName === "" ||
       addUpdateViewRecord.lastName === null ||

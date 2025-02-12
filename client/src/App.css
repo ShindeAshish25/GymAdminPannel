@@ -1,3 +1,10 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f1f1f1;
+}
+
 .tableDiv thead tr {
     background: linear-gradient(to right, #eb3c5a, #f67831) !important;
     color: #ffff !important;
@@ -54,6 +61,7 @@ header {
 .CardDiv p {
     margin: 0;
 }
+
 
 .css-1fgcw51-MuiTypography-root-MuiDialogTitle-root {
     background: linear-gradient(to right, #eb3c5a, #f67831) !important;
@@ -152,4 +160,45 @@ header {
             background-position: center;
         }
     }
+}
+
+.cardBox {
+    padding: 15px;
+    border: #a99c95 1px solid;
+    border-radius: 10px;
+    background-color: #ffffff;
+    margin-top: 80px;
+}
+
+.cardTitle {
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.CardHeader {
+    background: linear-gradient(to right, #eb5a3c, #eec9c3) !important;
+    color: #ffffff !important;
+    padding: 20px 20px;
+    border-radius: 10px;
+    margin: 0 20px;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+}
+
+.CardHeaderReports {
+    background: linear-gradient(to right, #eb5a3c, #eec9c3) !important;
+    color: #ffffff !important;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin: 0 20px;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.CardHeaderReports .css-jupps9-MuiInputBase-root-MuiOutlinedInput-root {
+    background-color: #ffff !important;
+    background: #ffffff !important;
 }
