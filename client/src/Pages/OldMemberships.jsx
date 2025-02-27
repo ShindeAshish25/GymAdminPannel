@@ -377,7 +377,7 @@ const OldMemberships = () => {
       <div className="px-4">
         <div className="cardBox">
           <div className="CardHeader">
-            <span className="cardTitle"> Active Members</span>
+            <span className="cardTitle"> All Members</span>
             <div>
               <FormatListBulletedIcon
                 className="me-3"

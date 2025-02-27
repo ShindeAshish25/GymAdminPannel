@@ -44,6 +44,7 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { FileDownload } from "@mui/icons-material";
 const Report = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [viewType, setViewType] = useState("list");
@@ -262,6 +263,17 @@ const Report = () => {
               </Button>
             </div>
             <div>
+              <FileDownload
+                className="me-3"
+                style={{
+                  cursor: "pointer",
+                  color: "#b1b4b9",
+                  padding: "5px",
+                  borderRadius: "50%",
+                  backgroundColor: "#f5f5f5",
+                  fontSize: "24px",
+                }}
+              />
               <FormatListBulletedIcon
                 className="me-3"
                 onClick={() => toggleView("list")}

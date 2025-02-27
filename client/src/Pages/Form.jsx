@@ -30,6 +30,9 @@ import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import EditIcon from "@mui/icons-material/Edit";
 import Swal from "sweetalert2";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -63,6 +66,18 @@ const Form = (props) => {
   const [image, setImage] = React.useState(
     "https://img.freepik.com/premium-vector/man-professional-business-casual-young-avatar-icon-illustration_1277826-622.jpg?semt=ais_hybrid"
   );
+  const [printBill, setPrintBill] = React.useState(false);
+
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 800,
+    bgcolor: "background.paper",
+    boxShadow: 24,
+    p: 4,
+  };
 
   // console.log(addUpdateViewRecord);
   // console.log(props.op);
@@ -80,6 +95,12 @@ const Form = (props) => {
   };
   const handleClose = () => {
     setOpen(false);
+  };
+  const handleClickOpenBill = () => {
+    setPrintBill(true);
+  };
+  const handleCloseBill = () => {
+    setPrintBill(false);
   };
 
   const onInputChanges = (e) => {
@@ -297,6 +318,8 @@ const Form = (props) => {
             timer: 2000,
           });
           setOpen(false);
+          setPrintBill(true);
+
           props.getActiveCustomer();
         } else if (response.data.status === false) {
           Swal.fire({
@@ -444,6 +467,7 @@ const Form = (props) => {
           });
           setOpen(false);
           props.getActiveCustomer();
+          setPrintBill(true);
         } else {
           // handleClickAlertMsg(TransitionTop, response.data.message);
           Swal.fire({
@@ -969,7 +993,68 @@ const Form = (props) => {
             {warningMessage}
           </Alert>
         </Snackbar>
-        ;
+
+        <Modal
+          open={printBill}
+          maxWidth="lg"
+          onClose={handleCloseBill}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+          className="alertCard"
+        >
+          <Box sx={style}>
+            <Typography id="modal-modal-description">
+              <div className="row">
+                <div className="col-md-12 ">
+                  <img src={addUpdateViewRecord.image} alt="" />
+                </div>
+                <div className="col-md-12">
+                  <Typography
+                    className="mb-3"
+                    id="modal-modal-title"
+                    variant="h4"
+                  >
+                    <b>Name : </b> {addUpdateViewRecord.firstName}
+                    {addUpdateViewRecord.lastName} <br />
+                    <b>Mobile No : </b> {addUpdateViewRecord.mobileNo}
+                    <br />
+                    <b>Email ID : </b> {addUpdateViewRecord.email}
+                    <br />
+                    <b>Joining Date : </b> {addUpdateViewRecord.joiningDate}
+                    <br />
+                    <b>Batch : </b> {addUpdateViewRecord.batch}
+                    <br />
+                    <b>Address : </b> {addUpdateViewRecord.address}
+                    <br />
+                    <b>Memberships : </b> {addUpdateViewRecord.memberships}
+                    <br />
+                    <b>Training : </b> {addUpdateViewRecord.training}
+                    <br />
+                    <b>Total Amount: </b> {addUpdateViewRecord.totalAmount}
+                    <br />
+                    <b>Remaining Amount: </b>{" "}
+                    {addUpdateViewRecord.remainingAmount}
+                    <br />
+                    <b>Pament Mode: </b> {addUpdateViewRecord.paymentMode}
+                    <br />
+                    <b>Pament Date: </b> {addUpdateViewRecord.paymentDate}
+                    <br />
+                  </Typography>
+
+                  <div className="text-end mt-3">
+                    <Button
+                      variant="outlined"
+                      color="error"
+                      onClick={handleCloseBill}
+                    >
+                      Close
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </Typography>
+          </Box>
+        </Modal>
       </>
     );
   } else if (props.op == "Update") {
