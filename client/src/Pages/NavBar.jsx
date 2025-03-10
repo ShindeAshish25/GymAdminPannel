@@ -287,25 +287,31 @@ function Navbar() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {alertData?.map((alertData, index) => (
-                  <MenuItem
-                    className=""
-                    key={index}
-                    onClick={() => {
-                      handleCloseUserMenu();
-                      handleOpen(alertData);
-                    }}
-                  >
-                    <div className="d-flex align-items-center border-bottom pb-2 ">
-                      <div className="alertImg">
-                        <img src={alertData?.photo} alt="" />
-                      </div>
-                      <div className="alertText ms-3">
-                        {alertData?.firstName + " " + alertData?.lastName}
-                      </div>
-                    </div>
-                  </MenuItem>
-                ))}
+                {alertData?.length < 0 ? (
+                  <>
+                    {alertData?.map((alertData, index) => (
+                      <MenuItem
+                        className=""
+                        key={index}
+                        onClick={() => {
+                          handleCloseUserMenu();
+                          handleOpen(alertData);
+                        }}
+                      >
+                        <div className="d-flex align-items-center border-bottom pb-2 ">
+                          <div className="alertImg">
+                            <img src={alertData?.photo} alt="" />
+                          </div>
+                          <div className="alertText ms-3">
+                            {alertData?.firstName + " " + alertData?.lastName}
+                          </div>
+                        </div>
+                      </MenuItem>
+                    ))}
+                  </>
+                ) : (
+                  <div className="p-3">No Record Found</div>
+                )}
               </Menu>
             </Box>
           </Toolbar>

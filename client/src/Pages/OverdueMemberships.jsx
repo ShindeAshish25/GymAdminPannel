@@ -116,7 +116,7 @@ const OverdueMemberships = () => {
       <div className="px-4">
         <div className="cardBox">
           <div className="CardHeader">
-            <span className="cardTitle"> Active Members</span>
+            <span className="cardTitle"> Overdue Members</span>
             <div>
               <FormatListBulletedIcon
                 className="me-3"
@@ -162,8 +162,17 @@ const OverdueMemberships = () => {
               </div>
             )}
 
-            {/* Card view */}
-            {viewType === "card" && <CustCard filteredRows={filteredRows} />}
+            <div className="cardDiv">
+              {/* Card view */}
+              {viewType === "card" && (
+                <CustCard
+                  filteredRows={filteredRows}
+                  onHandleClick={onHandleClick}
+                  onHadelDelete={onHadelDelete}
+                  op={"overdue"}
+                />
+              )}
+            </div>
           </div>
         </div>
       </div>

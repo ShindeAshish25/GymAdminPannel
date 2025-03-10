@@ -178,9 +178,18 @@ const Customer = () => {
                 />
               </div>
             )}
-
             {/* Card view */}
-            {viewType === "card" && <CustCard filteredRows={filteredRows} />}
+            {viewType === "card" && (
+              <div className="cardDiv">
+                <CustCard
+                  filteredRows={filteredRows}
+                  onHandleClick={onHandleClick}
+                  onHadelDelete={onHadelDelete}
+                  getActiveCustomer={getActiveCust}
+                  op={"customer"}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>

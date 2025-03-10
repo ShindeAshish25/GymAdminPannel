@@ -33,6 +33,7 @@ import Swal from "sweetalert2";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import DemoUser from "../assets/demoUser.png";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -63,9 +64,7 @@ const Form = (props) => {
   const [alertMsg, setAlertMsg] = React.useState(false);
   const [warningMessage, setWarningMessage] = React.useState("");
   const [transition, setTransition] = React.useState(undefined);
-  const [image, setImage] = React.useState(
-    "https://img.freepik.com/premium-vector/man-professional-business-casual-young-avatar-icon-illustration_1277826-622.jpg?semt=ais_hybrid"
-  );
+  const [image, setImage] = React.useState(DemoUser);
   const [printBill, setPrintBill] = React.useState(false);
 
   const style = {
@@ -186,12 +185,15 @@ const Form = (props) => {
       };
       reader.readAsDataURL(e.target.files[0]); // Read the selected file as base64
     } else {
-      // Handle other input fields
-      const trimmedValue = e?.target?.value;
-      newsearchData = {
-        ...addUpdateViewRecord,
-        [e?.target?.name]: trimmedValue,
-      };
+      const { name, value } = e.target;
+      newsearchData[name] = value; // Preserve all input values
+
+      // Calculate remainingAmount when totalAmount or paidAmount is updated
+      if (name === "totalAmount" || name === "paidAmount") {
+        const total = parseInt(newsearchData.totalAmount || 0, 10);
+        const paid = parseInt(newsearchData.paidAmount || 0, 10);
+        newsearchData.remainingAmount = (total - paid).toString();
+      }
     }
 
     console.log(newsearchData);
@@ -199,6 +201,7 @@ const Form = (props) => {
   };
 
   const onHanddelSave = async (e) => {
+    console.log(addUpdateViewRecord);
     if (
       addUpdateViewRecord.firstName === "" ||
       addUpdateViewRecord.firstName === null ||
@@ -212,7 +215,6 @@ const Form = (props) => {
       addUpdateViewRecord.lastName === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Last Name' is missing");
-      return;
       return;
     } else if (
       addUpdateViewRecord.mobileNo === "" ||
@@ -297,6 +299,13 @@ const Form = (props) => {
       addUpdateViewRecord.gender === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Gender' is missing");
+      return;
+    } else if (
+      addUpdateViewRecord.photo === "" ||
+      addUpdateViewRecord.photo === null ||
+      addUpdateViewRecord.photo === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Photo' is missing");
       return;
     }
 
@@ -445,6 +454,13 @@ const Form = (props) => {
       addUpdateViewRecord.gender === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Gender' is missing");
+      return;
+    } else if (
+      addUpdateViewRecord.photo === "" ||
+      addUpdateViewRecord.photo === null ||
+      addUpdateViewRecord.photo === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Photo' is missing");
       return;
     }
 
@@ -795,7 +811,7 @@ const Form = (props) => {
                     onChange={(e) => onInputChange(e)}
                   >
                     <MenuItem value="M">Morning</MenuItem>
-                    <MenuItem value="E">Evenning</MenuItem>
+                    <MenuItem value="E">Evening</MenuItem>
                   </Select>
                 </FormControl>
               </div>
@@ -1009,11 +1025,7 @@ const Form = (props) => {
                   <img src={addUpdateViewRecord.image} alt="" />
                 </div>
                 <div className="col-md-12">
-                  <Typography
-                    className="mb-3"
-                    id="modal-modal-title"
-                    variant="h4"
-                  >
+                  <Typography className="mb-3" id="modal-modal-title">
                     <b>Name : </b> {addUpdateViewRecord.firstName}
                     {addUpdateViewRecord.lastName} <br />
                     <b>Mobile No : </b> {addUpdateViewRecord.mobileNo}
@@ -1254,7 +1266,7 @@ const Form = (props) => {
                     onChange={(e) => onInputChange(e)}
                   >
                     <MenuItem value="M">Morning</MenuItem>
-                    <MenuItem value="E">Evenning</MenuItem>
+                    <MenuItem value="E">Evening</MenuItem>
                   </Select>
                 </FormControl>
               </div>
@@ -1643,7 +1655,7 @@ const Form = (props) => {
                     onChange={(e) => onInputChange(e)}
                   >
                     <MenuItem value="M">Morning</MenuItem>
-                    <MenuItem value="E">Evenning</MenuItem>
+                    <MenuItem value="E">Evening</MenuItem>
                   </Select>
                 </FormControl>
               </div>
