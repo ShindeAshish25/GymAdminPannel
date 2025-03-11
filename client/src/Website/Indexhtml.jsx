@@ -256,12 +256,12 @@ const Indexhtml = () => {
       <section className="services-section">
         <div className="container-fluid">
           <div className="row">
-            <div className="col-lg-6">
+            <div className="col-lg-5">
               <div className="services-pic">
                 <img src={yogesh} alt="" />
               </div>
             </div>
-            <div className="col-lg-6">
+            <div className="col-lg-7">
               <div className="service-items">
                 <div className="row">
                   <div className="col-md-6">
