@@ -78,7 +78,7 @@ const CustCard = (props) => {
                     <p className="card-text">{row?.mobileNo}</p>
                     <div className="d-flex  flex-column">
                       <p className="card-text">
-                        <b>Remaining Amount :</b> {row?.remainingAmount}
+                        <b>Remaining Amount :</b> ₹ {row?.remainingAmount}
                       </p>
                       <p className="card-text">
                         <b>Memberships :</b> {row?.memberships}

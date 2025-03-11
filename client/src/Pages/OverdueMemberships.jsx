@@ -162,17 +162,17 @@ const OverdueMemberships = () => {
               </div>
             )}
 
-            <div className="cardDiv">
-              {/* Card view */}
-              {viewType === "card" && (
+            {/* Card view */}
+            {viewType === "card" && (
+              <div className="cardDiv">
                 <CustCard
                   filteredRows={filteredRows}
                   onHandleClick={onHandleClick}
                   onHadelDelete={onHadelDelete}
                   op={"overdue"}
                 />
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@ body {
     padding: 0;
     font-family: 'Roboto', sans-serif;
     background-color: #f1f1f1;
-    overflow: hidden;
+    /* overflow: hidden; */
     -ms-overflow-style: none;
     /* Hide default scrollbar */
 }
@@ -61,18 +61,18 @@ header {
 }
 
 
-.card-img-top {
-    width: 120px;
-    height: 120px;
+.CardDiv .card-img-top {
+    width: 175px !important;
+    height: 160px !important;
     object-fit: cover;
     border: 2px solid #afa9a9;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     margin: 0 auto;
-    border-radius: 50%;
+    border-radius: 50% !important;
     transform: translateY(-30%);
 }
 
-.card {
+.CardDiv .card {
     padding: 0.5em;
     text-align: center;
     border-radius: 2em;
@@ -83,7 +83,6 @@ header {
 .card-title {
     font-weight: bold;
     font-size: 1.5em;
-
 }
 
 .btn-primary {
@@ -102,7 +101,6 @@ header {
 .CardDiv p {
     margin: 0;
 }
-
 
 .css-1fgcw51-MuiTypography-root-MuiDialogTitle-root {
     background: linear-gradient(to right, #eb3c5a, #f67831) !important;
@@ -268,12 +266,12 @@ header {
 /* ---------------Report page -------------------- */
 
 .reportDiv ul {
-    --col-gap: 2rem;
+    --col-gap: 1rem;
     --barH: 1rem;
-    --roleH: 2rem;
+    --roleH: 1rem;
     --flapH: 2rem;
 
-    width: min(60rem, 90%);
+    width: min(90rem, 90%);
     margin-inline: auto;
 
     display: flex;
@@ -371,4 +369,11 @@ header {
 
 .reportDiv .credits a {
     color: var(--color);
+}
+
+.ReportSection .scollDiv {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 230px !important;
+
 }

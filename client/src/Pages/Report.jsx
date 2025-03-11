@@ -234,7 +234,7 @@ const Report = () => {
     },
     {
       id: 5,
-      color: "#AC2A1A",
+      color: "#7aac1a",
       icon: "fa-brands fa-github",
       title: "Unpaid Amount members",
       description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
@@ -243,7 +243,7 @@ const Report = () => {
   return (
     <>
       <div className="px-4">
-        <div className="cardBox">
+        <div className="cardBox ReportSection">
           <div className="CardHeaderReports">
             <span className="cardTitle">Reports</span>
             <div className="d-flex align-items-center ">
@@ -340,7 +340,7 @@ const Report = () => {
           </div>
           <div className="CardBody">
             <div className="reportDiv">
-              <div className="p-6 max-w-4xl mx-auto">
+              <div className="p-6 mx-auto">
                 <ul>
                   {cards.map((card) => (
                     <li key={card.id} style={{ "--accent-color": card.color }}>
@@ -367,15 +367,18 @@ const Report = () => {
                 />
               </div>
             </div>
-
-            {viewType === "list" && (
-              <div className="listDiv">
-                <CustTable filteredRows={filteredRows} op={"customer"} />
+            <div className="scollDiv">
+              {viewType === "list" && (
+                <div className="listDiv">
+                  <CustTable filteredRows={filteredRows} op={"customer"} />
+                </div>
+              )}
+              {/* Card view */}
+              <div className="cardDiv">
+                {viewType === "card" && (
+                  <CustCard filteredRows={filteredRows} />
+                )}
               </div>
-            )}
-            {/* Card view */}
-            <div className="cardDiv">
-              {viewType === "card" && <CustCard filteredRows={filteredRows} />}
             </div>
           </div>
         </div>

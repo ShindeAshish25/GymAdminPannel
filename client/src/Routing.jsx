@@ -9,6 +9,9 @@ import LoginPage from "./Pages/LoginPage";
 import Report from "./Pages/Report";
 import Footer from "./Pages/Footer";
 import "./App.css";
+import Indexhtml from "./Website/Indexhtml.jsx";
+import Galleryhtml from "./Website/Galleryhtml.jsx";
+import Contacthtml from "./Website/Contacthtml.jsx";
 export const Routing = () => {
   function AuthenticatedLayout({ children }) {
     return (
@@ -25,7 +28,10 @@ export const Routing = () => {
       <BrowserRouter>
         <Routes>
           {/* Unauthenticated Routes */}
-          <Route path="/" element={<LoginPage />} />
+          <Route path="/" element={<Indexhtml />} />
+          <Route path="/gallery" element={<Galleryhtml />} />
+          <Route path="/contact" element={<Contacthtml />} />
+          <Route path="/login" element={<LoginPage />} />
 
           {/* Authenticated Routes */}
           <Route

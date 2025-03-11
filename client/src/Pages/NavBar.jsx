@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link } from "react-router-dom"; // Import Link for routing
+import { Link, useNavigate } from "react-router-dom"; // Import Link for routing
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -14,7 +14,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Modal from "@mui/material/Modal";
-import { Close } from "@mui/icons-material";
+import { Close, Home, HomeRepairServiceTwoTone } from "@mui/icons-material";
 import { baseURL } from "./config";
 import axios from "axios";
 
@@ -42,6 +42,9 @@ function Navbar() {
     setData(data);
     setOpen(true);
   };
+
+  const navigate = useNavigate();
+
   const handleClose = () => setOpen(false);
 
   const handleOpenNavMenu = (event) => {
@@ -262,6 +265,15 @@ function Navbar() {
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>
+              <IconButton
+                onClick={(e) => {
+                  e.preventDefault(); // Prevent default anchor behavior
+                  navigate("/"); // Navigate programmatically
+                }}
+                sx={{ p: 0 }}
+              >
+                <Home sx={{ color: "white" }} color="action" className="me-3" />
+              </IconButton>
               <Tooltip title="Over Due Memberships customer">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Badge badgeContent={alertData?.length} color="error">

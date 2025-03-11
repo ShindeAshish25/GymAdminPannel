@@ -423,17 +423,17 @@ const OldMemberships = () => {
               </div>
             )}
 
-            <div className="cardDiv">
-              {/* Card view */}
-              {viewType === "card" && (
+            {/* Card view */}
+            {viewType === "card" && (
+              <div className="cardDiv">
                 <CustCard
                   filteredRows={filteredRows}
                   onHadelClick={onHadelClick}
                   onHadelDelete={onHadelDelete}
                   op={"old"}
                 />
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
