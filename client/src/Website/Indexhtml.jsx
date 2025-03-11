@@ -36,8 +36,8 @@ const Indexhtml = () => {
     <>
       {/* <!-- Page Preloder --> */}
       {/* <div id="preloder">
-                <div class="loader"></div>
-            </div> */}
+        <div className="loader"></div>
+      </div> */}
 
       {/* <!-- Header Section Begin --> */}
       <div className="header-section">
