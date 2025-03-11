@@ -266,12 +266,12 @@ header {
 /* ---------------Report page -------------------- */
 
 .reportDiv ul {
-    --col-gap: 1rem;
-    --barH: 1rem;
-    --roleH: 1rem;
+    --col-gap: 3rem;
+    --barH: 2rem;
+    --roleH: 2rem;
     --flapH: 2rem;
 
-    width: min(90rem, 90%);
+    width: min(80rem, 90%);
     margin-inline: auto;
 
     display: flex;
