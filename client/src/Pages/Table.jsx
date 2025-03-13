@@ -13,10 +13,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
+import Form from "./Form";
 
 const CustTable = (props) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [isOpenDialog, setIsOpenDialog] = React.useState(false);
+  const [dialogComp, setDialogComp] = React.useState();
 
   dayjs.extend(utc);
   const handleChangePage = (event, newPage) => {
@@ -26,6 +29,12 @@ const CustTable = (props) => {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+  };
+
+  const onHandleClick = (data, operation) => {
+    setIsOpenDialog((isOpenDialog) => !isOpenDialog);
+    setDialogComp(<Form data={data} op={operation} />);
+    console.log(data + operation + "clicked");
   };
 
   // Calculate the rows to display based on the current page and rows per page
@@ -115,7 +124,7 @@ const CustTable = (props) => {
                           <EditIcon
                             sx={{ color: "#eb3c5a" }}
                             className="me-2"
-                            onClick={() => props.onHandleClick(row, "Update")}
+                            onClick={() => onHandleClick(row, "Update")}
                           />
                           <DeleteIcon
                             sx={{ color: "#eb3c5a" }}
@@ -156,6 +165,7 @@ const CustTable = (props) => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+      {isOpenDialog ? dialogComp : ""}
     </>
   );
 };

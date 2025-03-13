@@ -58,7 +58,7 @@ const Form = (props) => {
   const [imageSrc, setImageSrc] = useState(null);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
-  let [addUpdateViewRecord, setAddUpdateViewRecord] = React.useState({
+  const [addUpdateViewRecord, setAddUpdateViewRecord] = React.useState({
     ...props.data,
   });
   const [alertMsg, setAlertMsg] = React.useState(false);
@@ -66,6 +66,7 @@ const Form = (props) => {
   const [transition, setTransition] = React.useState(undefined);
   const [image, setImage] = React.useState(DemoUser);
   const [printBill, setPrintBill] = React.useState(false);
+  const [updateRecord, setUpdateRecord] = React.useState(props.data);
 
   const style = {
     position: "absolute",
@@ -78,8 +79,8 @@ const Form = (props) => {
     p: 4,
   };
 
-  // console.log(addUpdateViewRecord);
-  // console.log(props.op);
+  console.log(addUpdateViewRecord);
+  console.log(updateRecord);
 
   const headers = {
     "Content-Type": "application/json",
@@ -344,6 +345,7 @@ const Form = (props) => {
       })
       .catch((err) => {
         // Explicitly handle 409 Conflict
+        console.log(err);
         if (err.response && err.response.status === 409) {
           console.log("Conflict: The customer might already exist.");
           handleClickAlertMsg(
@@ -357,6 +359,8 @@ const Form = (props) => {
   };
 
   const onHanddelUpdate = async (e) => {
+    console.log("updateClick" + updateRecord);
+
     if (
       addUpdateViewRecord.firstName === "" ||
       addUpdateViewRecord.firstName === null ||
@@ -497,7 +501,20 @@ const Form = (props) => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        if (err.response && err.response.status === 409) {
+          console.log("Conflict: The customer might already exist.");
+          handleClickAlertMsg(
+            TransitionTop,
+            "Conflict: Customer already exists."
+          );
+        } else if (err.response.status === 413) {
+          console.log("Conflict: The customer might already exist.");
+          alert("Conflict: Photo size large.");
+          w;
+          handleClickAlertMsg(TransitionTop, "Conflict: Photo size large.");
+        } else {
+          console.log(err);
+        }
       });
   };
 
@@ -1168,7 +1185,7 @@ const Form = (props) => {
                   name="mobileNo"
                   value={addUpdateViewRecord.mobileNo || ""}
                   inputProps={{
-                    maxLength: 10,
+                    maxLength: 12,
                   }}
                   onKeyPress={(e) => {
                     if (!/^\d$/.test(e.key)) {
@@ -1195,8 +1212,9 @@ const Form = (props) => {
                     const emailRegex =
                       /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
                     if (emailRegex.test(email)) {
-                      onInputChange(e); // Valid email
+                      e.preventDefault();
                     }
+                    onInputChange(e); // Valid email
                   }}
                 />
               </div>
@@ -1442,7 +1460,8 @@ const Form = (props) => {
           </DialogContent>
           <DialogActions>
             <Button
-              onClick={onHanddelUpdate}
+              // onClick={onHanddelUpdate}
+              onClick={(e) => onHanddelUpdate()}
               variant="outlined"
               startIcon={<AutoFixHighIcon />}
             >

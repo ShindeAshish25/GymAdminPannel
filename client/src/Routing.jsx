@@ -12,6 +12,7 @@ import "./App.css";
 import Indexhtml from "./Website/Indexhtml.jsx";
 import Galleryhtml from "./Website/Galleryhtml.jsx";
 import Contacthtml from "./Website/Contacthtml.jsx";
+
 export const Routing = () => {
   function AuthenticatedLayout({ children }) {
     return (
@@ -31,8 +32,9 @@ export const Routing = () => {
           <Route path="/" element={<Indexhtml />} />
           <Route path="/gallery" element={<Galleryhtml />} />
           <Route path="/contact" element={<Contacthtml />} />
+        </Routes>
+        <Routes className="adminPannel">
           <Route path="/login" element={<LoginPage />} />
-
           {/* Authenticated Routes */}
           <Route
             path="/Customer"

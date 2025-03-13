@@ -1,4 +1,13 @@
 import React from "react";
+import {
+  MDBCarousel,
+  // MDBCarouselInner,
+  MDBCarouselItem,
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBIcon,
+} from "mdb-react-ui-kit";
 import { useNavigate } from "react-router-dom";
 import "./css/bootstrap.min.css";
 import "./css/font-awesome.min.css";
@@ -28,6 +37,10 @@ import service_icon_4 from "./img/services/service-icon-4.png";
 import trainer_1 from "./img/trainer/trainer-1.jpg";
 import trainer_2 from "./img/trainer/trainer-2.jpg";
 import getintouctch from "./myImg/getintouctch.jpg";
+import banner_person from "./img/banner-person.png";
+
+import testimonial_1 from "./img/testimonial/testimonial-1.jpg";
+import quote_left from "./img/testimonial/quote-left.png";
 import logo from "./myImg/Logo.png";
 
 const Indexhtml = () => {
@@ -323,7 +336,7 @@ const Indexhtml = () => {
           <div className="row classes-slider owl-carousel">
             <div className="col-lg-4">
               <div
-                className="single-class-item set-bg"
+                className="single-class-item set-bg classes-1"
                 //style={{ background }}
                 data-setbg="img/classes/classes-1.jpg"
               >
@@ -335,7 +348,7 @@ const Indexhtml = () => {
                 </div>
               </div>
               <div
-                className="single-class-item set-bg"
+                className="single-class-item set-bg classes-4"
                 data-setbg="img/classes/classes-4.jpg"
               >
                 <div className="si-text">
@@ -348,7 +361,7 @@ const Indexhtml = () => {
             </div>
             <div className="col-lg-4">
               <div
-                className="single-class-item set-bg"
+                className="single-class-item set-bg classes-2"
                 data-setbg="img/classes/classes-2.jpg"
               >
                 <div className="si-text">
@@ -359,7 +372,7 @@ const Indexhtml = () => {
                 </div>
               </div>
               <div
-                className="single-class-item set-bg"
+                className="single-class-item set-bg classes-5"
                 data-setbg="img/classes/classes-5.jpg"
               >
                 <div className="si-text">
@@ -372,7 +385,7 @@ const Indexhtml = () => {
             </div>
             <div className="col-lg-4">
               <div
-                className="single-class-item set-bg"
+                className="single-class-item set-bg classes-3"
                 data-setbg="img/classes/classes-3.jpg"
               >
                 <div className="si-text">
@@ -383,7 +396,7 @@ const Indexhtml = () => {
                 </div>
               </div>
               <div
-                className="single-class-item set-bg"
+                className="single-class-item set-bg classes-6"
                 data-setbg="img/classes/classes-6.jpg"
               >
                 <div className="si-text">
@@ -396,7 +409,7 @@ const Indexhtml = () => {
             </div>
             <div className="col-lg-4">
               <div
-                className="single-class-item set-bg"
+                className="single-class-item set-bg classes-7"
                 data-setbg="img/classes/classes-7.jpg"
               >
                 <div className="si-text">
@@ -407,7 +420,7 @@ const Indexhtml = () => {
                 </div>
               </div>
               <div
-                className="single-class-item set-bg"
+                className="single-class-item set-bg classes-8"
                 data-setbg="img/classes/classes-8.jpg"
               >
                 <div className="si-text">
@@ -478,6 +491,7 @@ const Indexhtml = () => {
               </div>
             </div>
           </div>
+
           <div className="row">
             <div className="col-lg-10 offset-lg-1">
               <div className="testimonial-slider owl-carousel">
@@ -489,9 +503,9 @@ const Indexhtml = () => {
                     ullamco laboris nisi ut aliquip ex ea commodo consequat.{" "}
                   </p>
                   <div className="ti-pic">
-                    <img src="img/testimonial/testimonial-1.jpg" alt="" />
+                    <img src={testimonial_1} alt="" />
                     <div className="quote">
-                      <img src="img/testimonial/quote-left.png" alt="" />
+                      <img src={quote_left} alt="" />
                     </div>
                   </div>
                   <div className="ti-author">
@@ -507,9 +521,9 @@ const Indexhtml = () => {
                     ullamco laboris nisi ut aliquip ex ea commodo consequat.{" "}
                   </p>
                   <div className="ti-pic">
-                    <img src="img/testimonial/testimonial-1.jpg" alt="" />
+                    <img src={testimonial_1} alt="" />
                     <div className="quote">
-                      <img src="img/testimonial/quote-left.png" alt="" />
+                      <img src={quote_left} alt="" />
                     </div>
                   </div>
                   <div className="ti-author">
@@ -525,7 +539,10 @@ const Indexhtml = () => {
       {/* <!-- Testimonial Section End --> */}
 
       {/* <!-- Banner Section Begin --> */}
-      <section className="banner-section set-bg" data-setbg="img/banner-bg.jpg">
+      <section
+        className="banner-section set-bg bannerGym"
+        data-setbg="img/banner-bg.jpg"
+      >
         <div className="container">
           <div className="row">
             <div className="col-lg-6">
@@ -541,7 +558,7 @@ const Indexhtml = () => {
               </div>
             </div>
             <div className="col-lg-5">
-              <img src={trainer_2} alt="" />
+              <img src={banner_person} alt="" />
             </div>
           </div>
         </div>

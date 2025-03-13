@@ -2,10 +2,13 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif;
-    background-color: #f1f1f1;
     /* overflow: hidden; */
     -ms-overflow-style: none;
     /* Hide default scrollbar */
+}
+
+.adminPannel {
+    background-color: #ec1313 !important;
 }
 
 /* Webkit-based browsers (Chrome, Safari, Edge) */
@@ -205,8 +208,9 @@ header {
     padding: 15px;
     border: #a99c95 1px solid;
     border-radius: 10px;
-    background-color: #ffffff;
+    background-color: #dadada;
     margin-top: 80px;
+    min-height: 700px;
 
 }
 
@@ -376,4 +380,16 @@ header {
     overflow-x: hidden;
     height: 230px !important;
 
+}
+
+.css-1dc80h3-MuiTableCell-root,
+.css-1plsf6o {
+    padding: 10px !important;
+}
+
+.css-1pk1fka,
+.css-16wblaj-MuiInputBase-input-MuiOutlinedInput-input {
+    background-color: #ffff !important;
+    border-radius: 10px;
+    border: none;
 }
