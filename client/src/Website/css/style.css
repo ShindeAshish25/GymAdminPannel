@@ -777,6 +777,12 @@
 
  .banner-section {
  	padding-top: 65px;
+	position: relative;
+ }
+ .banner-section img{ 
+	position: absolute;
+	bottom : 0%;
+	object-fit: contain;
  }
 
  .banner-text {

@@ -327,10 +327,10 @@ const Form = (props) => {
             draggable: true,
             timer: 2000,
           });
-          setOpen(false);
-          setPrintBill(true);
-
+          setOpen(false); 
           props.getActiveCustomer();
+          // setPrintBill(true);
+
         } else if (response.data.status === false) {
           Swal.fire({
             title: "error",
@@ -486,10 +486,11 @@ const Form = (props) => {
             timer: 2000,
           });
           setOpen(false);
+          console.log("*****************************************555555555555555555555555555555")
           props.getActiveCustomer();
-          setPrintBill(true);
+          console.log("*****************************************7777777777777777777777777777")
+          // setPrintBill(true);
         } else {
-          // handleClickAlertMsg(TransitionTop, response.data.message);
           Swal.fire({
             title: "Oppss...",
             icon: "error",
@@ -497,6 +498,7 @@ const Form = (props) => {
             draggable: true,
             timer: 2000,
           });
+          // handleClickAlertMsg(TransitionTop, response.data.message);
           setOpen(false);
         }
       })
@@ -600,7 +602,6 @@ const Form = (props) => {
           setOpen(false);
           props.getActiveCustomer();
         } else {
-          // handleClickAlertMsg(TransitionTop, response.data.message);
           Swal.fire({
             title: "Oops...",
             icon: "success",
@@ -608,6 +609,7 @@ const Form = (props) => {
             draggable: true,
             timer: 2000,
           });
+          // handleClickAlertMsg(TransitionTop, response.data.message);
           setOpen(false);
         }
       })

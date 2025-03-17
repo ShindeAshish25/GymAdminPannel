@@ -209,8 +209,8 @@ header {
     border: #a99c95 1px solid;
     border-radius: 10px;
     background-color: #dadada;
-    margin-top: 80px;
-    min-height: 700px;
+    margin-top: 45px;
+    max-height: 580px;
 
 }
 
@@ -392,4 +392,8 @@ header {
     background-color: #ffff !important;
     border-radius: 10px;
     border: none;
+}
+
+@media(max-width:1440px) {
+    
 }

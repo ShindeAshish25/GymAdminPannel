@@ -34,10 +34,11 @@ import service_icon_1 from "./img/services/service-icon-1.png";
 import service_icon_3 from "./img/services/service-icon-3.png";
 import service_icon_2 from "./img/services/service-icon-2.png";
 import service_icon_4 from "./img/services/service-icon-4.png";
-import trainer_1 from "./img/trainer/trainer-1.jpg";
-import trainer_2 from "./img/trainer/trainer-2.jpg";
-import getintouctch from "./myImg/getintouctch.jpg";
-import banner_person from "./img/banner-person.png";
+import trainer_1 from "./myImg/sir.jpeg";
+import trainer_2 from "./myImg/sir.jpeg";
+// import getintouctch from "./myImg/getintouctch.jpg";
+import getintouctch from "./myImg/Screenshot_10.png";
+import banner_person from "./myImg/sir2.png";
 
 import testimonial_1 from "./img/testimonial/testimonial-1.jpg";
 import quote_left from "./img/testimonial/quote-left.png";
@@ -448,8 +449,8 @@ const Indexhtml = () => {
           </div>
 
           <div className="row text-center">
-            <div className="col-lg-2 col-md-0"></div>
-            <div className="col-lg-4 col-md-6">
+            <div className="col-lg-4 col-md-0"></div>
+            {/* <div className="col-lg-4 col-md-6">
               <div className="single-trainer-item">
                 <img src={trainer_1} alt="" />
                 <div className="trainer-text">
@@ -461,7 +462,7 @@ const Indexhtml = () => {
                   </p>
                 </div>
               </div>
-            </div>
+            </div> */}
             <div className="col-lg-4 col-md-6">
               <div className="single-trainer-item">
                 <img src={trainer_2} alt="" />
@@ -557,7 +558,7 @@ const Indexhtml = () => {
                 </a>
               </div>
             </div>
-            <div className="col-lg-5">
+            <div className="col-lg-6">
               <img src={banner_person} alt="" />
             </div>
           </div>

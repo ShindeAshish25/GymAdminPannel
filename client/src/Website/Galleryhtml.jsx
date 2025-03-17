@@ -15,13 +15,24 @@ import "./js/jquery.slicknav.js";
 import "./js/owl.carousel.min.js";
 import "./js/main.js";
 
-import gallery1 from "./img/gallery/gallery-1.jpg";
-import gallery2 from "./img/gallery/gallery-2.jpg";
-import gallery3 from "./img/gallery/gallery-3.jpg";
-import gallery4 from "./img/gallery/gallery-4.jpg";
-import gallery5 from "./img/gallery/gallery-5.jpg";
-import gallery6 from "./img/gallery/gallery-6.jpg";
-import gallery7 from "./img/gallery/gallery-7.jpg";
+// import gallery1 from "./img/gallery/gallery-1.jpg";
+// import gallery2 from "./img/gallery/gallery-2.jpg";
+// import gallery3 from "./img/gallery/gallery-3.jpg";
+// import gallery4 from "./img/gallery/gallery-4.jpg";
+// import gallery5 from "./img/gallery/gallery-5.jpg";
+// import gallery6 from "./img/gallery/gallery-6.jpg";
+// import gallery7 from "./img/gallery/gallery-7.jpg";
+
+import gallery1 from "./myImg/Screenshot_1.png";
+import gallery2 from "./myImg/Screenshot_2.png";
+import gallery3 from "./myImg/Screenshot_3.png";
+import gallery4 from "./myImg/Screenshot_4.png";
+import gallery5 from "./myImg/Screenshot_5.png";
+import gallery6 from "./myImg/Screenshot_6.png";
+import gallery7 from "./myImg/Screenshot_7.png";
+import gallery8 from "./myImg/Screenshot_8.png";
+import gallery9 from "./myImg/Screenshot_9.png";
+
 import logo from "./myImg/Logo.png";
 
 const Galleryhtml = () => {
