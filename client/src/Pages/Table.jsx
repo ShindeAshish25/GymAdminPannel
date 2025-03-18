@@ -31,11 +31,17 @@ const CustTable = (props) => {
     setPage(0);
   };
 
-  const onHandleClick = (data, operation) => {
-    setIsOpenDialog((isOpenDialog) => !isOpenDialog);
-    setDialogComp(<Form data={data} op={operation} />);
-    console.log(data + operation + "clicked");
-  };
+  // const onHandleClick = (data, operation) => {
+  //   setIsOpenDialog((isOpenDialog) => !isOpenDialog);
+  //   setDialogComp(
+  //     <Form
+  //       data={data}
+  //       op={operation}
+  //       getActiveCustomer={props.getActiveCustomer}
+  //     />
+  //   );
+  //   console.log(data + operation + "clicked");
+  // };
 
   // Calculate the rows to display based on the current page and rows per page
   const rowsToDisplay = props?.filteredRows?.slice(
@@ -124,7 +130,8 @@ const CustTable = (props) => {
                           <EditIcon
                             sx={{ color: "#eb3c5a" }}
                             className="me-2"
-                            onClick={() => onHandleClick(row, "Update")}
+                            onClick={() => props.onHandleClick(row, "Update")}
+                            // onClick={() => props.onHandlUpdate(row, "Update")}
                           />
                           <DeleteIcon
                             sx={{ color: "#eb3c5a" }}

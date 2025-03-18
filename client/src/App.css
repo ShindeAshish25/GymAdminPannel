@@ -211,6 +211,7 @@ header {
     background-color: #dadada;
     margin-top: 45px;
     max-height: 580px;
+    min-height: 580px;
 
 }
 
@@ -394,6 +395,4 @@ header {
     border: none;
 }
 
-@media(max-width:1440px) {
-    
-}
+@media(max-width:1440px) {}

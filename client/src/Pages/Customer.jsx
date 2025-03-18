@@ -85,12 +85,15 @@ const Customer = () => {
     );
   });
 
-  const onHandleClick = (data, operation) => {
+  const onHandleClick = (row, operation) => {
+    console.log(row + operation + "******************clicked");
     setIsOpenDialog((isOpenDialog) => !isOpenDialog);
     setDialogComp(
-      <Form data={data} op={operation} getActiveCustomer={getActiveCust} />
+      <Form data={row} op={operation} getActiveCustomer={getActiveCust} />
     );
-    console.log(data + operation);
+  };
+  const onHandlUpdate = (row) => {
+    console.log(row);
   };
   const onHadelDelete = (row) => {
     console.log(row);
@@ -173,6 +176,7 @@ const Customer = () => {
                   filteredRows={filteredRows}
                   onHandleClick={onHandleClick}
                   onHadelDelete={onHadelDelete}
+                  onHandlUpdate={onHandlUpdate}
                   getActiveCustomer={getActiveCust}
                   op={"customer"}
                 />

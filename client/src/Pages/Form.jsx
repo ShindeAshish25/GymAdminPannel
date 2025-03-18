@@ -79,9 +79,6 @@ const Form = (props) => {
     p: 4,
   };
 
-  console.log(addUpdateViewRecord);
-  console.log(updateRecord);
-
   const headers = {
     "Content-Type": "application/json",
   };
@@ -327,10 +324,9 @@ const Form = (props) => {
             draggable: true,
             timer: 2000,
           });
-          setOpen(false); 
+          setOpen(false);
           props.getActiveCustomer();
           // setPrintBill(true);
-
         } else if (response.data.status === false) {
           Swal.fire({
             title: "error",
@@ -486,9 +482,13 @@ const Form = (props) => {
             timer: 2000,
           });
           setOpen(false);
-          console.log("*****************************************555555555555555555555555555555")
+          console.log(
+            "*****************************************555555555555555555555555555555"
+          );
           props.getActiveCustomer();
-          console.log("*****************************************7777777777777777777777777777")
+          console.log(
+            "*****************************************7777777777777777777777777777"
+          );
           // setPrintBill(true);
         } else {
           Swal.fire({
@@ -1228,21 +1228,22 @@ const Form = (props) => {
                       label="Joining Date"
                       name="joiningDate"
                       value={
-                        addUpdateViewRecord?.joiningDate
-                          ? dayjs(addUpdateViewRecord.joiningDate) // Convert ISO string to Dayjs object
+                        dayjs(
+                          addUpdateViewRecord?.joiningDate || null
+                        ).isValid()
+                          ? dayjs(
+                              addUpdateViewRecord?.joiningDate,
+                              "DD-MM-YYYY"
+                            )
                           : null
-                      }
+                      } // Ensure the value is properly formatted
                       slotProps={{
                         textField: {
                           error: false,
                         },
                       }}
-                      format="DD-MM-YYYY"
-                      onChange={(value) => {
-                        if (value) {
-                          onInputChange(value.toISOString(), "joiningDate"); // Store in ISO format
-                        }
-                      }}
+                      format="DD-MM-YYYY" // Ensuring the DatePicker uses this format
+                      onChange={(value) => onInputChange(value, "joiningDate")}
                     />
                   </DemoContainer>
                 </LocalizationProvider>
@@ -1255,8 +1256,13 @@ const Form = (props) => {
                       label="Payment Date"
                       name="paymentDate"
                       value={
-                        addUpdateViewRecord?.paymentDate
-                          ? dayjs(addUpdateViewRecord.paymentDate) // Convert ISO string to Dayjs object
+                        dayjs(
+                          addUpdateViewRecord?.paymentDate || null
+                        ).isValid()
+                          ? dayjs(
+                              addUpdateViewRecord?.paymentDate,
+                              "DD-MM-YYYY"
+                            )
                           : null
                       }
                       slotProps={{
@@ -1616,23 +1622,23 @@ const Form = (props) => {
                       className="w-100"
                       label="Joining Date"
                       name="joiningDate"
-                      disabled
                       value={
-                        addUpdateViewRecord?.joiningDate
-                          ? dayjs(addUpdateViewRecord.joiningDate) // Convert ISO string to Dayjs object
+                        dayjs(
+                          addUpdateViewRecord?.joiningDate || null
+                        ).isValid()
+                          ? dayjs(
+                              addUpdateViewRecord?.joiningDate,
+                              "DD-MM-YYYY"
+                            )
                           : null
-                      }
+                      } // Ensure the value is properly formatted
                       slotProps={{
                         textField: {
                           error: false,
                         },
                       }}
-                      format="DD-MM-YYYY"
-                      onChange={(value) => {
-                        if (value) {
-                          onInputChange(value.toISOString(), "joiningDate"); // Store in ISO format
-                        }
-                      }}
+                      format="DD-MM-YYYY" // Ensuring the DatePicker uses this format
+                      onChange={(value) => onInputChange(value, "joiningDate")}
                     />
                   </DemoContainer>
                 </LocalizationProvider>
@@ -1645,8 +1651,13 @@ const Form = (props) => {
                       label="Payment Date"
                       name="paymentDate"
                       value={
-                        addUpdateViewRecord?.paymentDate
-                          ? dayjs(addUpdateViewRecord.paymentDate) // Convert ISO string to Dayjs object
+                        dayjs(
+                          addUpdateViewRecord?.paymentDate || null
+                        ).isValid()
+                          ? dayjs(
+                              addUpdateViewRecord?.paymentDate,
+                              "DD-MM-YYYY"
+                            )
                           : null
                       }
                       slotProps={{
