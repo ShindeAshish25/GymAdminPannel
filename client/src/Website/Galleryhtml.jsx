@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./css/bootstrap.min.css";
 import "./css/font-awesome.min.css";
@@ -32,11 +32,60 @@ import gallery6 from "./myImg/Screenshot_6.png";
 import gallery7 from "./myImg/Screenshot_7.png";
 import gallery8 from "./myImg/Screenshot_8.png";
 import gallery9 from "./myImg/Screenshot_9.png";
+import gallery10 from "./myImg/Screenshot_10.png";
+import gallery11 from "./myImg/Screenshot_11.png";
+// import gallery12 from "./myImg/Screenshot_12.png";
 
 import logo from "./myImg/Logo.png";
 
+const images = [
+  gallery1,
+  gallery2,
+  gallery3,
+  gallery4,
+  gallery5,
+  gallery6,
+  gallery7,
+  gallery8,
+  gallery9,
+  gallery10,
+  gallery11,
+  // gallery12,
+];
 const Galleryhtml = () => {
   const navigate = useNavigate();
+
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(null);
+
+  const openImage = (index) => {
+    setSelectedImage(images[index]);
+    setCurrentIndex(index);
+  };
+
+  const closeImage = () => {
+    setSelectedImage(null);
+    setCurrentIndex(null);
+  };
+
+  const showNext = (e) => {
+    e.stopPropagation();
+    if (currentIndex !== null) {
+      const nextIndex = (currentIndex + 1) % images.length;
+      setSelectedImage(images[nextIndex]);
+      setCurrentIndex(nextIndex);
+    }
+  };
+
+  const showPrev = (e) => {
+    e.stopPropagation();
+    if (currentIndex !== null) {
+      const prevIndex = (currentIndex - 1 + images.length) % images.length;
+      setSelectedImage(images[prevIndex]);
+      setCurrentIndex(prevIndex);
+    }
+  };
+
   return (
     <>
       {/* <!-- Page Preloder --> */}
@@ -144,53 +193,39 @@ const Galleryhtml = () => {
       {/* <!-- Gallery Section Begin --> */}
       <div className="gallery-section spad">
         <div className="container">
-          <div className="row">
-            <div className="col-lg-12">
-              <ul className="gallery-controls">
-                <li className="active" data-filter=".all">
-                  all gallery
-                </li>
-                <li data-filter=".fitness">fitness</li>
-                <li data-filter=".coaching">coaching</li>
-                <li data-filter=".event">event</li>
-                <li data-filter=".other">other</li>
-              </ul>
+          <div className="gallery-container">
+            <div className="gallery-grid">
+              {images.map((img, index) => (
+                <img
+                  key={index}
+                  src={img}
+                  alt="Gallery"
+                  className="gallery-item"
+                  onClick={() => openImage(index)}
+                />
+              ))}
             </div>
-          </div>
-          <div className="row gallery-filter">
-            <div className="col-lg-6 mix all fitness">
-              <img src={gallery1} alt="" />
-            </div>
-            <div className="col-lg-6">
-              <div className="row">
-                <div className="col-lg-6 mix all fitness coaching">
-                  <img src={gallery2} alt="" />
-                </div>
-                <div className="col-lg-6">
-                  <div className="row">
-                    <div className="col-lg-12 mix all coaching">
-                      <img src={gallery3} alt="" />
-                    </div>
-                    <div className="col-lg-12 mix all coaching">
-                      <img src={gallery4} alt="" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-6">
-              <div className="row">
-                <div className="col-lg-6 mix all other">
-                  <img src={gallery5} alt="" />
-                </div>
-                <div className="col-lg-6 mix all other">
-                  <img src={gallery6} alt="" />
+
+            {selectedImage && (
+              <div className="overlay" onClick={closeImage}>
+                <div className="lightbox" onClick={(e) => e.stopPropagation()}>
+                  <button className="close-btn" onClick={closeImage}>
+                    &times;
+                  </button>
+                  <button className="prev-btn" onClick={showPrev}>
+                    &#10094;
+                  </button>
+                  <img
+                    src={selectedImage}
+                    alt="Full Size"
+                    className="full-img"
+                  />
+                  <button className="next-btn" onClick={showNext}>
+                    &#10095;
+                  </button>
                 </div>
               </div>
-            </div>
-            <div className="col-lg-6 mix all event">
-              <img src={gallery7} alt="" />
-            </div>
+            )}
           </div>
         </div>
       </div>

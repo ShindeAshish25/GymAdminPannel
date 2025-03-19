@@ -58,9 +58,9 @@ const Form = (props) => {
   const [imageSrc, setImageSrc] = useState(null);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
-  const [addUpdateViewRecord, setAddUpdateViewRecord] = React.useState({
-    ...props.data,
-  });
+  const [addUpdateViewRecord, setAddUpdateViewRecord] = React.useState(
+    props.data
+  );
   const [alertMsg, setAlertMsg] = React.useState(false);
   const [warningMessage, setWarningMessage] = React.useState("");
   const [transition, setTransition] = React.useState(undefined);
@@ -355,7 +355,7 @@ const Form = (props) => {
   };
 
   const onHanddelUpdate = async (e) => {
-    console.log("updateClick" + updateRecord);
+    console.log(addUpdateViewRecord);
 
     if (
       addUpdateViewRecord.firstName === "" ||
@@ -369,6 +369,7 @@ const Form = (props) => {
       addUpdateViewRecord.lastName === null ||
       addUpdateViewRecord.lastName === undefined
     ) {
+      alert("Last Name' is missing");
       handleClickAlertMsg(TransitionTop, "Last Name' is missing");
       return;
     } else if (
@@ -463,8 +464,6 @@ const Form = (props) => {
       handleClickAlertMsg(TransitionTop, "Photo' is missing");
       return;
     }
-
-    console.log(addUpdateViewRecord);
 
     await axios
       .post(baseURL + "/updateCust", addUpdateViewRecord, {

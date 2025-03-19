@@ -22,6 +22,8 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import SwitchAccountIcon from "@mui/icons-material/SwitchAccount";
+
 import {
   Alert,
   FormControlLabel,
@@ -206,7 +208,7 @@ const Report = () => {
     {
       id: 2,
       color: "#1286A8",
-      icon: "fa-brands fa-html5",
+      icon: "SwitchAccountIcon",
       title: "Total Revenue",
       description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
     },
@@ -344,9 +346,6 @@ const Report = () => {
                 <ul>
                   {cards.map((card) => (
                     <li key={card.id} style={{ "--accent-color": card.color }}>
-                      <div className="icon">
-                        <i className={card.icon}></i>
-                      </div>
                       <div className="title">{card.title}</div>
                       <div className="descr">{card.description}</div>
                     </li>

@@ -92,12 +92,6 @@ const Customer = () => {
       <Form data={row} op={operation} getActiveCustomer={getActiveCust} />
     );
   };
-  const onHandlUpdate = (row) => {
-    console.log(row);
-  };
-  const onHadelDelete = (row) => {
-    console.log(row);
-  };
 
   React.useEffect(() => {
     getActiveCust();
@@ -175,8 +169,6 @@ const Customer = () => {
                 <CustTable
                   filteredRows={filteredRows}
                   onHandleClick={onHandleClick}
-                  onHadelDelete={onHadelDelete}
-                  onHandlUpdate={onHandlUpdate}
                   getActiveCustomer={getActiveCust}
                   op={"customer"}
                 />
@@ -188,7 +180,6 @@ const Customer = () => {
                 <CustCard
                   filteredRows={filteredRows}
                   onHandleClick={onHandleClick}
-                  onHadelDelete={onHadelDelete}
                   getActiveCustomer={getActiveCust}
                   op={"customer"}
                 />

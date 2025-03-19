@@ -14,13 +14,17 @@ import AutorenewIcon from "@mui/icons-material/Autorenew";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import Form from "./Form";
+import { baseURL } from "./config";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const CustTable = (props) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [isOpenDialog, setIsOpenDialog] = React.useState(false);
-  const [dialogComp, setDialogComp] = React.useState();
-
+  const [dialogComp, setDialogComp] = React.useState(false);
+  const [data, setData] = useState({});
+  const [operation, setOperation] = useState("");
   dayjs.extend(utc);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -31,17 +35,61 @@ const CustTable = (props) => {
     setPage(0);
   };
 
-  // const onHandleClick = (data, operation) => {
-  //   setIsOpenDialog((isOpenDialog) => !isOpenDialog);
-  //   setDialogComp(
-  //     <Form
-  //       data={data}
-  //       op={operation}
-  //       getActiveCustomer={props.getActiveCustomer}
-  //     />
-  //   );
-  //   console.log(data + operation + "clicked");
-  // };
+  const onHandleClick = (data, operation) => {
+    console.log(data + "---" + operation + "---" + "clicked");
+    setIsOpenDialog((isOpenDialog) => !isOpenDialog);
+    setDialogComp(true);
+    setData(data);
+    setOperation(operation);
+  };
+
+  const headers = {
+    "Content-Type": "application/json",
+  };
+
+  const onHadelDelete = async (row) => {
+    await axios
+      .post(baseURL + "/delCust", row, {
+        headers,
+      })
+      .then((response) => {
+        console.log(response.data);
+        if (response.data.status === true) {
+          // handleClickAlertMsg(TransitionTop, response.data.message);
+          Swal.fire({
+            title: "Success",
+            icon: "success",
+            text: response.data.message,
+            draggable: true,
+            timer: 2000,
+          });
+          props.getActiveCustomer();
+          // setPrintBill(true);
+        } else if (response.data.status === false) {
+          Swal.fire({
+            title: "error",
+            icon: "Oppss..",
+            text: response.data.message,
+            draggable: true,
+            timer: 2000,
+          });
+          handleClickAlertMsg(TransitionTop, response.data.message);
+        }
+      })
+      .catch((err) => {
+        // Explicitly handle 409 Conflict
+        console.log(err);
+        if (err.response && err.response.status === 409) {
+          console.log("Conflict: The customer might already exist.");
+          handleClickAlertMsg(
+            TransitionTop,
+            "Conflict: Customer already exists."
+          );
+        } else {
+          console.log(err);
+        }
+      });
+  };
 
   // Calculate the rows to display based on the current page and rows per page
   const rowsToDisplay = props?.filteredRows?.slice(
@@ -130,13 +178,12 @@ const CustTable = (props) => {
                           <EditIcon
                             sx={{ color: "#eb3c5a" }}
                             className="me-2"
-                            onClick={() => props.onHandleClick(row, "Update")}
-                            // onClick={() => props.onHandlUpdate(row, "Update")}
+                            onClick={() => onHandleClick(row, "Update")}
                           />
                           <DeleteIcon
                             sx={{ color: "#eb3c5a" }}
                             className="me-2"
-                            onClick={() => props.onHadelDelete(row, "Delete")}
+                            onClick={() => onHadelDelete(row, "Delete")}
                           />
                         </>
                       ) : props.op === "overdue" ? (
@@ -144,14 +191,12 @@ const CustTable = (props) => {
                           <AutorenewIcon
                             sx={{ color: "#eb3c5a" }}
                             className="me-2"
-                            onClick={() =>
-                              props.onHandleClick?.(row, "Renewal")
-                            }
+                            onClick={() => onHandleClick?.(row, "Renewal")}
                           />
                           <DeleteIcon
                             sx={{ color: "#eb3c5a" }}
                             className="me-2"
-                            onClick={() => props.onHadelDelete(row, "Delete")}
+                            onClick={() => onHadelDelete(row, "Delete")}
                           />
                         </>
                       ) : null}
@@ -172,7 +217,17 @@ const CustTable = (props) => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      {isOpenDialog ? dialogComp : ""}
+      {isOpenDialog ? (
+        <Form
+          data={data}
+          op={operation}
+          getActiveCustomer={props.getActiveCustomer}
+        />
+      ) : (
+        ""
+      )}
+
+      {/* {isOpenDialog ? dialogComp : ""} */}
     </>
   );
 };

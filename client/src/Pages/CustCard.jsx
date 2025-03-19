@@ -3,6 +3,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import TablePagination from "@mui/material/TablePagination";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
+import { baseURL } from "./config";
+import axios from "axios";
+import Swal from "sweetalert2";
+
 const CustCard = (props) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(4);
@@ -14,6 +18,54 @@ const CustCard = (props) => {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+  };
+
+  const headers = {
+    "Content-Type": "application/json",
+  };
+
+  const onHadelDelete = async (row) => {
+    await axios
+      .post(baseURL + "/delCust", row, {
+        headers,
+      })
+      .then((response) => {
+        console.log(response.data);
+        if (response.data.status === true) {
+          // handleClickAlertMsg(TransitionTop, response.data.message);
+          Swal.fire({
+            title: "Success",
+            icon: "success",
+            text: response.data.message,
+            draggable: true,
+            timer: 2000,
+          });
+          props.getActiveCustomer();
+          // setPrintBill(true);
+        } else if (response.data.status === false) {
+          Swal.fire({
+            title: "error",
+            icon: "Oppss..",
+            text: response.data.message,
+            draggable: true,
+            timer: 2000,
+          });
+          handleClickAlertMsg(TransitionTop, response.data.message);
+        }
+      })
+      .catch((err) => {
+        // Explicitly handle 409 Conflict
+        console.log(err);
+        if (err.response && err.response.status === 409) {
+          console.log("Conflict: The customer might already exist.");
+          handleClickAlertMsg(
+            TransitionTop,
+            "Conflict: Customer already exists."
+          );
+        } else {
+          console.log(err);
+        }
+      });
   };
 
   // Calculate the rows to display based on the current page and rows per page
@@ -53,7 +105,7 @@ const CustCard = (props) => {
                         <DeleteIcon
                           sx={{ color: "#eb3c5a" }}
                           className="me-2"
-                          onClick={() => props.onHadelDelete(row, "Delete")}
+                          onClick={() => onHadelDelete(row, "Delete")}
                         />
                       </>
                     ) : props.op === "overdue" ? (

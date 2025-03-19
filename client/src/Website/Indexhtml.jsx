@@ -1,4 +1,8 @@
 import React from "react";
+import { useEffect, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Autoplay } from "swiper/modules";
+// import "swiper/css/navigation";
 import {
   MDBCarousel,
   // MDBCarouselInner,
@@ -38,7 +42,7 @@ import trainer_1 from "./myImg/sir.jpeg";
 import trainer_2 from "./myImg/sir.jpeg";
 // import getintouctch from "./myImg/getintouctch.jpg";
 import getintouctch from "./myImg/Screenshot_10.png";
-import banner_person from "./myImg/sir2.png";
+import banner_person from "./myImg/banner.png";
 
 import testimonial_1 from "./img/testimonial/testimonial-1.jpg";
 import quote_left from "./img/testimonial/quote-left.png";
@@ -46,6 +50,49 @@ import logo from "./myImg/Logo.png";
 
 const Indexhtml = () => {
   const navigate = useNavigate();
+
+  const testimonials = [
+    {
+      name: "John Doe",
+      text: "This is the best service I have ever used! Highly recommended.",
+      image: "https://source.unsplash.com/100x100/?man",
+    },
+    {
+      name: "Jane Smith",
+      text: "Amazing experience, fantastic support, and great value.",
+      image: "https://source.unsplash.com/100x100/?woman",
+    },
+    {
+      name: "Alice Brown",
+      text: "Super professional and efficient. Will use again!",
+      image: "https://source.unsplash.com/100x100/?girl",
+    },
+    {
+      name: "Michael Johnson",
+      text: "Top-notch service with incredible results!",
+      image: "https://source.unsplash.com/100x100/?boy",
+    },
+  ];
+
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      nextTestimonial();
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [index]);
+
+  const nextTestimonial = () => {
+    setIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
+  };
+
+  const prevTestimonial = () => {
+    setIndex(
+      (prevIndex) => (prevIndex - 1 + testimonials.length) % testimonials.length
+    );
+  };
   return (
     <>
       {/* <!-- Page Preloder --> */}
@@ -493,47 +540,30 @@ const Indexhtml = () => {
             </div>
           </div>
 
-          <div className="row">
-            <div className="col-lg-10 offset-lg-1">
-              <div className="testimonial-slider owl-carousel">
-                <div className="testimonial-item">
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.{" "}
-                  </p>
-                  <div className="ti-pic">
-                    <img src={testimonial_1} alt="" />
-                    <div className="quote">
-                      <img src={quote_left} alt="" />
-                    </div>
-                  </div>
-                  <div className="ti-author">
-                    <h4>Patrick Cortez</h4>
-                    <span>Leader</span>
-                  </div>
+          <div className="testimonial-container">
+            <div
+              className="testimonial-slider"
+              style={{ transform: `translateX(-${index * 100}%)` }}
+            >
+              {testimonials.map((testimonial, i) => (
+                <div key={i} className="testimonial-card">
+                  <img
+                    src={testimonial.image}
+                    alt={testimonial.name}
+                    className="testimonial-img"
+                  />
+                  <p className="testimonial-text">"{testimonial.text}"</p>
+                  <h4 className="testimonial-name">- {testimonial.name}</h4>
                 </div>
-                <div className="testimonial-item">
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.{" "}
-                  </p>
-                  <div className="ti-pic">
-                    <img src={testimonial_1} alt="" />
-                    <div className="quote">
-                      <img src={quote_left} alt="" />
-                    </div>
-                  </div>
-                  <div className="ti-author">
-                    <h4>Patrick Cortez</h4>
-                    <span>Leader</span>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
+
+            <button className="prev-btn" onClick={prevTestimonial}>
+              &#10094;
+            </button>
+            <button className="next-btn" onClick={nextTestimonial}>
+              &#10095;
+            </button>
           </div>
         </div>
       </section>
