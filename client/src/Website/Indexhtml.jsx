@@ -381,100 +381,80 @@ const Indexhtml = () => {
               </div>
             </div>
           </div>
-          <div className="row classes-slider owl-carousel">
+          <div className="row  ">
             <div className="col-lg-4">
               <div
-                className="single-class-item set-bg classes-1"
+                className="single-class-item  classes-1"
                 //style={{ background }}
-                data-setbg="img/classes/classes-1.jpg"
+                // data-setbg="img/classes/classes-1.jpg"
               >
                 <div className="si-text">
-                  <h4>Yoga</h4>
+                  <h4>Strength Training</h4>
                   <span>
-                    <i className="fa fa-user"></i> Ryan Knight
-                  </span>
-                </div>
-              </div>
-              <div
-                className="single-class-item set-bg classes-4"
-                data-setbg="img/classes/classes-4.jpg"
-              >
-                <div className="si-text">
-                  <h4>Karate</h4>
-                  <span>
-                    <i className="fa fa-user"></i> Kevin McCormick
+                    {/* <i className="fa fa-user"></i> Ryan Knight */}
                   </span>
                 </div>
               </div>
             </div>
             <div className="col-lg-4">
               <div
-                className="single-class-item set-bg classes-2"
-                data-setbg="img/classes/classes-2.jpg"
+                className="single-class-item  classes-4"
+                // data-setbg="img/classes/classes-4.jpg"
               >
                 <div className="si-text">
-                  <h4>Running</h4>
+                  <h4>Weight Gain</h4>
                   <span>
-                    <i className="fa fa-user"></i> Randy Rivera
+                    {/* <i className="fa fa-user"></i> Kevin McCormick */}
                   </span>
                 </div>
               </div>
+            </div>
+            <div className="col-lg-4">
               <div
-                className="single-class-item set-bg classes-5"
-                data-setbg="img/classes/classes-5.jpg"
+                className="single-class-item  classes-2"
+                // data-setbg="img/classes/classes-2.jpg"
               >
                 <div className="si-text">
                   <h4>Dance</h4>
                   <span>
-                    <i className="fa fa-user"></i> Russell Lane
+                    {/* <i className="fa fa-user"></i> Randy Rivera */}
                   </span>
                 </div>
               </div>
             </div>
             <div className="col-lg-4">
               <div
-                className="single-class-item set-bg classes-3"
-                data-setbg="img/classes/classes-3.jpg"
+                className="single-class-item  classes-3"
+                // data-setbg="img/classes/classes-3.jpg"
               >
                 <div className="si-text">
                   <h4>Personal Training</h4>
                   <span>
-                    <i className="fa fa-user"></i> Cole Robertson
-                  </span>
-                </div>
-              </div>
-              <div
-                className="single-class-item set-bg classes-6"
-                data-setbg="img/classes/classes-6.jpg"
-              >
-                <div className="si-text">
-                  <h4>Weight Loss</h4>
-                  <span>
-                    <i className="fa fa-user"></i> Ryan Scott
+                    {/* <i className="fa fa-user"></i> Cole Robertson */}
                   </span>
                 </div>
               </div>
             </div>
             <div className="col-lg-4">
               <div
-                className="single-class-item set-bg classes-7"
-                data-setbg="img/classes/classes-7.jpg"
-              >
-                <div className="si-text">
-                  <h4>Personal Training</h4>
-                  <span>
-                    <i className="fa fa-user"></i> Cole Robertson
-                  </span>
-                </div>
-              </div>
-              <div
-                className="single-class-item set-bg classes-8"
-                data-setbg="img/classes/classes-8.jpg"
+                className="single-class-item  classes-6"
+                // data-setbg="img/classes/classes-6.jpg"
               >
                 <div className="si-text">
                   <h4>Weight Loss</h4>
+                  <span>{/* <i className="fa fa-user"></i> Ryan Scott */}</span>
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-4">
+              <div
+                className="single-class-item  classes-7"
+                // data-setbg="img/classes/classes-7.jpg"
+              >
+                <div className="si-text">
+                  <h4>Cardio</h4>
                   <span>
-                    <i className="fa fa-user"></i> Ryan Scott
+                    {/* <i className="fa fa-user"></i> Cole Robertson */}
                   </span>
                 </div>
               </div>
@@ -537,36 +517,73 @@ const Indexhtml = () => {
               <div className="section-title">
                 <h2>success stories</h2>
               </div>
+              <div id="demo" className="carousel slide" data-ride="carousel">
+                <div className="carousel-inner">
+                  <div className="carousel-item active">
+                    <div className="carousel-caption">
+                      <p>
+                        If Shai Reznik's TDD videos don't convince you to add
+                        automated testing your code, I don't know what will.This
+                        was the very best explanation of frameworks for
+                        brginners that I've ever seen.{" "}
+                      </p>{" "}
+                      <img src="https://i.imgur.com/lE89Aey.jpg" />
+                      <div id="image-caption">Sunny Shinde</div>
+                    </div>
+                  </div>
+                  <div className="carousel-item">
+                    <div className="carousel-caption">
+                      <p>
+                        If Shai Reznik's TDD videos don't convince you to add
+                        automated testing your code, I don't know what will.This
+                        was the very best explanation of frameworks for
+                        brginners that I've ever seen.
+                      </p>{" "}
+                      <img
+                        src="https://i.imgur.com/QptVdsp.jpg"
+                        className="img-fluid"
+                      />
+                      <div id="image-caption">Omkar Patil</div>
+                    </div>
+                  </div>
+                  <div className="carousel-item">
+                    <div className="carousel-caption">
+                      <p>
+                        If Shai Reznik's TDD videos don't convince you to add
+                        automated testing your code, I don't know what will.This
+                        was the very best explanation of frameworks for
+                        brginners that I've ever seen.
+                      </p>{" "}
+                      <img
+                        src="https://i.imgur.com/jQWThIn.jpg"
+                        className="img-fluid"
+                      />
+                      <div id="image-caption">Chaitanay Kovle</div>
+                    </div>
+                  </div>
+                </div>{" "}
+                <a
+                  className="carousel-control-prev"
+                  href="#demo"
+                  data-slide="prev"
+                >
+                  {" "}
+                  <i className="fa fa-arrow-left"></i>{" "}
+                </a>{" "}
+                <a
+                  className="carousel-control-next"
+                  href="#demo"
+                  data-slide="next"
+                >
+                  {" "}
+                  <i className="fa fa-arrow-right"></i>{" "}
+                </a>
+              </div>
             </div>
-          </div>
-
-          <div className="testimonial-container">
-            <div
-              className="testimonial-slider"
-              style={{ transform: `translateX(-${index * 100}%)` }}
-            >
-              {testimonials.map((testimonial, i) => (
-                <div key={i} className="testimonial-card">
-                  <img
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    className="testimonial-img"
-                  />
-                  <p className="testimonial-text">"{testimonial.text}"</p>
-                  <h4 className="testimonial-name">- {testimonial.name}</h4>
-                </div>
-              ))}
-            </div>
-
-            <button className="prev-btn" onClick={prevTestimonial}>
-              &#10094;
-            </button>
-            <button className="next-btn" onClick={nextTestimonial}>
-              &#10095;
-            </button>
           </div>
         </div>
       </section>
+
       {/* <!-- Testimonial Section End --> */}
 
       {/* <!-- Banner Section Begin --> */}
@@ -589,7 +606,7 @@ const Indexhtml = () => {
               </div>
             </div>
             <div className="col-lg-6">
-              <img src={banner_person} alt="" />
+              {/* <img src={banner_person} alt="" /> */}
             </div>
           </div>
         </div>
