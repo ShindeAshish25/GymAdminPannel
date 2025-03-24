@@ -85,15 +85,12 @@ const Customer = () => {
     );
   });
 
-  const onHandleClick = (data, operation) => {
+  const onHandleClick = (row, operation) => {
+    console.log(row + operation + "******************clicked");
     setIsOpenDialog((isOpenDialog) => !isOpenDialog);
     setDialogComp(
-      <Form data={data} op={operation} getActiveCustomer={getActiveCust} />
+      <Form data={row} op={operation} getActiveCustomer={getActiveCust} />
     );
-    console.log(data + operation);
-  };
-  const onHadelDelete = (row) => {
-    console.log(row);
   };
 
   React.useEffect(() => {
@@ -172,15 +169,22 @@ const Customer = () => {
                 <CustTable
                   filteredRows={filteredRows}
                   onHandleClick={onHandleClick}
-                  onHadelDelete={onHadelDelete}
                   getActiveCustomer={getActiveCust}
                   op={"customer"}
                 />
               </div>
             )}
-
             {/* Card view */}
-            {viewType === "card" && <CustCard filteredRows={filteredRows} />}
+            {viewType === "card" && (
+              <div className="cardDiv">
+                <CustCard
+                  filteredRows={filteredRows}
+                  onHandleClick={onHandleClick}
+                  getActiveCustomer={getActiveCust}
+                  op={"customer"}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>

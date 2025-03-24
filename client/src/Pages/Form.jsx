@@ -33,6 +33,7 @@ import Swal from "sweetalert2";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import DemoUser from "../assets/demoUser.png";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -57,16 +58,15 @@ const Form = (props) => {
   const [imageSrc, setImageSrc] = useState(null);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
-  let [addUpdateViewRecord, setAddUpdateViewRecord] = React.useState({
-    ...props.data,
-  });
+  const [addUpdateViewRecord, setAddUpdateViewRecord] = React.useState(
+    props.data
+  );
   const [alertMsg, setAlertMsg] = React.useState(false);
   const [warningMessage, setWarningMessage] = React.useState("");
   const [transition, setTransition] = React.useState(undefined);
-  const [image, setImage] = React.useState(
-    "https://img.freepik.com/premium-vector/man-professional-business-casual-young-avatar-icon-illustration_1277826-622.jpg?semt=ais_hybrid"
-  );
+  const [image, setImage] = React.useState(DemoUser);
   const [printBill, setPrintBill] = React.useState(false);
+  const [updateRecord, setUpdateRecord] = React.useState(props.data);
 
   const style = {
     position: "absolute",
@@ -78,9 +78,6 @@ const Form = (props) => {
     boxShadow: 24,
     p: 4,
   };
-
-  // console.log(addUpdateViewRecord);
-  // console.log(props.op);
 
   const headers = {
     "Content-Type": "application/json",
@@ -186,12 +183,15 @@ const Form = (props) => {
       };
       reader.readAsDataURL(e.target.files[0]); // Read the selected file as base64
     } else {
-      // Handle other input fields
-      const trimmedValue = e?.target?.value;
-      newsearchData = {
-        ...addUpdateViewRecord,
-        [e?.target?.name]: trimmedValue,
-      };
+      const { name, value } = e.target;
+      newsearchData[name] = value; // Preserve all input values
+
+      // Calculate remainingAmount when totalAmount or paidAmount is updated
+      if (name === "totalAmount" || name === "paidAmount") {
+        const total = parseInt(newsearchData.totalAmount || 0, 10);
+        const paid = parseInt(newsearchData.paidAmount || 0, 10);
+        newsearchData.remainingAmount = (total - paid).toString();
+      }
     }
 
     console.log(newsearchData);
@@ -199,6 +199,7 @@ const Form = (props) => {
   };
 
   const onHanddelSave = async (e) => {
+    console.log(addUpdateViewRecord);
     if (
       addUpdateViewRecord.firstName === "" ||
       addUpdateViewRecord.firstName === null ||
@@ -212,7 +213,6 @@ const Form = (props) => {
       addUpdateViewRecord.lastName === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Last Name' is missing");
-      return;
       return;
     } else if (
       addUpdateViewRecord.mobileNo === "" ||
@@ -297,6 +297,13 @@ const Form = (props) => {
       addUpdateViewRecord.gender === undefined
     ) {
       handleClickAlertMsg(TransitionTop, "Gender' is missing");
+      return;
+    } else if (
+      addUpdateViewRecord.photo === "" ||
+      addUpdateViewRecord.photo === null ||
+      addUpdateViewRecord.photo === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Photo' is missing");
       return;
     }
 
@@ -318,9 +325,8 @@ const Form = (props) => {
             timer: 2000,
           });
           setOpen(false);
-          setPrintBill(true);
-
           props.getActiveCustomer();
+          // setPrintBill(true);
         } else if (response.data.status === false) {
           Swal.fire({
             title: "error",
@@ -335,6 +341,7 @@ const Form = (props) => {
       })
       .catch((err) => {
         // Explicitly handle 409 Conflict
+        console.log(err);
         if (err.response && err.response.status === 409) {
           console.log("Conflict: The customer might already exist.");
           handleClickAlertMsg(
@@ -348,6 +355,8 @@ const Form = (props) => {
   };
 
   const onHanddelUpdate = async (e) => {
+    console.log(addUpdateViewRecord);
+
     if (
       addUpdateViewRecord.firstName === "" ||
       addUpdateViewRecord.firstName === null ||
@@ -360,6 +369,7 @@ const Form = (props) => {
       addUpdateViewRecord.lastName === null ||
       addUpdateViewRecord.lastName === undefined
     ) {
+      alert("Last Name' is missing");
       handleClickAlertMsg(TransitionTop, "Last Name' is missing");
       return;
     } else if (
@@ -446,9 +456,14 @@ const Form = (props) => {
     ) {
       handleClickAlertMsg(TransitionTop, "Gender' is missing");
       return;
+    } else if (
+      addUpdateViewRecord.photo === "" ||
+      addUpdateViewRecord.photo === null ||
+      addUpdateViewRecord.photo === undefined
+    ) {
+      handleClickAlertMsg(TransitionTop, "Photo' is missing");
+      return;
     }
-
-    console.log(addUpdateViewRecord);
 
     await axios
       .post(baseURL + "/updateCust", addUpdateViewRecord, {
@@ -466,10 +481,15 @@ const Form = (props) => {
             timer: 2000,
           });
           setOpen(false);
+          console.log(
+            "*****************************************555555555555555555555555555555"
+          );
           props.getActiveCustomer();
-          setPrintBill(true);
+          console.log(
+            "*****************************************7777777777777777777777777777"
+          );
+          // setPrintBill(true);
         } else {
-          // handleClickAlertMsg(TransitionTop, response.data.message);
           Swal.fire({
             title: "Oppss...",
             icon: "error",
@@ -477,11 +497,25 @@ const Form = (props) => {
             draggable: true,
             timer: 2000,
           });
+          // handleClickAlertMsg(TransitionTop, response.data.message);
           setOpen(false);
         }
       })
       .catch((err) => {
-        console.log(err);
+        if (err.response && err.response.status === 409) {
+          console.log("Conflict: The customer might already exist.");
+          handleClickAlertMsg(
+            TransitionTop,
+            "Conflict: Customer already exists."
+          );
+        } else if (err.response.status === 413) {
+          console.log("Conflict: The customer might already exist.");
+          alert("Conflict: Photo size large.");
+          w;
+          handleClickAlertMsg(TransitionTop, "Conflict: Photo size large.");
+        } else {
+          console.log(err);
+        }
       });
   };
 
@@ -567,7 +601,6 @@ const Form = (props) => {
           setOpen(false);
           props.getActiveCustomer();
         } else {
-          // handleClickAlertMsg(TransitionTop, response.data.message);
           Swal.fire({
             title: "Oops...",
             icon: "success",
@@ -575,6 +608,7 @@ const Form = (props) => {
             draggable: true,
             timer: 2000,
           });
+          // handleClickAlertMsg(TransitionTop, response.data.message);
           setOpen(false);
         }
       })
@@ -795,7 +829,7 @@ const Form = (props) => {
                     onChange={(e) => onInputChange(e)}
                   >
                     <MenuItem value="M">Morning</MenuItem>
-                    <MenuItem value="E">Evenning</MenuItem>
+                    <MenuItem value="E">Evening</MenuItem>
                   </Select>
                 </FormControl>
               </div>
@@ -1009,11 +1043,7 @@ const Form = (props) => {
                   <img src={addUpdateViewRecord.image} alt="" />
                 </div>
                 <div className="col-md-12">
-                  <Typography
-                    className="mb-3"
-                    id="modal-modal-title"
-                    variant="h4"
-                  >
+                  <Typography className="mb-3" id="modal-modal-title">
                     <b>Name : </b> {addUpdateViewRecord.firstName}
                     {addUpdateViewRecord.lastName} <br />
                     <b>Mobile No : </b> {addUpdateViewRecord.mobileNo}
@@ -1156,7 +1186,7 @@ const Form = (props) => {
                   name="mobileNo"
                   value={addUpdateViewRecord.mobileNo || ""}
                   inputProps={{
-                    maxLength: 10,
+                    maxLength: 12,
                   }}
                   onKeyPress={(e) => {
                     if (!/^\d$/.test(e.key)) {
@@ -1183,8 +1213,9 @@ const Form = (props) => {
                     const emailRegex =
                       /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
                     if (emailRegex.test(email)) {
-                      onInputChange(e); // Valid email
+                      e.preventDefault();
                     }
+                    onInputChange(e); // Valid email
                   }}
                 />
               </div>
@@ -1196,21 +1227,22 @@ const Form = (props) => {
                       label="Joining Date"
                       name="joiningDate"
                       value={
-                        addUpdateViewRecord?.joiningDate
-                          ? dayjs(addUpdateViewRecord.joiningDate) // Convert ISO string to Dayjs object
+                        dayjs(
+                          addUpdateViewRecord?.joiningDate || null
+                        ).isValid()
+                          ? dayjs(
+                              addUpdateViewRecord?.joiningDate,
+                              "DD-MM-YYYY"
+                            )
                           : null
-                      }
+                      } // Ensure the value is properly formatted
                       slotProps={{
                         textField: {
                           error: false,
                         },
                       }}
-                      format="DD-MM-YYYY"
-                      onChange={(value) => {
-                        if (value) {
-                          onInputChange(value.toISOString(), "joiningDate"); // Store in ISO format
-                        }
-                      }}
+                      format="DD-MM-YYYY" // Ensuring the DatePicker uses this format
+                      onChange={(value) => onInputChange(value, "joiningDate")}
                     />
                   </DemoContainer>
                 </LocalizationProvider>
@@ -1223,8 +1255,13 @@ const Form = (props) => {
                       label="Payment Date"
                       name="paymentDate"
                       value={
-                        addUpdateViewRecord?.paymentDate
-                          ? dayjs(addUpdateViewRecord.paymentDate) // Convert ISO string to Dayjs object
+                        dayjs(
+                          addUpdateViewRecord?.paymentDate || null
+                        ).isValid()
+                          ? dayjs(
+                              addUpdateViewRecord?.paymentDate,
+                              "DD-MM-YYYY"
+                            )
                           : null
                       }
                       slotProps={{
@@ -1254,7 +1291,7 @@ const Form = (props) => {
                     onChange={(e) => onInputChange(e)}
                   >
                     <MenuItem value="M">Morning</MenuItem>
-                    <MenuItem value="E">Evenning</MenuItem>
+                    <MenuItem value="E">Evening</MenuItem>
                   </Select>
                 </FormControl>
               </div>
@@ -1430,7 +1467,8 @@ const Form = (props) => {
           </DialogContent>
           <DialogActions>
             <Button
-              onClick={onHanddelUpdate}
+              // onClick={onHanddelUpdate}
+              onClick={(e) => onHanddelUpdate()}
               variant="outlined"
               startIcon={<AutoFixHighIcon />}
             >
@@ -1583,23 +1621,23 @@ const Form = (props) => {
                       className="w-100"
                       label="Joining Date"
                       name="joiningDate"
-                      disabled
                       value={
-                        addUpdateViewRecord?.joiningDate
-                          ? dayjs(addUpdateViewRecord.joiningDate) // Convert ISO string to Dayjs object
+                        dayjs(
+                          addUpdateViewRecord?.joiningDate || null
+                        ).isValid()
+                          ? dayjs(
+                              addUpdateViewRecord?.joiningDate,
+                              "DD-MM-YYYY"
+                            )
                           : null
-                      }
+                      } // Ensure the value is properly formatted
                       slotProps={{
                         textField: {
                           error: false,
                         },
                       }}
-                      format="DD-MM-YYYY"
-                      onChange={(value) => {
-                        if (value) {
-                          onInputChange(value.toISOString(), "joiningDate"); // Store in ISO format
-                        }
-                      }}
+                      format="DD-MM-YYYY" // Ensuring the DatePicker uses this format
+                      onChange={(value) => onInputChange(value, "joiningDate")}
                     />
                   </DemoContainer>
                 </LocalizationProvider>
@@ -1612,8 +1650,13 @@ const Form = (props) => {
                       label="Payment Date"
                       name="paymentDate"
                       value={
-                        addUpdateViewRecord?.paymentDate
-                          ? dayjs(addUpdateViewRecord.paymentDate) // Convert ISO string to Dayjs object
+                        dayjs(
+                          addUpdateViewRecord?.paymentDate || null
+                        ).isValid()
+                          ? dayjs(
+                              addUpdateViewRecord?.paymentDate,
+                              "DD-MM-YYYY"
+                            )
                           : null
                       }
                       slotProps={{
@@ -1643,7 +1686,7 @@ const Form = (props) => {
                     onChange={(e) => onInputChange(e)}
                   >
                     <MenuItem value="M">Morning</MenuItem>
-                    <MenuItem value="E">Evenning</MenuItem>
+                    <MenuItem value="E">Evening</MenuItem>
                   </Select>
                 </FormControl>
               </div>

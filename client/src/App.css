@@ -2,11 +2,55 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif;
-    background-color: #f1f1f1;
+    /* overflow: hidden; */
+    -ms-overflow-style: none;
+    /* Hide default scrollbar */
 }
 
-.tableDiv thead tr {
-    background: linear-gradient(to right, #eb3c5a, #f67831) !important;
+.adminPannel {
+    background-color: #ec1313 !important;
+}
+
+/* Webkit-based browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    width: 10px;
+    /* Width of vertical scrollbar */
+    height: 10px;
+    /* Height of horizontal scrollbar */
+}
+
+::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    /* Track color */
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    /* Thumb color */
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    /* Thumb color on hover */
+}
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    /* Options: auto, thin */
+    scrollbar-color: #a34007 #f0f0f000;
+    /* Thumb color | Track color */
+}
+
+::-webkit-scrollbar-corner {
+    background: #f0f0f000;
+}
+
+.tableDiv thead .css-1jxw05q-MuiTableCell-root,
+.tableDiv thead .css-195ypl5 {
+    background: linear-gradient(to right, #eb3c5a, #eb3c5a) !important;
     color: #ffff !important;
     font-weight: 700 !important;
 }
@@ -20,18 +64,18 @@ header {
 }
 
 
-.card-img-top {
-    width: 120px;
-    height: 120px;
+.CardDiv .card-img-top {
+    width: 175px !important;
+    height: 160px !important;
     object-fit: cover;
     border: 2px solid #afa9a9;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     margin: 0 auto;
-    border-radius: 50%;
+    border-radius: 50% !important;
     transform: translateY(-30%);
 }
 
-.card {
+.CardDiv .card {
     padding: 0.5em;
     text-align: center;
     border-radius: 2em;
@@ -42,7 +86,6 @@ header {
 .card-title {
     font-weight: bold;
     font-size: 1.5em;
-
 }
 
 .btn-primary {
@@ -61,7 +104,6 @@ header {
 .CardDiv p {
     margin: 0;
 }
-
 
 .css-1fgcw51-MuiTypography-root-MuiDialogTitle-root {
     background: linear-gradient(to right, #eb3c5a, #f67831) !important;
@@ -92,7 +134,7 @@ header {
     background-color: #a99c95;
     position: absolute;
     bottom: 0;
-    width: 100vw;
+    width: 100vw !important;
     color: #ffffff;
 }
 
@@ -166,8 +208,25 @@ header {
     padding: 15px;
     border: #a99c95 1px solid;
     border-radius: 10px;
-    background-color: #ffffff;
-    margin-top: 80px;
+    background-color: #dadada;
+    margin-top: 45px;
+    max-height: 580px;
+    min-height: 580px;
+
+}
+
+.cardBox .cardDiv {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 515px;
+
+}
+
+.cardBox .listDiv {
+    overflow-y: hidden;
+    overflow-x: hidden;
+    height: 450px !;
+
 }
 
 .cardTitle {
@@ -198,7 +257,142 @@ header {
     align-items: center;
 }
 
-.CardHeaderReports .css-jupps9-MuiInputBase-root-MuiOutlinedInput-root {
+.CardHeaderReports .css-jupps9-MuiInputBase-root-MuiOutlinedInput-root,
+.CardHeaderReports .css-1oy18r0 {
     background-color: #ffff !important;
     background: #ffffff !important;
 }
+
+.css-13cdgmw,
+.css-12fsshj-MuiSvgIcon-root {
+    cursor: pointer;
+}
+
+/* ---------------Report page -------------------- */
+
+.reportDiv ul {
+    --col-gap: 3rem;
+    --barH: 2rem;
+    --roleH: 2rem;
+    --flapH: 2rem;
+
+    width: min(80rem, 90%);
+    margin-inline: auto;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: var(--col-gap);
+    padding-inline: calc(var(--col-gap) / 2);
+
+    justify-content: center;
+    align-items: flex-start;
+    list-style: none;
+}
+
+.reportDiv ul li {
+    width: 10em;
+    display: grid;
+    grid-template:
+        "role"
+        "icon"
+        "title"
+        "descr";
+    align-items: flex-start;
+    gap: 1rem;
+    padding-block-end: calc(var(--flapH) + 1rem);
+    text-align: center;
+    background: var(--accent-color);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6) var(--roleH),
+            rgba(0, 0, 0, 0.4) calc(var(--roleH) + 0.5rem),
+            rgba(0, 0, 0, 0) calc(var(--roleH) + 0.5rem + 5rem));
+    clip-path: polygon(calc(var(--col-gap) / -2 - 5px) 0,
+            calc(100% + var(--col-gap) / 2 + 5px) 0,
+            calc(100% + var(--col-gap) / 2 + 5px) calc(100% - var(--flapH)),
+            50% 100%,
+            calc(var(--col-gap) / -2 - 5px) calc(100% - var(--flapH)));
+}
+
+/* bar */
+.reportDiv ul li::before {
+    content: "";
+    grid-area: role;
+    height: var(--barH);
+    width: calc(100% + var(--col-gap));
+    margin-left: calc(var(--col-gap) / -2);
+    margin-top: calc(var(--roleH) / 2 - var(--barH) / 2);
+    background: grey;
+    z-index: -1;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.4),
+            rgba(255, 255, 255, 0.2) 30%,
+            rgba(255, 255, 255, 0.1) 40%,
+            rgba(0, 0, 0, 0.1) 60%,
+            rgba(0, 0, 0, 0.2) 70%,
+            rgba(0, 0, 0, 0.4));
+}
+
+/* role */
+.reportDiv ul li::after {
+    content: "";
+    grid-area: role;
+    background: var(--accent-color);
+    background-image: linear-gradient(rgba(255, 255, 255, 0.4),
+            rgba(255, 255, 255, 0.2) 30%,
+            rgba(255, 255, 255, 0.1) 40%,
+            rgba(0, 0, 0, 0.1) 60%,
+            rgba(0, 0, 0, 0.2) 70%,
+            rgba(0, 0, 0, 0.4));
+    height: var(--roleH);
+}
+
+.reportDiv ul li .icon,
+.reportDiv ul li .title,
+.reportDiv ul li .descr {
+    padding-inline: 1rem;
+    color: white;
+    text-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.5);
+}
+
+.reportDiv ul li .icon {
+    font-size: 3rem;
+}
+
+.reportDiv ul li .title {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.reportDiv ul li .descr {
+    font-size: 0.9rem;
+}
+
+.reportDiv .credits {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+}
+
+.reportDiv .credits a {
+    color: var(--color);
+}
+
+.ReportSection .scollDiv {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 230px !important;
+
+}
+
+.css-1dc80h3-MuiTableCell-root,
+.css-1plsf6o {
+    padding: 10px !important;
+}
+
+.css-1pk1fka,
+.css-16wblaj-MuiInputBase-input-MuiOutlinedInput-input {
+    background-color: #ffff !important;
+    border-radius: 10px;
+    border: none;
+}
+
+@media(max-width:1440px) {}

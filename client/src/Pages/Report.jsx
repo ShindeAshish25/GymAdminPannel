@@ -22,6 +22,8 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import SwitchAccountIcon from "@mui/icons-material/SwitchAccount";
+
 import {
   Alert,
   FormControlLabel,
@@ -194,15 +196,61 @@ const Report = () => {
   const headers = {
     "Content-Type": "application/json",
   };
-
+  const cards = [
+    {
+      id: 1,
+      color: "#0B374D",
+      icon: "fa-brands fa-codepen",
+      title: "Total Members",
+      description:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta, impedit?",
+    },
+    {
+      id: 2,
+      color: "#1286A8",
+      icon: "SwitchAccountIcon",
+      title: "Total Revenue",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+    },
+    {
+      id: 3,
+      color: "#D2B53B",
+      icon: "fa-brands fa-css3",
+      title: "Remaining Amount",
+      description: "Lorem ipsum dolor sit.",
+    },
+    {
+      id: 4,
+      color: "#DA611E",
+      icon: "fa-brands fa-js",
+      title: "New Joiners",
+      description:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor laboriosam odio alias.",
+    },
+    {
+      id: 5,
+      color: "#AC2A1A",
+      icon: "fa-brands fa-github",
+      title: "Ovre Due members",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+    },
+    {
+      id: 5,
+      color: "#7aac1a",
+      icon: "fa-brands fa-github",
+      title: "Unpaid Amount members",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+    },
+  ];
   return (
     <>
       <div className="px-4">
-        <div className="cardBox">
+        <div className="cardBox ReportSection">
           <div className="CardHeaderReports">
             <span className="cardTitle">Reports</span>
             <div className="d-flex align-items-center ">
               <LocalizationProvider
+                sx={{ backgroundColor: "white" }}
                 dateAdapter={AdapterDayjs}
                 className="w-100 LocalizationProvider"
                 fullWidth
@@ -293,6 +341,18 @@ const Report = () => {
             </div>
           </div>
           <div className="CardBody">
+            <div className="reportDiv">
+              <div className="p-6 mx-auto">
+                <ul>
+                  {cards.map((card) => (
+                    <li key={card.id} style={{ "--accent-color": card.color }}>
+                      <div className="title">{card.title}</div>
+                      <div className="descr">{card.description}</div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
             <div className="row justify-content-end align-items-center">
               <div className="col-md-4">
                 <TextField
@@ -306,15 +366,19 @@ const Report = () => {
                 />
               </div>
             </div>
-
-            {viewType === "list" && (
-              <div className="listDiv">
-                <CustTable filteredRows={filteredRows} op={"customer"} />
+            <div className="scollDiv">
+              {viewType === "list" && (
+                <div className="listDiv">
+                  <CustTable filteredRows={filteredRows} op={"customer"} />
+                </div>
+              )}
+              {/* Card view */}
+              <div className="cardDiv">
+                {viewType === "card" && (
+                  <CustCard filteredRows={filteredRows} />
+                )}
               </div>
-            )}
-
-            {/* Card view */}
-            {viewType === "card" && <CustCard filteredRows={filteredRows} />}
+            </div>
           </div>
         </div>
       </div>

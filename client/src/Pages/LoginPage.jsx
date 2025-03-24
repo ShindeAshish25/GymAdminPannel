@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import loginImg from "../assets/loginP.jpg";
+import { IconButton } from "@mui/material";
+import { Home } from "@mui/icons-material";
+import logo from "../assets/Logo.png";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
@@ -33,6 +36,15 @@ const LoginPage = () => {
         <img src={loginImg} alt="image" className="form-img" />
 
         <div className="log">
+          <img
+            onClick={(e) => {
+              e.preventDefault(); // Prevent default anchor behavior
+              navigate("/"); // Navigate programmatically
+            }}
+            src={logo}
+            alt="image"
+            className="form-img"
+          />
           <h1>One on One Fitness</h1>
           <form onSubmit={handleSubmit}>
             <div className="input-cont">
@@ -56,6 +68,7 @@ const LoginPage = () => {
 
             <input type="submit" value="Login" />
           </form>
+          <p className="p-3 text-center error">Only for Admin Use</p>
         </div>
       </div>
     </div>
