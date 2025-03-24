@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/customers', customerRoutes)
 
 
-const PORT = 5000
+const PORT = process.env.PORT || 5000
 
 //server
 connectDB().then(() => {
