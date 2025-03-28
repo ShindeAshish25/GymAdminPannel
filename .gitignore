@@ -26,3 +26,4 @@ client/*.local
 
 
 server/node_modules
+server/uploads/

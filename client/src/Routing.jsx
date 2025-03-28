@@ -8,12 +8,13 @@ import OldMemberships from "./Pages/OldMemberships";
 import LoginPage from "./Pages/LoginPage";
 import Report from "./Pages/Report";
 import Footer from "./Pages/Footer";
-import "./App.css";
 import Indexhtml from "./Website/Indexhtml.jsx";
 import Galleryhtml from "./Website/Galleryhtml.jsx";
 import Contacthtml from "./Website/Contacthtml.jsx";
+import "./App.css";
 
 export const Routing = () => {
+  
   function AuthenticatedLayout({ children }) {
     return (
       <>

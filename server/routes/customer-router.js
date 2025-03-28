@@ -1,11 +1,13 @@
 const express = require("express");
 const router = express.Router();
 
+
 //controller
 const customerControllers = require('../controllers/customer-controller');
+const upload = require("../middleware/multer-middleware.js");
 
 // create Customer 
-router.post('/addCust', customerControllers.createCustomer)
+router.post('/addCust', upload.single('photo'), customerControllers.createCustomer)
 
 // get All Customer Data
 router.get('/getAllMember', customerControllers.getAllCustomers)
@@ -17,7 +19,10 @@ router.get('/getActiveCust', customerControllers.getActiveCustomers)
 router.get('/getOverDueMember', customerControllers.getOverdDueCustomers)
 
 //Update Customer
-router.post('/updateCust', customerControllers.updateCustomer)
+router.post('/updateCust', upload.single('photo'), customerControllers.updateCustomer)
+
+//Update Customer
+router.post('/deleteCust', customerControllers.deleteCustomer)
 
 //renewMemberShip
 router.post('/renewMemberShip', customerControllers.updateCustomer)

@@ -102,18 +102,40 @@ const Customer = () => {
   };
 
   const getActiveCust = async () => {
-    await axios
-      .get(baseURL + "/getActiveCust", {
-        headers,
-      })
-      .then((response) => {
-        setActiveCust(response.data.data);
-        console.log(response.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+
+    try {
+      const response = await axios.get(baseURL + "/getActiveCust", { headers, });
+      console.log(response.data.data);
+
+      const data = await Promise.all(
+        response.data.data.map(async (ele) => {
+          const imgUrl = await fetchImage(ele.photo);
+          return { ...ele, photo: imgUrl };
+        })
+      );
+
+      setActiveCust(data);
+
+    } catch (error) {
+      console.log(err);
+    }
+
   };
+
+  const fetchImage = async (file) => {
+
+    const imageURL = baseURL.replace('/api/customers', '') + file
+
+    try {
+      const response = await axios.get(imageURL, { responseType: 'blob', });
+      const imgURL = URL.createObjectURL(response.data);
+      return imgURL;
+    } catch (err) {
+      console.error('Error fetching the image:', err);
+    }
+  };
+
+
 
   return (
     <>

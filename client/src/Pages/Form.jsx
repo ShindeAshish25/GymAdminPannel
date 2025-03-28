@@ -80,11 +80,13 @@ const Form = (props) => {
   };
 
   const headers = {
-    "Content-Type": "application/json",
+    'Content-Type': 'multipart/form-data',
   };
 
   useEffect(() => {
     handleClickOpen();
+    setImage(props.data.photo);
+    console.log(props.data);
   }, []);
 
   const handleClickOpen = () => {
@@ -167,21 +169,28 @@ const Form = (props) => {
     let newsearchData = { ...addUpdateViewRecord };
 
     if (field === "paymentDate") {
-      // Handle payment date change
-      newsearchData.paymentDate = e ? e.format("DD-MM-YYYY") : null;
+      newsearchData.paymentDate = e ? e.format("DD-MM-YYYY") : null; // Handle payment date change
+
     } else if (field === "joiningDate") {
-      // Handle joiningDate date change
-      newsearchData.joiningDate = e ? e.format("DD-MM-YYYY") : null;
+      newsearchData.joiningDate = e ? e.format("DD-MM-YYYY") : null; // Handle joiningDate date change
+
     } else if (field === "photo" && e?.target?.files && e.target.files[0]) {
-      // Handle image upload
-      const reader = new FileReader();
-      reader.onload = (fileEvent) => {
-        newsearchData.photo = fileEvent.target.result; // Save the base64 image data
-        setImage(newsearchData.photo);
-        setAddUpdateViewRecord(newsearchData);
-        // console.log(newsearchData); // Log the updated object
-      };
-      reader.readAsDataURL(e.target.files[0]); // Read the selected file as base64
+
+      newsearchData.photo = e.target.files[0];
+      const preview = URL.createObjectURL(e.target.files[0])
+      setImage(preview);
+      setAddUpdateViewRecord(newsearchData);
+
+      // // Handle image upload
+      // const reader = new FileReader();
+      // reader.onload = (fileEvent) => {
+      //   newsearchData.photo = fileEvent.target.result; // Save the base64 image data
+      //   setImage(newsearchData.photo);
+      //   setAddUpdateViewRecord(newsearchData);
+      //   // console.log(newsearchData); // Log the updated object
+      // };
+      // reader.readAsDataURL(e.target.files[0]); // Read the selected file as base64
+
     } else {
       const { name, value } = e.target;
       newsearchData[name] = value; // Preserve all input values
@@ -198,121 +207,77 @@ const Form = (props) => {
     setAddUpdateViewRecord(newsearchData);
   };
 
-  const onHanddelSave = async (e) => {
-    console.log(addUpdateViewRecord);
-    if (
-      addUpdateViewRecord.firstName === "" ||
-      addUpdateViewRecord.firstName === null ||
-      addUpdateViewRecord.firstName === undefined
-    ) {
-      handleClickAlertMsg(TransitionTop, "First Name' is missing");
-      return;
-    } else if (
-      addUpdateViewRecord.lastName === "" ||
-      addUpdateViewRecord.lastName === null ||
-      addUpdateViewRecord.lastName === undefined
-    ) {
-      handleClickAlertMsg(TransitionTop, "Last Name' is missing");
-      return;
-    } else if (
-      addUpdateViewRecord.mobileNo === "" ||
-      addUpdateViewRecord.mobileNo === null ||
-      addUpdateViewRecord.mobileNo === undefined
-    ) {
-      handleClickAlertMsg(TransitionTop, "Mobile No' is missing");
-      return;
-    } else if (
-      addUpdateViewRecord.email === "" ||
-      addUpdateViewRecord.email === null ||
-      addUpdateViewRecord.email === undefined
-    ) {
-      handleClickAlertMsg(TransitionTop, "Email' is missing");
-      return;
-    } else if (
-      addUpdateViewRecord.batch === "" ||
-      addUpdateViewRecord.batch === null ||
-      addUpdateViewRecord.batch === undefined
-    ) {
-      handleClickAlertMsg(TransitionTop, "Batch' is missing");
-      return;
-    } else if (
-      addUpdateViewRecord.memberships === "" ||
-      addUpdateViewRecord.memberships === null ||
-      addUpdateViewRecord.memberships === undefined
-    ) {
-      handleClickAlertMsg(TransitionTop, "Memberships' is missing");
-      return;
-    } else if (
-      addUpdateViewRecord.training === "" ||
-      addUpdateViewRecord.training === null ||
-      addUpdateViewRecord.training === undefined
-    ) {
-      handleClickAlertMsg(TransitionTop, "Training' is missing");
-      return;
-    } else if (
-      addUpdateViewRecord.totalAmount === "" ||
-      addUpdateViewRecord.totalAmount === null ||
-      addUpdateViewRecord.totalAmount === undefined
-    ) {
-      handleClickAlertMsg(TransitionTop, "Total Amount' is missing");
-      return;
-    } else if (
-      addUpdateViewRecord.paidAmount === "" ||
-      addUpdateViewRecord.paidAmount === null ||
-      addUpdateViewRecord.paidAmount === undefined
-    ) {
+  const isNotValid = (field) => {
+    return (field === "" || field === null || field === undefined)
+  }
+
+  const onHandleSave = async (e) => {
+
+    if (isNotValid(addUpdateViewRecord.firstName)) {
+      handleClickAlertMsg(TransitionTop, "First Name' is missing"); return;
+
+    } else if (isNotValid(addUpdateViewRecord.lastName)) {
+      handleClickAlertMsg(TransitionTop, "Last Name' is missing"); return;
+
+    } else if (isNotValid(addUpdateViewRecord.mobileNo)) {
+      handleClickAlertMsg(TransitionTop, "Mobile No' is missing"); return;
+
+    } else if (isNotValid(addUpdateViewRecord.email)) {
+      handleClickAlertMsg(TransitionTop, "Email' is missing"); return;
+
+    } else if (isNotValid(addUpdateViewRecord.batch)) {
+      handleClickAlertMsg(TransitionTop, "Batch' is missing"); return;
+
+    } else if (isNotValid(addUpdateViewRecord.memberships)) {
+      handleClickAlertMsg(TransitionTop, "Memberships' is missing"); return;
+
+    } else if (isNotValid(addUpdateViewRecord.training)) {
+      handleClickAlertMsg(TransitionTop, "Training' is missing"); return;
+
+    } else if (isNotValid(addUpdateViewRecord.totalAmount)) {
+      handleClickAlertMsg(TransitionTop, "Total Amount' is missing"); return;
+
+    } else if (isNotValid(addUpdateViewRecord.paidAmount)) {
       handleClickAlertMsg(TransitionTop, "Paid Amount' is missing");
       return;
-    } else if (
-      addUpdateViewRecord.paymentDate === "" ||
-      addUpdateViewRecord.paymentDate === null ||
-      addUpdateViewRecord.paymentDate === undefined
-    ) {
+
+    } else if (isNotValid(addUpdateViewRecord.paymentDate)) {
       handleClickAlertMsg(TransitionTop, "Payment Date' is missing");
       return;
-    } else if (
-      addUpdateViewRecord.joiningDate === "" ||
-      addUpdateViewRecord.joiningDate === null ||
-      addUpdateViewRecord.joiningDate === undefined
-    ) {
+
+    } else if (isNotValid(addUpdateViewRecord.joiningDate)) {
       handleClickAlertMsg(TransitionTop, "Joining  Date' is missing");
       return;
-    } else if (
-      addUpdateViewRecord.address === "" ||
-      addUpdateViewRecord.address === null ||
-      addUpdateViewRecord.address === undefined
-    ) {
+
+    } else if (isNotValid(addUpdateViewRecord.address)) {
       handleClickAlertMsg(TransitionTop, "Addresses' is missing");
       return;
-    } else if (
-      addUpdateViewRecord.paymentMode === "" ||
-      addUpdateViewRecord.paymentMode === null ||
-      addUpdateViewRecord.paymentMode === undefined
-    ) {
+
+    } else if (isNotValid(addUpdateViewRecord.paymentMode)) {
       handleClickAlertMsg(TransitionTop, "Payment Mode' is missing");
       return;
-    } else if (
-      addUpdateViewRecord.gender === "" ||
-      addUpdateViewRecord.gender === null ||
-      addUpdateViewRecord.gender === undefined
-    ) {
+
+    } else if (isNotValid(addUpdateViewRecord.gender)) {
       handleClickAlertMsg(TransitionTop, "Gender' is missing");
       return;
-    } else if (
-      addUpdateViewRecord.photo === "" ||
-      addUpdateViewRecord.photo === null ||
-      addUpdateViewRecord.photo === undefined
-    ) {
+
+    } else if (isNotValid(addUpdateViewRecord.photo)) {
       handleClickAlertMsg(TransitionTop, "Photo' is missing");
       return;
     }
 
-    // console.log(addUpdateViewRecord);
 
-    await axios
-      .post(baseURL + "/addCust", addUpdateViewRecord, {
-        headers,
-      })
+    //Api call - add
+
+    const data = new FormData();
+    for (const key in addUpdateViewRecord) {
+      if (key === 'photo' && !(addUpdateViewRecord[key] instanceof Blob)) {
+        data.append(key, addUpdateViewRecord[key]);
+      }
+    }
+
+
+    await axios.post(baseURL + "/addCust", data, { headers })
       .then((response) => {
         console.log(response.data);
         if (response.data.status === true) {
@@ -354,8 +319,7 @@ const Form = (props) => {
       });
   };
 
-  const onHanddelUpdate = async (e) => {
-    console.log(addUpdateViewRecord);
+  const onHandleUpdate = async (e) => {
 
     if (
       addUpdateViewRecord.firstName === "" ||
@@ -465,13 +429,23 @@ const Form = (props) => {
       return;
     }
 
+    //Api call - update
+
+    const data = new FormData();
+    for (const key in addUpdateViewRecord) {
+      if (key !== 'photo') {
+        data.append(key, addUpdateViewRecord[key]);
+      } else if ( key === 'photo' && (addUpdateViewRecord[key] instanceof File)) {
+        data.append(key, addUpdateViewRecord[key]);
+      }
+    }
+
+
     await axios
-      .post(baseURL + "/updateCust", addUpdateViewRecord, {
-        headers,
-      })
+      .post(baseURL + "/updateCust", data, { headers })
       .then((response) => {
         console.log(response.data);
-        if (response.data.respMsg === "success") {
+        if (response.data.status) {
           // handleClickAlertMsg(TransitionTop, response.data.message);
           Swal.fire({
             title: "Success",
@@ -768,9 +742,9 @@ const Form = (props) => {
                           addUpdateViewRecord?.joiningDate || null
                         ).isValid()
                           ? dayjs(
-                              addUpdateViewRecord?.joiningDate,
-                              "DD-MM-YYYY"
-                            )
+                            addUpdateViewRecord?.joiningDate,
+                            "DD-MM-YYYY"
+                          )
                           : null
                       } // Ensure the value is properly formatted
                       slotProps={{
@@ -796,9 +770,9 @@ const Form = (props) => {
                           addUpdateViewRecord?.paymentDate || null
                         ).isValid()
                           ? dayjs(
-                              addUpdateViewRecord?.paymentDate,
-                              "DD-MM-YYYY"
-                            )
+                            addUpdateViewRecord?.paymentDate,
+                            "DD-MM-YYYY"
+                          )
                           : null
                       }
                       slotProps={{
@@ -1003,7 +977,7 @@ const Form = (props) => {
           </DialogContent>
           <DialogActions>
             <Button
-              onClick={onHanddelSave}
+              onClick={onHandleSave}
               variant="outlined"
               startIcon={<PersonAddAlt1Icon />}
             >
@@ -1132,9 +1106,9 @@ const Form = (props) => {
                     <div
                       id="imagePreview"
                       style={{
-                        backgroundImage: addUpdateViewRecord.photo
-                          ? `url(${addUpdateViewRecord.photo})`
-                          : "none",
+                        backgroundImage: image ? `url(${image})`
+                          : addUpdateViewRecord.photo
+                            ? `url(${addUpdateViewRecord.photo})` : "none",
                       }}
                     ></div>
                   </div>
@@ -1231,9 +1205,9 @@ const Form = (props) => {
                           addUpdateViewRecord?.joiningDate || null
                         ).isValid()
                           ? dayjs(
-                              addUpdateViewRecord?.joiningDate,
-                              "DD-MM-YYYY"
-                            )
+                            addUpdateViewRecord?.joiningDate,
+                            "DD-MM-YYYY"
+                          )
                           : null
                       } // Ensure the value is properly formatted
                       slotProps={{
@@ -1259,9 +1233,9 @@ const Form = (props) => {
                           addUpdateViewRecord?.paymentDate || null
                         ).isValid()
                           ? dayjs(
-                              addUpdateViewRecord?.paymentDate,
-                              "DD-MM-YYYY"
-                            )
+                            addUpdateViewRecord?.paymentDate,
+                            "DD-MM-YYYY"
+                          )
                           : null
                       }
                       slotProps={{
@@ -1467,15 +1441,14 @@ const Form = (props) => {
           </DialogContent>
           <DialogActions>
             <Button
-              // onClick={onHanddelUpdate}
-              onClick={(e) => onHanddelUpdate()}
+              onClick={(e) => onHandleUpdate()}
               variant="outlined"
               startIcon={<AutoFixHighIcon />}
             >
               Update Record
             </Button>
           </DialogActions>
-        </BootstrapDialog>
+        </BootstrapDialog >
       </>
     );
   } else if (props.op == "Renewal") {
@@ -1626,9 +1599,9 @@ const Form = (props) => {
                           addUpdateViewRecord?.joiningDate || null
                         ).isValid()
                           ? dayjs(
-                              addUpdateViewRecord?.joiningDate,
-                              "DD-MM-YYYY"
-                            )
+                            addUpdateViewRecord?.joiningDate,
+                            "DD-MM-YYYY"
+                          )
                           : null
                       } // Ensure the value is properly formatted
                       slotProps={{
@@ -1654,9 +1627,9 @@ const Form = (props) => {
                           addUpdateViewRecord?.paymentDate || null
                         ).isValid()
                           ? dayjs(
-                              addUpdateViewRecord?.paymentDate,
-                              "DD-MM-YYYY"
-                            )
+                            addUpdateViewRecord?.paymentDate,
+                            "DD-MM-YYYY"
+                          )
                           : null
                       }
                       slotProps={{
