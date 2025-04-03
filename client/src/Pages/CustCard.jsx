@@ -4,12 +4,18 @@ import EditIcon from "@mui/icons-material/Edit";
 import TablePagination from "@mui/material/TablePagination";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import { baseURL } from "./config";
+import Form from "./Form";
+
 import axios from "axios";
 import Swal from "sweetalert2";
 
 const CustCard = (props) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(4);
+  const [isOpenDialog, setIsOpenDialog] = React.useState(false);
+  const [dialogComp, setDialogComp] = React.useState(false);
+  const [data, setData] = useState({});
+  const [operation, setOperation] = useState("");
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -22,6 +28,15 @@ const CustCard = (props) => {
 
   const headers = {
     "Content-Type": "application/json",
+  };
+
+  const onHandleClick = (data, operation) => {
+    // console.log("data", data);
+    // console.log(data + "---" + operation + "---" + "clicked");
+    setIsOpenDialog(true);
+    setDialogComp(true);
+    setData(data);
+    setOperation(operation);
   };
 
   const onHadelDelete = async (row) => {
@@ -100,7 +115,7 @@ const CustCard = (props) => {
                         <EditIcon
                           sx={{ color: "#eb3c5a" }}
                           className="me-2"
-                          onClick={() => props.onHandleClick(row, "Update")}
+                          onClick={() => onHandleClick(row, "Update")}
                         />
                         <DeleteIcon
                           sx={{ color: "#eb3c5a" }}
@@ -113,12 +128,12 @@ const CustCard = (props) => {
                         <AutorenewIcon
                           sx={{ color: "#eb3c5a" }}
                           className="me-2"
-                          onClick={() => props.onHandleClick?.(row, "Renewal")}
+                          onClick={() => onHandleClick?.(row, "Renewal")}
                         />
                         <DeleteIcon
                           sx={{ color: "#eb3c5a" }}
                           className="me-2"
-                          onClick={() => props.onHadelDelete(row, "Delete")}
+                          onClick={() => onHadelDelete(row, "Delete")}
                         />
                       </>
                     ) : null}
@@ -153,6 +168,18 @@ const CustCard = (props) => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </div>
+
+      {isOpenDialog ? (
+        <Form
+          data={data}
+          setIsOpenDialog={setIsOpenDialog}
+          isOpenDialog={isOpenDialog}
+          op={operation}
+          getActiveCustomer={props.getActiveCustomer}
+        />
+      ) : (
+        ""
+      )}
     </>
   );
 };

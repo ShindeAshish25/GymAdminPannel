@@ -103,10 +103,10 @@ const Report = () => {
 
     if (field === "startDate") {
       // Handle payment date change
-      newsearchData.startDate = e ? e.format("DD-MM-YYYY") : null;
+      newsearchData.startDate = e ? e.format("YYYY-MM-DD") : null;
     } else if (field === "endDate") {
       // Handle joiningDate date change
-      newsearchData.endDate = e ? e.format("DD-MM-YYYY") : null;
+      newsearchData.endDate = e ? e.format("YYYY-MM-DD") : null;
     } else {
       // Handle other input fields
       const trimmedValue = e?.target?.value;
@@ -263,12 +263,8 @@ const Report = () => {
                   <DatePicker
                     className="w-100 me-3"
                     label="Start Date"
-                    name="joiningDate"
-                    value={
-                      dayjs(addUpdateViewRecord?.joiningDate || null).isValid()
-                        ? dayjs(addUpdateViewRecord?.joiningDate, "DD-MM-YYYY")
-                        : null
-                    } // Ensure the value is properly formatted
+                    name="startDate"
+                    value={dayjs(addUpdateViewRecord?.startDate, "YYYY-MM-DD")}
                     slotProps={{
                       textField: {
                         error: false,
@@ -286,11 +282,7 @@ const Report = () => {
                     className="w-100 me-3"
                     label="End Date"
                     name="endDate"
-                    value={
-                      dayjs(addUpdateViewRecord?.joiningDate || null).isValid()
-                        ? dayjs(addUpdateViewRecord?.joiningDate, "DD-MM-YYYY")
-                        : null
-                    } // Ensure the value is properly formatted
+                    value={dayjs(addUpdateViewRecord?.endDate, "YYYY-MM-DD")}
                     slotProps={{
                       textField: {
                         error: false,

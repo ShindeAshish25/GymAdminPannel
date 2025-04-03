@@ -80,20 +80,21 @@ const Form = (props) => {
   };
 
   const headers = {
-    'Content-Type': 'multipart/form-data',
+    "Content-Type": "multipart/form-data",
   };
 
   useEffect(() => {
     handleClickOpen();
     setImage(props.data.photo);
-    console.log(props.data);
+    // console.log(props.data);
   }, []);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
-    setOpen(false);
+    // setOpen(false);
+    props.setIsOpenDialog(false);
   };
   const handleClickOpenBill = () => {
     setPrintBill(true);
@@ -102,82 +103,16 @@ const Form = (props) => {
     setPrintBill(false);
   };
 
-  const onInputChanges = (e) => {
-    const { name, value } = e.target;
-
-    // Update the specific field in the state
-    setAddUpdateViewRecord((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-
-    // Calculate the remaining amount based on the updated values
-    const total =
-      name === "totalAmount"
-        ? parseFloat(value) || 0
-        : parseFloat(addUpdateViewRecord.totalAmount) || 0;
-    const payable =
-      name === "paidAmount"
-        ? parseFloat(value) || 0
-        : parseFloat(addUpdateViewRecord.paidAmount) || 0;
-    const remaining = total - payable;
-
-    if (total > payable && remaining >= 0) {
-      setAddUpdateViewRecord((prevState) => ({
-        ...prevState,
-        remainingAmount: remaining.toString(),
-      }));
-    } else {
-      // Optional: Show an alert or reset invalid input
-      if (total <= payable) {
-        alert("Total Amount must be greater than Paid Amount.");
-        return;
-      } else if (remaining < 0) {
-        alert("Remaining Amount cannot be negative.");
-      }
-      // setAddUpdateViewRecord((prevState) => ({
-      //   ...prevState,
-      //   remainingAmount: "0",
-      // }));
-    }
-
-    // Update the remainingAmount field
-    setAddUpdateViewRecord((prevState) => ({
-      ...prevState,
-      remainingAmount: remaining.toString(),
-    }));
-  };
-
-  // const onInputChange = (value, field) => {
-  //   let newsearchData = { ...addUpdateViewRecord };
-
-  //   if (field === "paymentDate") {
-  //     newsearchData.paymentDate = value ? value.format("DD-MM-YYYY") : null;
-  //   } else {
-  //     const trimmedValue = value?.target?.value;
-  //     newsearchData = {
-  //       ...addUpdateViewRecord,
-  //       [value?.target?.name]: trimmedValue,
-  //     };
-  //   }
-
-  //   console.log(newsearchData);
-  //   setAddUpdateViewRecord(newsearchData);
-  // };
-
   const onInputChange = (e, field) => {
     let newsearchData = { ...addUpdateViewRecord };
 
     if (field === "paymentDate") {
-      newsearchData.paymentDate = e ? e.format("DD-MM-YYYY") : null; // Handle payment date change
-
+      newsearchData.paymentDate = e ? e.format("YYYY-MM-DD") : null; // Handle payment date change
     } else if (field === "joiningDate") {
-      newsearchData.joiningDate = e ? e.format("DD-MM-YYYY") : null; // Handle joiningDate date change
-
+      newsearchData.joiningDate = e ? e.format("YYYY-MM-DD") : null; // Handle joiningDate date change
     } else if (field === "photo" && e?.target?.files && e.target.files[0]) {
-
       newsearchData.photo = e.target.files[0];
-      const preview = URL.createObjectURL(e.target.files[0])
+      const preview = URL.createObjectURL(e.target.files[0]);
       setImage(preview);
       setAddUpdateViewRecord(newsearchData);
 
@@ -190,7 +125,6 @@ const Form = (props) => {
       //   // console.log(newsearchData); // Log the updated object
       // };
       // reader.readAsDataURL(e.target.files[0]); // Read the selected file as base64
-
     } else {
       const { name, value } = e.target;
       newsearchData[name] = value; // Preserve all input values
@@ -203,84 +137,76 @@ const Form = (props) => {
       }
     }
 
-    console.log(newsearchData);
+    // console.log(newsearchData);
     setAddUpdateViewRecord(newsearchData);
   };
 
   const isNotValid = (field) => {
-    return (field === "" || field === null || field === undefined)
-  }
+    return field === "" || field === null || field === undefined;
+  };
 
   const onHandleSave = async (e) => {
-
     if (isNotValid(addUpdateViewRecord.firstName)) {
-      handleClickAlertMsg(TransitionTop, "First Name' is missing"); return;
-
+      handleClickAlertMsg(TransitionTop, "First Name' is missing");
+      return;
     } else if (isNotValid(addUpdateViewRecord.lastName)) {
-      handleClickAlertMsg(TransitionTop, "Last Name' is missing"); return;
-
+      handleClickAlertMsg(TransitionTop, "Last Name' is missing");
+      return;
     } else if (isNotValid(addUpdateViewRecord.mobileNo)) {
-      handleClickAlertMsg(TransitionTop, "Mobile No' is missing"); return;
-
+      handleClickAlertMsg(TransitionTop, "Mobile No' is missing");
+      return;
     } else if (isNotValid(addUpdateViewRecord.email)) {
-      handleClickAlertMsg(TransitionTop, "Email' is missing"); return;
-
+      handleClickAlertMsg(TransitionTop, "Email' is missing");
+      return;
     } else if (isNotValid(addUpdateViewRecord.batch)) {
-      handleClickAlertMsg(TransitionTop, "Batch' is missing"); return;
-
+      handleClickAlertMsg(TransitionTop, "Batch' is missing");
+      return;
     } else if (isNotValid(addUpdateViewRecord.memberships)) {
-      handleClickAlertMsg(TransitionTop, "Memberships' is missing"); return;
-
+      handleClickAlertMsg(TransitionTop, "Memberships' is missing");
+      return;
     } else if (isNotValid(addUpdateViewRecord.training)) {
-      handleClickAlertMsg(TransitionTop, "Training' is missing"); return;
-
+      handleClickAlertMsg(TransitionTop, "Training' is missing");
+      return;
     } else if (isNotValid(addUpdateViewRecord.totalAmount)) {
-      handleClickAlertMsg(TransitionTop, "Total Amount' is missing"); return;
-
+      handleClickAlertMsg(TransitionTop, "Total Amount' is missing");
+      return;
     } else if (isNotValid(addUpdateViewRecord.paidAmount)) {
       handleClickAlertMsg(TransitionTop, "Paid Amount' is missing");
       return;
-
     } else if (isNotValid(addUpdateViewRecord.paymentDate)) {
       handleClickAlertMsg(TransitionTop, "Payment Date' is missing");
       return;
-
     } else if (isNotValid(addUpdateViewRecord.joiningDate)) {
       handleClickAlertMsg(TransitionTop, "Joining  Date' is missing");
       return;
-
     } else if (isNotValid(addUpdateViewRecord.address)) {
       handleClickAlertMsg(TransitionTop, "Addresses' is missing");
       return;
-
     } else if (isNotValid(addUpdateViewRecord.paymentMode)) {
       handleClickAlertMsg(TransitionTop, "Payment Mode' is missing");
       return;
-
     } else if (isNotValid(addUpdateViewRecord.gender)) {
       handleClickAlertMsg(TransitionTop, "Gender' is missing");
       return;
-
     } else if (isNotValid(addUpdateViewRecord.photo)) {
       handleClickAlertMsg(TransitionTop, "Photo' is missing");
       return;
     }
 
-
     //Api call - add
 
     const data = new FormData();
     for (const key in addUpdateViewRecord) {
-      if (key === 'photo' && !(addUpdateViewRecord[key] instanceof Blob)) {
+      if (key === "photo" && !(addUpdateViewRecord[key] instanceof Blob)) {
         data.append(key, addUpdateViewRecord[key]);
       }
     }
 
-
-    await axios.post(baseURL + "/addCust", data, { headers })
+    await axios
+      .post(baseURL + "/addCust", data, { headers })
       .then((response) => {
-        console.log(response.data);
-        if (response.data.status === true) {
+        // console.log(response.data);
+        if (response.data.status == true) {
           // handleClickAlertMsg(TransitionTop, response.data.message);
           Swal.fire({
             title: "Success",
@@ -290,9 +216,10 @@ const Form = (props) => {
             timer: 2000,
           });
           setOpen(false);
+          props.setIsOpenDialog(false);
           props.getActiveCustomer();
           // setPrintBill(true);
-        } else if (response.data.status === false) {
+        } else if (response.data.status == false) {
           Swal.fire({
             title: "error",
             icon: "Oppss..",
@@ -302,6 +229,7 @@ const Form = (props) => {
           });
           handleClickAlertMsg(TransitionTop, response.data.message);
           setOpen(false);
+          props.setIsOpenDialog(false);
         }
       })
       .catch((err) => {
@@ -315,136 +243,73 @@ const Form = (props) => {
           );
         } else {
           console.log(err);
+          handleClickAlertMsg(TransitionTop, err.message);
         }
       });
   };
 
   const onHandleUpdate = async (e) => {
-
-    if (
-      addUpdateViewRecord.firstName === "" ||
-      addUpdateViewRecord.firstName === null ||
-      addUpdateViewRecord.firstName === undefined
-    ) {
+    if (isNotValid(addUpdateViewRecord.firstName)) {
       handleClickAlertMsg(TransitionTop, "First Name' is missing");
       return;
-    } else if (
-      addUpdateViewRecord.lastName === "" ||
-      addUpdateViewRecord.lastName === null ||
-      addUpdateViewRecord.lastName === undefined
-    ) {
-      alert("Last Name' is missing");
+    } else if (isNotValid(addUpdateViewRecord.lastName)) {
       handleClickAlertMsg(TransitionTop, "Last Name' is missing");
       return;
-    } else if (
-      addUpdateViewRecord.mobileNo === "" ||
-      addUpdateViewRecord.mobileNo === null ||
-      addUpdateViewRecord.mobileNo === undefined
-    ) {
+    } else if (isNotValid(addUpdateViewRecord.mobileNo)) {
       handleClickAlertMsg(TransitionTop, "Mobile No' is missing");
       return;
-    } else if (
-      addUpdateViewRecord.email === "" ||
-      addUpdateViewRecord.email === null ||
-      addUpdateViewRecord.email === undefined
-    ) {
+    } else if (isNotValid(addUpdateViewRecord.email)) {
       handleClickAlertMsg(TransitionTop, "Email' is missing");
       return;
-    } else if (
-      addUpdateViewRecord.batch === "" ||
-      addUpdateViewRecord.batch === null ||
-      addUpdateViewRecord.batch === undefined
-    ) {
+    } else if (isNotValid(addUpdateViewRecord.batch)) {
       handleClickAlertMsg(TransitionTop, "Batch' is missing");
       return;
-    } else if (
-      addUpdateViewRecord.memberships === "" ||
-      addUpdateViewRecord.memberships === null ||
-      addUpdateViewRecord.memberships === undefined
-    ) {
+    } else if (isNotValid(addUpdateViewRecord.memberships)) {
       handleClickAlertMsg(TransitionTop, "Memberships' is missing");
       return;
-    } else if (
-      addUpdateViewRecord.training === "" ||
-      addUpdateViewRecord.training === null ||
-      addUpdateViewRecord.training === undefined
-    ) {
+    } else if (isNotValid(addUpdateViewRecord.training)) {
       handleClickAlertMsg(TransitionTop, "Training' is missing");
       return;
-    } else if (
-      addUpdateViewRecord.totalAmount === "" ||
-      addUpdateViewRecord.totalAmount === null ||
-      addUpdateViewRecord.totalAmount === undefined
-    ) {
+    } else if (isNotValid(addUpdateViewRecord.totalAmount)) {
       handleClickAlertMsg(TransitionTop, "Total Amount' is missing");
       return;
-    } else if (
-      addUpdateViewRecord.paidAmount === "" ||
-      addUpdateViewRecord.paidAmount === null ||
-      addUpdateViewRecord.paidAmount === undefined
-    ) {
+    } else if (isNotValid(addUpdateViewRecord.paidAmount)) {
       handleClickAlertMsg(TransitionTop, "Paid Amount' is missing");
       return;
-    } else if (
-      addUpdateViewRecord.paymentDate === "" ||
-      addUpdateViewRecord.paymentDate === null ||
-      addUpdateViewRecord.paymentDate === undefined
-    ) {
+    } else if (isNotValid(addUpdateViewRecord.paymentDate)) {
       handleClickAlertMsg(TransitionTop, "Payment Date' is missing");
       return;
-    } else if (
-      addUpdateViewRecord.joiningDate === "" ||
-      addUpdateViewRecord.joiningDate === null ||
-      addUpdateViewRecord.joiningDate === undefined
-    ) {
+    } else if (isNotValid(addUpdateViewRecord.joiningDate)) {
       handleClickAlertMsg(TransitionTop, "Joining  Date' is missing");
       return;
-    } else if (
-      addUpdateViewRecord.address === "" ||
-      addUpdateViewRecord.address === null ||
-      addUpdateViewRecord.address === undefined
-    ) {
+    } else if (isNotValid(addUpdateViewRecord.address)) {
       handleClickAlertMsg(TransitionTop, "Addresses' is missing");
       return;
-    } else if (
-      addUpdateViewRecord.paymentMode === "" ||
-      addUpdateViewRecord.paymentMode === null ||
-      addUpdateViewRecord.paymentMode === undefined
-    ) {
+    } else if (isNotValid(addUpdateViewRecord.paymentMode)) {
       handleClickAlertMsg(TransitionTop, "Payment Mode' is missing");
       return;
-    } else if (
-      addUpdateViewRecord.gender === "" ||
-      addUpdateViewRecord.gender === null ||
-      addUpdateViewRecord.gender === undefined
-    ) {
+    } else if (isNotValid(addUpdateViewRecord.gender)) {
       handleClickAlertMsg(TransitionTop, "Gender' is missing");
       return;
-    } else if (
-      addUpdateViewRecord.photo === "" ||
-      addUpdateViewRecord.photo === null ||
-      addUpdateViewRecord.photo === undefined
-    ) {
+    } else if (isNotValid(addUpdateViewRecord.photo)) {
       handleClickAlertMsg(TransitionTop, "Photo' is missing");
       return;
     }
-
     //Api call - update
 
     const data = new FormData();
     for (const key in addUpdateViewRecord) {
-      if (key !== 'photo') {
+      if (key !== "photo") {
         data.append(key, addUpdateViewRecord[key]);
-      } else if ( key === 'photo' && (addUpdateViewRecord[key] instanceof File)) {
+      } else if (key === "photo" && addUpdateViewRecord[key] instanceof File) {
         data.append(key, addUpdateViewRecord[key]);
       }
     }
 
-
     await axios
       .post(baseURL + "/updateCust", data, { headers })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         if (response.data.status) {
           // handleClickAlertMsg(TransitionTop, response.data.message);
           Swal.fire({
@@ -455,13 +320,14 @@ const Form = (props) => {
             timer: 2000,
           });
           setOpen(false);
-          console.log(
-            "*****************************************555555555555555555555555555555"
-          );
+          props.setIsOpenDialog(false);
+          // console.log(
+          //   "*****************************************555555555555555555555555555555"
+          // );
           props.getActiveCustomer();
-          console.log(
-            "*****************************************7777777777777777777777777777"
-          );
+          // console.log(
+          //   "*****************************************7777777777777777777777777777"
+          // );
           // setPrintBill(true);
         } else {
           Swal.fire({
@@ -473,6 +339,7 @@ const Form = (props) => {
           });
           // handleClickAlertMsg(TransitionTop, response.data.message);
           setOpen(false);
+          props.setIsOpenDialog(false);
         }
       })
       .catch((err) => {
@@ -489,65 +356,41 @@ const Form = (props) => {
           handleClickAlertMsg(TransitionTop, "Conflict: Photo size large.");
         } else {
           console.log(err);
+          handleClickAlertMsg(TransitionTop, err.message);
         }
       });
   };
 
   const onHanddelRenew = async (e) => {
-    if (
-      addUpdateViewRecord.batch === "" ||
-      addUpdateViewRecord.batch === null ||
-      addUpdateViewRecord.batch === undefined
-    ) {
+    if (isNotValid(addUpdateViewRecord.batch)) {
       handleClickAlertMsg(TransitionTop, "Batch' is missing");
       return;
-    } else if (
-      addUpdateViewRecord.memberships === "" ||
-      addUpdateViewRecord.memberships === null ||
-      addUpdateViewRecord.memberships === undefined
-    ) {
+    } else if (isNotValid(addUpdateViewRecord.memberships)) {
       handleClickAlertMsg(TransitionTop, "Memberships' is missing");
       return;
-    } else if (
-      addUpdateViewRecord.totalAmount === "" ||
-      addUpdateViewRecord.totalAmount === null ||
-      addUpdateViewRecord.totalAmount === undefined
-    ) {
+    } else if (isNotValid(addUpdateViewRecord.totalAmount)) {
       handleClickAlertMsg(TransitionTop, "Total Amount' is missing");
       return;
-    } else if (
-      addUpdateViewRecord.paidAmount === "" ||
-      addUpdateViewRecord.paidAmount === null ||
-      addUpdateViewRecord.paidAmount === undefined
-    ) {
+    } else if (isNotValid(addUpdateViewRecord.paidAmount)) {
+      handleClickAlertMsg(TransitionTop, "Total Amount' is missing");
+      return;
+    } else if (isNotValid(addUpdateViewRecord.totalAmount)) {
       handleClickAlertMsg(TransitionTop, "Paid Amount' is missing");
       return;
-    } else if (
-      addUpdateViewRecord.paymentDate === "" ||
-      addUpdateViewRecord.paymentDate === null ||
-      addUpdateViewRecord.paymentDate === undefined
-    ) {
+    } else if (isNotValid(addUpdateViewRecord.paymentDate)) {
       handleClickAlertMsg(TransitionTop, "Payment Date' is missing");
       return;
-    } else if (
-      addUpdateViewRecord.joiningDate === "" ||
-      addUpdateViewRecord.joiningDate === null ||
-      addUpdateViewRecord.joiningDate === undefined
-    ) {
-      handleClickAlertMsg(TransitionTop, "Joining  Date' is missing");
+    } else if (isNotValid(addUpdateViewRecord.joiningDate)) {
+      handleClickAlertMsg(TransitionTop, "Joining Date' is missing");
       return;
-    } else if (
-      addUpdateViewRecord.paymentMode === "" ||
-      addUpdateViewRecord.paymentMode === null ||
-      addUpdateViewRecord.paymentMode === undefined
-    ) {
+    } else if (isNotValid(addUpdateViewRecord.paymentMode)) {
       handleClickAlertMsg(TransitionTop, "Payment Mode' is missing");
       return;
     }
 
     const renewMembership = {
       custId: addUpdateViewRecord.custId,
-      paymentDate: "27-12-2024",
+      paymentDate: addUpdateViewRecord.paymentDate,
       payableAmpunt: addUpdateViewRecord.payableAmpunt,
       totalAmount: addUpdateViewRecord.totalAmount,
       remainingAmount: addUpdateViewRecord.remainingAmount,
@@ -555,14 +398,14 @@ const Form = (props) => {
       batch: addUpdateViewRecord.batch,
     };
 
-    console.log(addUpdateViewRecord);
+    // console.log(addUpdateViewRecord);
 
     await axios
       .post(baseURL + "/renewMemberShip", renewMembership, {
         headers,
       })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         if (response.data.respMsg === "success") {
           // handleClickAlertMsg(TransitionTop, response.data.message);
           Swal.fire({
@@ -573,6 +416,7 @@ const Form = (props) => {
             timer: 2000,
           });
           setOpen(false);
+          props.setIsOpenDialog(false);
           props.getActiveCustomer();
         } else {
           Swal.fire({
@@ -584,15 +428,16 @@ const Form = (props) => {
           });
           // handleClickAlertMsg(TransitionTop, response.data.message);
           setOpen(false);
+          props.setIsOpenDialog(false);
         }
       })
       .catch((err) => {
         console.log(err);
+        handleClickAlertMsg(TransitionTop, err.message);
       });
   };
 
   const handleClickAlertMsg = (Transition, warnMsg) => {
-    console.log("handleClickAlertMsg");
     setAlertMsg(true);
     setWarningMessage(warnMsg);
     setTransition(() => Transition);
@@ -737,16 +582,10 @@ const Form = (props) => {
                       className="w-100"
                       label="Joining Date"
                       name="joiningDate"
-                      value={
-                        dayjs(
-                          addUpdateViewRecord?.joiningDate || null
-                        ).isValid()
-                          ? dayjs(
-                            addUpdateViewRecord?.joiningDate,
-                            "DD-MM-YYYY"
-                          )
-                          : null
-                      } // Ensure the value is properly formatted
+                      value={dayjs(
+                        addUpdateViewRecord?.joiningDate,
+                        "YYYY-MM-DD"
+                      )}
                       slotProps={{
                         textField: {
                           error: false,
@@ -765,16 +604,10 @@ const Form = (props) => {
                       className="w-100"
                       label="Payment Date"
                       name="paymentDate"
-                      value={
-                        dayjs(
-                          addUpdateViewRecord?.paymentDate || null
-                        ).isValid()
-                          ? dayjs(
-                            addUpdateViewRecord?.paymentDate,
-                            "DD-MM-YYYY"
-                          )
-                          : null
-                      }
+                      value={dayjs(
+                        addUpdateViewRecord?.paymentDate,
+                        "YYYY-MM-DD"
+                      )}
                       slotProps={{
                         textField: {
                           error: false,
@@ -1064,10 +897,26 @@ const Form = (props) => {
   } else if (props.op == "Update") {
     return (
       <>
+        <Snackbar
+          open={alertMsg}
+          autoHideDuration={3000}
+          onClose={handleClickAlertMsgClose}
+          TransitionComponent={transition}
+          key={transition ? transition.name : ""}
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        >
+          <Alert
+            onClose={handleClickAlertMsgClose}
+            severity="warning"
+            sx={{ width: "100%", marginTop: "8px", fontWeight: "bold" }}
+          >
+            {warningMessage}
+          </Alert>
+        </Snackbar>
         <BootstrapDialog
           onClose={handleClose}
           aria-labelledby="customized-dialog-title"
-          open={open}
+          open={props.isOpenDialog}
           TransitionComponent={Transition}
           maxWidth="lg"
         >
@@ -1106,9 +955,11 @@ const Form = (props) => {
                     <div
                       id="imagePreview"
                       style={{
-                        backgroundImage: image ? `url(${image})`
+                        backgroundImage: image
+                          ? `url(${image})`
                           : addUpdateViewRecord.photo
-                            ? `url(${addUpdateViewRecord.photo})` : "none",
+                          ? `url(${addUpdateViewRecord.photo})`
+                          : "none",
                       }}
                     ></div>
                   </div>
@@ -1117,7 +968,7 @@ const Form = (props) => {
               <div className="col-md-3">
                 <TextField
                   id="outlined-basic"
-                  label="Frist Name"
+                  label="First Name"
                   variant="outlined"
                   name="firstName"
                   value={addUpdateViewRecord.firstName || ""}
@@ -1201,14 +1052,15 @@ const Form = (props) => {
                       label="Joining Date"
                       name="joiningDate"
                       value={
-                        dayjs(
-                          addUpdateViewRecord?.joiningDate || null
-                        ).isValid()
-                          ? dayjs(
-                            addUpdateViewRecord?.joiningDate,
-                            "DD-MM-YYYY"
-                          )
-                          : null
+                        dayjs(addUpdateViewRecord?.joiningDate, "YYYY-MM-DD")
+                        // dayjs(
+                        //   addUpdateViewRecord?.joiningDate || null
+                        // ).isValid()
+                        //   ? dayjs(
+                        //       addUpdateViewRecord?.joiningDate,
+                        //       "DD-MM-YYYY"
+                        //     )
+                        //   : null
                       } // Ensure the value is properly formatted
                       slotProps={{
                         textField: {
@@ -1228,16 +1080,10 @@ const Form = (props) => {
                       className="w-100"
                       label="Payment Date"
                       name="paymentDate"
-                      value={
-                        dayjs(
-                          addUpdateViewRecord?.paymentDate || null
-                        ).isValid()
-                          ? dayjs(
-                            addUpdateViewRecord?.paymentDate,
-                            "DD-MM-YYYY"
-                          )
-                          : null
-                      }
+                      value={dayjs(
+                        addUpdateViewRecord?.paymentDate,
+                        "YYYY-MM-DD"
+                      )}
                       slotProps={{
                         textField: {
                           error: false,
@@ -1441,19 +1287,35 @@ const Form = (props) => {
           </DialogContent>
           <DialogActions>
             <Button
-              onClick={(e) => onHandleUpdate()}
+              onClick={onHandleUpdate}
               variant="outlined"
               startIcon={<AutoFixHighIcon />}
             >
               Update Record
             </Button>
           </DialogActions>
-        </BootstrapDialog >
+        </BootstrapDialog>
       </>
     );
   } else if (props.op == "Renewal") {
     return (
       <>
+        <Snackbar
+          open={alertMsg}
+          autoHideDuration={3000}
+          onClose={handleClickAlertMsgClose}
+          TransitionComponent={transition}
+          key={transition ? transition.name : ""}
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        >
+          <Alert
+            onClose={handleClickAlertMsgClose}
+            severity="warning"
+            sx={{ width: "100%", marginTop: "8px", fontWeight: "bold" }}
+          >
+            {warningMessage}
+          </Alert>
+        </Snackbar>
         <BootstrapDialog
           onClose={handleClose}
           aria-labelledby="customized-dialog-title"
@@ -1594,16 +1456,11 @@ const Form = (props) => {
                       className="w-100"
                       label="Joining Date"
                       name="joiningDate"
-                      value={
-                        dayjs(
-                          addUpdateViewRecord?.joiningDate || null
-                        ).isValid()
-                          ? dayjs(
-                            addUpdateViewRecord?.joiningDate,
-                            "DD-MM-YYYY"
-                          )
-                          : null
-                      } // Ensure the value is properly formatted
+                      disabled
+                      value={dayjs(
+                        addUpdateViewRecord?.joiningDate,
+                        "YYYY-MM-DD"
+                      )}
                       slotProps={{
                         textField: {
                           error: false,
@@ -1622,16 +1479,10 @@ const Form = (props) => {
                       className="w-100"
                       label="Payment Date"
                       name="paymentDate"
-                      value={
-                        dayjs(
-                          addUpdateViewRecord?.paymentDate || null
-                        ).isValid()
-                          ? dayjs(
-                            addUpdateViewRecord?.paymentDate,
-                            "DD-MM-YYYY"
-                          )
-                          : null
-                      }
+                      value={dayjs(
+                        addUpdateViewRecord?.paymentDate,
+                        "YYYY-MM-DD"
+                      )}
                       slotProps={{
                         textField: {
                           error: false,
