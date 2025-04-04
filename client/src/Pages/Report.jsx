@@ -103,10 +103,10 @@ const Report = () => {
 
     if (field === "startDate") {
       // Handle payment date change
-      newsearchData.startDate = e ? e.format("DD-MM-YYYY") : null;
+      newsearchData.startDate = e ? e.format("YYYY-MM-DD") : null;
     } else if (field === "endDate") {
       // Handle joiningDate date change
-      newsearchData.endDate = e ? e.format("DD-MM-YYYY") : null;
+      newsearchData.endDate = e ? e.format("YYYY-MM-DD") : null;
     } else {
       // Handle other input fields
       const trimmedValue = e?.target?.value;
@@ -202,44 +202,50 @@ const Report = () => {
       color: "#0B374D",
       icon: "fa-brands fa-codepen",
       title: "Total Members",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta, impedit?",
+      count: "0",
+      // description:
+      // "Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta, impedit?",
     },
     {
       id: 2,
       color: "#1286A8",
       icon: "SwitchAccountIcon",
       title: "Total Revenue",
-      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+      count: "0",
+      // description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
     },
     {
       id: 3,
       color: "#D2B53B",
       icon: "fa-brands fa-css3",
       title: "Remaining Amount",
-      description: "Lorem ipsum dolor sit.",
+      count: "0",
+      // description: "Lorem ipsum dolor sit.",
     },
     {
       id: 4,
       color: "#DA611E",
       icon: "fa-brands fa-js",
       title: "New Joiners",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor laboriosam odio alias.",
+      count: "0",
+      // description:
+      // "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor laboriosam odio alias.",
     },
     {
       id: 5,
       color: "#AC2A1A",
       icon: "fa-brands fa-github",
       title: "Ovre Due members",
-      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+      count: "0",
+      // description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
     },
     {
       id: 5,
       color: "#7aac1a",
       icon: "fa-brands fa-github",
       title: "Unpaid Amount members",
-      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+      count: "0",
+      // description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
     },
   ];
   return (
@@ -263,12 +269,8 @@ const Report = () => {
                   <DatePicker
                     className="w-100 me-3"
                     label="Start Date"
-                    name="joiningDate"
-                    value={
-                      dayjs(addUpdateViewRecord?.joiningDate || null).isValid()
-                        ? dayjs(addUpdateViewRecord?.joiningDate, "DD-MM-YYYY")
-                        : null
-                    } // Ensure the value is properly formatted
+                    name="startDate"
+                    value={dayjs(addUpdateViewRecord?.startDate, "YYYY-MM-DD")}
                     slotProps={{
                       textField: {
                         error: false,
@@ -286,11 +288,7 @@ const Report = () => {
                     className="w-100 me-3"
                     label="End Date"
                     name="endDate"
-                    value={
-                      dayjs(addUpdateViewRecord?.joiningDate || null).isValid()
-                        ? dayjs(addUpdateViewRecord?.joiningDate, "DD-MM-YYYY")
-                        : null
-                    } // Ensure the value is properly formatted
+                    value={dayjs(addUpdateViewRecord?.endDate, "YYYY-MM-DD")}
                     slotProps={{
                       textField: {
                         error: false,
@@ -347,7 +345,7 @@ const Report = () => {
                   {cards.map((card) => (
                     <li key={card.id} style={{ "--accent-color": card.color }}>
                       <div className="title">{card.title}</div>
-                      <div className="descr">{card.description}</div>
+                      <div className="title">{card.count}</div>
                     </li>
                   ))}
                 </ul>

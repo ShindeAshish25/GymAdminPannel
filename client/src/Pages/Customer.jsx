@@ -87,9 +87,16 @@ const Customer = () => {
 
   const onHandleClick = (row, operation) => {
     console.log(row + operation + "******************clicked");
-    setIsOpenDialog((isOpenDialog) => !isOpenDialog);
+    setIsOpenDialog(true);
+    setDialogComp(true);
     setDialogComp(
-      <Form data={row} op={operation} getActiveCustomer={getActiveCust} />
+      <Form
+        data={row}
+        op={operation}
+        getActiveCustomer={getActiveCust}
+        setIsOpenDialog={setIsOpenDialog}
+        isOpenDialog={isOpenDialog}
+      />
     );
   };
 
@@ -102,9 +109,8 @@ const Customer = () => {
   };
 
   const getActiveCust = async () => {
-
     try {
-      const response = await axios.get(baseURL + "/getActiveCust", { headers, });
+      const response = await axios.get(baseURL + "/getActiveCust", { headers });
       console.log(response.data.data);
 
       const data = await Promise.all(
@@ -115,27 +121,22 @@ const Customer = () => {
       );
 
       setActiveCust(data);
-
     } catch (error) {
-      console.log(err);
+      console.log(error);
     }
-
   };
 
   const fetchImage = async (file) => {
-
-    const imageURL = baseURL.replace('/api/customers', '') + file
+    const imageURL = baseURL.replace("/api/customers", "") + file;
 
     try {
-      const response = await axios.get(imageURL, { responseType: 'blob', });
+      const response = await axios.get(imageURL, { responseType: "blob" });
       const imgURL = URL.createObjectURL(response.data);
       return imgURL;
     } catch (err) {
-      console.error('Error fetching the image:', err);
+      console.error("Error fetching the image:", err);
     }
   };
-
-
 
   return (
     <>

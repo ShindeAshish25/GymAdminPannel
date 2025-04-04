@@ -36,8 +36,9 @@ const CustTable = (props) => {
   };
 
   const onHandleClick = (data, operation) => {
-    console.log(data + "---" + operation + "---" + "clicked");
-    setIsOpenDialog((isOpenDialog) => !isOpenDialog);
+    // console.log("data", data);
+    // console.log(data + "---" + operation + "---" + "clicked");
+    setIsOpenDialog(true);
     setDialogComp(true);
     setData(data);
     setOperation(operation);
@@ -48,7 +49,6 @@ const CustTable = (props) => {
   };
 
   const onHandleDelete = async (row) => {
-
     axios
       .post(baseURL + "/deleteCust", row, {
         headers,
@@ -142,35 +142,35 @@ const CustTable = (props) => {
                       {row?.memberships == 1
                         ? "1 Month"
                         : row?.memberships == 2
-                          ? "2 Months"
-                          : row?.memberships == 3
-                            ? "3 Months"
-                            : row?.memberships == 4
-                              ? "4 Months"
-                              : row?.memberships == 5
-                                ? "5 Months"
-                                : row?.memberships == 6
-                                  ? "6 Months"
-                                  : row?.memberships == 7
-                                    ? "7 Months"
-                                    : row?.memberships == 8
-                                      ? "8 Months"
-                                      : row?.memberships == 9
-                                        ? "9 Months"
-                                        : row?.memberships == 10
-                                          ? "10 Months"
-                                          : row?.memberships == 11
-                                            ? "11 Months"
-                                            : row?.memberships == 12
-                                              ? "12 Months"
-                                              : "-"}
+                        ? "2 Months"
+                        : row?.memberships == 3
+                        ? "3 Months"
+                        : row?.memberships == 4
+                        ? "4 Months"
+                        : row?.memberships == 5
+                        ? "5 Months"
+                        : row?.memberships == 6
+                        ? "6 Months"
+                        : row?.memberships == 7
+                        ? "7 Months"
+                        : row?.memberships == 8
+                        ? "8 Months"
+                        : row?.memberships == 9
+                        ? "9 Months"
+                        : row?.memberships == 10
+                        ? "10 Months"
+                        : row?.memberships == 11
+                        ? "11 Months"
+                        : row?.memberships == 12
+                        ? "12 Months"
+                        : "-"}
                     </TableCell>
                     <TableCell>
                       {row?.batch === "M"
                         ? "Morning"
                         : row?.batch === "E"
-                          ? "Evening"
-                          : "-"}
+                        ? "Evening"
+                        : "-"}
                     </TableCell>
                     <TableCell>{row?.renew}</TableCell>
                     <TableCell>
@@ -192,7 +192,7 @@ const CustTable = (props) => {
                           <AutorenewIcon
                             sx={{ color: "#eb3c5a" }}
                             className="me-2"
-                            onClick={() => onHandleClick?.(row, "Renewal")}
+                            onClick={() => onHandleClick(row, "Renewal")}
                           />
                           <DeleteIcon
                             sx={{ color: "#eb3c5a" }}
@@ -221,6 +221,8 @@ const CustTable = (props) => {
       {isOpenDialog ? (
         <Form
           data={data}
+          setIsOpenDialog={setIsOpenDialog}
+          isOpenDialog={isOpenDialog}
           op={operation}
           getActiveCustomer={props.getActiveCustomer}
         />

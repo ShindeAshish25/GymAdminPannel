@@ -299,7 +299,7 @@ function Navbar() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {alertData?.length < 0 ? (
+                {alertData?.length > 0 ? (
                   <>
                     {alertData?.map((alertData, index) => (
                       <MenuItem
