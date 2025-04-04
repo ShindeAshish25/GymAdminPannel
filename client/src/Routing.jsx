@@ -14,7 +14,6 @@ import Contacthtml from "./Website/Contacthtml.jsx";
 import "./App.css";
 
 export const Routing = () => {
-  
   function AuthenticatedLayout({ children }) {
     return (
       <>
