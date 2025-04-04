@@ -271,13 +271,11 @@ const Form = (props) => {
 
     const data = new FormData();
     for (const key in addUpdateViewRecord) {
-      if (key === 'photo' && !(addUpdateViewRecord[key] instanceof Blob)) {
-        data.append(key, addUpdateViewRecord[key]);
-      }
+      data.append(key, addUpdateViewRecord[key]);
     }
 
 
-    await axios.post(baseURL + "/addCust", data, { headers })
+    await axios.post(baseURL + "/addCust", data)
       .then((response) => {
         console.log(response.data);
         if (response.data.status === true) {
@@ -435,7 +433,7 @@ const Form = (props) => {
     for (const key in addUpdateViewRecord) {
       if (key !== 'photo') {
         data.append(key, addUpdateViewRecord[key]);
-      } else if ( key === 'photo' && (addUpdateViewRecord[key] instanceof File)) {
+      } else if (key === 'photo' && (addUpdateViewRecord[key] instanceof File)) {
         data.append(key, addUpdateViewRecord[key]);
       }
     }
@@ -659,7 +657,7 @@ const Form = (props) => {
               <div className="col-md-3">
                 <TextField
                   id="outlined-basic"
-                  label="Frist Name"
+                  label="First Name"
                   variant="outlined"
                   name="firstName"
                   fullWidth

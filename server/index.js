@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const connectDB = require('./config/db')
+const path = require('path')
 const customerRoutes = require('./routes/customer-router')
 
 const app = express();
@@ -12,7 +13,7 @@ const PORT = process.env.PORT || 5000
 app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/uploads', express.static('uploads'));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // API Routes
 app.use('/api/customers', customerRoutes)

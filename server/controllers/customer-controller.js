@@ -3,11 +3,11 @@ const Customer = require('../models/customer-modal');
 const path = require('path')
 const fs = require('fs')
 const { dateStringToDate } = require('../utils/helper');
+const { log } = require('console');
 
 //createCustomer
 const createCustomer = async (req, res) => {
-
-
+    
     try {
         const { email, mobileNo, joiningDate, paymentDate } = req.body;
 
@@ -17,7 +17,7 @@ const createCustomer = async (req, res) => {
             return res.status(409).json({ status: false, message: 'customer already exists' });
         }
 
-        const fileName = req.file.filename.replace(' ', '_');
+        const fileName = req.file.filename.replaceAll(' ', '_');
         const imagePath = `/uploads/${fileName}`;
         // Convert the date string to a Date object in Asia/Kolkata timezone
         const joiningDateObject = dateStringToDate(joiningDate);
@@ -31,7 +31,7 @@ const createCustomer = async (req, res) => {
 
     } catch (error) {
         console.log(error);
-        res.status(500).json({ status: false, message: 'internal server error', });
+        res.status(500).json({ status: false, message: 'Internal server error', });
     }
 }
 
