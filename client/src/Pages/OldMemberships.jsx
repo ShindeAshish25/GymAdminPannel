@@ -41,7 +41,7 @@ const OldMemberships = () => {
   const [dialogComp, setDialogComp] = React.useState();
   const [OldMember, setOldMember] = React.useState([]);
   const [addData, setAddData] = React.useState({
-    fristName: "",
+    firstName: "",
     lastName: "",
     mobileNo: "",
     email: "",
@@ -58,7 +58,7 @@ const OldMemberships = () => {
 
   const rows = [
     {
-      fristName: "Alex",
+      firstName: "Alex",
       lastName: "JOhne",
       custId: "1",
       mobileNo: "9049831815",
@@ -74,7 +74,7 @@ const OldMemberships = () => {
       img: "https://wac-cdn.atlassian.com/dam/jcr:ba03a215-2f45-40f5-8540-b2015223c918/Max-R_Headshot%20(1).jpg?cdnVersion=2480",
     },
     {
-      fristName: "Yogesh ",
+      firstName: "Yogesh ",
       lastName: "Raut",
       mobileNo: "9049831815",
       custId: "2",
@@ -90,7 +90,7 @@ const OldMemberships = () => {
       img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcg4Y51XjQ-zSf87X4nUPTQzsF83eFdZswTg&s",
     },
     {
-      fristName: "Rahul ",
+      firstName: "Rahul ",
       lastName: "patil",
       custId: "3",
       mobileNo: "9049831815",
@@ -106,7 +106,7 @@ const OldMemberships = () => {
       img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2bcBC2rxeYymW9_yJ1xbxz8tmAn--t7_NCVGlirSsgKXXCff9aCyV82uXVmTSEB8GO-A&usqp=CAU",
     },
     {
-      fristName: "John",
+      firstName: "John",
       lastName: "Doe",
       custId: "1",
       mobileNo: "9049831815",
@@ -122,7 +122,7 @@ const OldMemberships = () => {
       img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
     },
     {
-      fristName: "Ashish ",
+      firstName: "Ashish ",
       lastName: "Shinde",
       mobileNo: "9049831815",
       custId: "2",
@@ -138,7 +138,7 @@ const OldMemberships = () => {
       img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKMjeeornJdOe6FD8JTzqih-CByVmSWpSD0g&s",
     },
     {
-      fristName: "Mohsin ",
+      firstName: "Mohsin ",
       lastName: "Sayadd",
       custId: "3",
       mobileNo: "9049831815",
@@ -154,7 +154,7 @@ const OldMemberships = () => {
       img: "https://plus.unsplash.com/premium_photo-1682089892133-556bde898f2c?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c3R1ZGVudCUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D",
     },
     {
-      fristName: "Alex",
+      firstName: "Alex",
       lastName: "JOhne",
       custId: "1",
       mobileNo: "9049831815",
@@ -170,7 +170,7 @@ const OldMemberships = () => {
       img: "https://wac-cdn.atlassian.com/dam/jcr:ba03a215-2f45-40f5-8540-b2015223c918/Max-R_Headshot%20(1).jpg?cdnVersion=2480",
     },
     {
-      fristName: "Yogesh ",
+      firstName: "Yogesh ",
       lastName: "Raut",
       mobileNo: "9049831815",
       custId: "2",
@@ -186,7 +186,7 @@ const OldMemberships = () => {
       img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcg4Y51XjQ-zSf87X4nUPTQzsF83eFdZswTg&s",
     },
     {
-      fristName: "Rahul ",
+      firstName: "Rahul ",
       lastName: "patil",
       custId: "3",
       mobileNo: "9049831815",
@@ -202,7 +202,7 @@ const OldMemberships = () => {
       img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2bcBC2rxeYymW9_yJ1xbxz8tmAn--t7_NCVGlirSsgKXXCff9aCyV82uXVmTSEB8GO-A&usqp=CAU",
     },
     {
-      fristName: "John",
+      firstName: "John",
       lastName: "Doe",
       custId: "1",
       mobileNo: "9049831815",
@@ -218,7 +218,7 @@ const OldMemberships = () => {
       img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
     },
     {
-      fristName: "Ashish ",
+      firstName: "Ashish ",
       lastName: "Shinde",
       mobileNo: "9049831815",
       custId: "2",
@@ -234,7 +234,7 @@ const OldMemberships = () => {
       img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKMjeeornJdOe6FD8JTzqih-CByVmSWpSD0g&s",
     },
     {
-      fristName: "Mohsin ",
+      firstName: "Mohsin ",
       lastName: "Sayadd",
       custId: "3",
       mobileNo: "9049831815",
@@ -250,7 +250,7 @@ const OldMemberships = () => {
       img: "https://plus.unsplash.com/premium_photo-1682089892133-556bde898f2c?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c3R1ZGVudCUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D",
     },
     {
-      fristName: "Yogesh ",
+      firstName: "Yogesh ",
       lastName: "Raut",
       mobileNo: "9049831815",
       custId: "2",
@@ -266,7 +266,7 @@ const OldMemberships = () => {
       img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcg4Y51XjQ-zSf87X4nUPTQzsF83eFdZswTg&s",
     },
     {
-      fristName: "Rahul ",
+      firstName: "Rahul ",
       lastName: "patil",
       custId: "3",
       mobileNo: "9049831815",
@@ -282,7 +282,7 @@ const OldMemberships = () => {
       img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2bcBC2rxeYymW9_yJ1xbxz8tmAn--t7_NCVGlirSsgKXXCff9aCyV82uXVmTSEB8GO-A&usqp=CAU",
     },
     {
-      fristName: "John",
+      firstName: "John",
       lastName: "Doe",
       custId: "1",
       mobileNo: "9049831815",
@@ -298,7 +298,7 @@ const OldMemberships = () => {
       img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
     },
     {
-      fristName: "Ashish ",
+      firstName: "Ashish ",
       lastName: "Shinde",
       mobileNo: "9049831815",
       custId: "2",
@@ -359,17 +359,33 @@ const OldMemberships = () => {
   }, []);
 
   const getOldMember = async () => {
-    await axios
-      .get(baseURL + "/getAllMember", {
-        headers,
-      })
-      .then((response) => {
-        setOldMember(response?.data.data);
-        console.log(response.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    try {
+      const response = await axios.get(baseURL + "/getAllMember", { headers, });
+      console.log(response.data.data);
+
+      const data = await Promise.all(
+        response.data.data.map(async (ele) => {
+          const imgUrl = await fetchImage(ele.photo);
+          return { ...ele, photo: imgUrl };
+        })
+      );
+
+      setOldMember(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchImage = async (file) => {
+    const imageURL = baseURL.replace("/api/customers", "") + file;
+
+    try {
+      const response = await axios.get(imageURL, { responseType: "blob" });
+      const imgURL = URL.createObjectURL(response.data);
+      return imgURL;
+    } catch (err) {
+      console.error("Error fetching the image:", err);
+    }
   };
 
   return (

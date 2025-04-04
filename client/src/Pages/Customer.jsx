@@ -59,6 +59,10 @@ const Customer = () => {
     photo: "",
   });
 
+  React.useEffect(() => {
+    getActiveCust();
+  }, []);
+
   const onSeachChange = (e) => {
     setSearchQuery(e.target.value);
   };
@@ -100,9 +104,7 @@ const Customer = () => {
     );
   };
 
-  React.useEffect(() => {
-    getActiveCust();
-  }, []);
+
 
   const headers = {
     "Content-Type": "application/json",

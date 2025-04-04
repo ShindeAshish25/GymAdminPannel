@@ -100,14 +100,34 @@ const OverdueMemberships = () => {
   }, []);
 
   const getOverDueMember = async () => {
-    await axios
-      .get(baseURL + "/getOverDueMember", { headers })
-      .then((response) => {
-        setOverDueMember(response?.data?.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    try {
+      const response = await axios.get(baseURL + "/getOverDueMember", { headers });
+      console.log(response.data.data);
+
+      const data = await Promise.all(
+        response.data.data.map(async (ele) => {
+          const imgUrl = await fetchImage(ele.photo);
+          return { ...ele, photo: imgUrl };
+        })
+      );
+
+      setOverDueMember(data);
+    } catch (error) {
+      console.log(error);
+    }
+
+  };
+
+  const fetchImage = async (file) => {
+    const imageURL = baseURL.replace("/api/customers", "") + file;
+
+    try {
+      const response = await axios.get(imageURL, { responseType: "blob" });
+      const imgURL = URL.createObjectURL(response.data);
+      return imgURL;
+    } catch (err) {
+      console.error("Error fetching the image:", err);
+    }
   };
 
   console.log("overDueMember");

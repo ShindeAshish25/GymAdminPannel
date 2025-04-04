@@ -38,7 +38,7 @@ export const Routing = () => {
           <Route path="/login" element={<LoginPage />} />
           {/* Authenticated Routes */}
           <Route
-            path="/Customer"
+            path="/customer"
             element={
               <AuthenticatedLayout>
                 <Customer />
@@ -62,7 +62,7 @@ export const Routing = () => {
             }
           />
           <Route
-            path="/Report"
+            path="/report"
             element={
               <AuthenticatedLayout>
                 <Report />

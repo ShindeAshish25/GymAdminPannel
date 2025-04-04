@@ -359,7 +359,7 @@ const Form = (props) => {
       });
   };
 
-  const onHanddelRenew = async (e) => {
+  const onHandleRenew = async (e) => {
     if (isNotValid(addUpdateViewRecord.batch)) {
       handleClickAlertMsg(TransitionTop, "Batch' is missing");
       return;
@@ -386,6 +386,10 @@ const Form = (props) => {
       return;
     }
 
+
+
+    //Api call - ReNew
+
     const renewMembership = {
       custId: addUpdateViewRecord.custId,
       paymentDate: addUpdateViewRecord.paymentDate,
@@ -396,12 +400,17 @@ const Form = (props) => {
       batch: addUpdateViewRecord.batch,
     };
 
-    // console.log(addUpdateViewRecord);
+    // const data = new FormData();
+    // for (const key in addUpdateViewRecord) {
+    //   if (key !== "photo") {
+    //     data.append(key, addUpdateViewRecord[key]);
+    //   } else if (key === 'photo' && (addUpdateViewRecord[key] instanceof File)) {
+    //     data.append(key, addUpdateViewRecord[key]);
+    //   }
+    // }
 
     await axios
-      .post(baseURL + "/renewMemberShip", renewMembership, {
-        headers,
-      })
+      .post(baseURL + "/renewMemberShip", renewMembership)
       .then((response) => {
         // console.log(response.data);
         if (response.data.respMsg === "success") {
@@ -956,8 +965,8 @@ const Form = (props) => {
                         backgroundImage: image
                           ? `url(${image})`
                           : addUpdateViewRecord.photo
-                          ? `url(${addUpdateViewRecord.photo})`
-                          : "none",
+                            ? `url(${addUpdateViewRecord.photo})`
+                            : "none",
                       }}
                     ></div>
                   </div>
@@ -1686,7 +1695,7 @@ const Form = (props) => {
           </DialogContent>
           <DialogActions>
             <Button
-              onClick={onHanddelRenew}
+              onClick={onHandleRenew}
               variant="outlined"
               startIcon={<AutorenewIcon />}
             >

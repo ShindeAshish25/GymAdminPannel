@@ -7,7 +7,7 @@ const { log } = require('console');
 
 //createCustomer
 const createCustomer = async (req, res) => {
-    
+
     try {
         const { email, mobileNo, joiningDate, paymentDate } = req.body;
 
@@ -41,7 +41,7 @@ const updateCustomer = async (req, res) => {
     try {
         const { custId, joiningDate, paymentDate } = req.body;
         const body = req.body
-        const fileName = req?.file?.filename?.replace(' ', '_');
+        const fileName = req?.file?.filename?.replace(' ', '_') || '';
 
         // Find the user/document in the database
         const customer = await Customer.findById(custId);
@@ -74,7 +74,7 @@ const updateCustomer = async (req, res) => {
     } catch (error) {
         console.log(error);
 
-        res.status(500).json({ status: false, message: 'internal server error', error });
+        res.status(500).json({ status: false, message: 'Internal server error', error });
     }
 }
 
@@ -95,7 +95,7 @@ const deleteCustomer = async (req, res) => {
     } catch (error) {
         console.log(error);
 
-        res.status(500).json({ status: false, message: 'internal server error', error });
+        res.status(500).json({ status: false, message: 'Internal server error', error });
     }
 }
 
@@ -176,7 +176,7 @@ const getAlertData = async (req, res) => {
         customers.forEach(customer => customer.custId = customer._id);
 
         if (!customers.length) {
-            return res.status(404).json({ status: false, message: 'No customers data found' });
+            return res.status(200).json({ status: false, message: 'No customers data found', data: [] });
         }
 
         res.status(200).json({ status: true, message: 'Alert customers retrieved successfully', data: customers })
@@ -184,7 +184,7 @@ const getAlertData = async (req, res) => {
     } catch (error) {
         console.log(error);
 
-        res.status(500).json({ status: false, message: 'internal server error' });
+        res.status(500).json({ status: false, message: 'Internal server error' });
     }
 }
 
