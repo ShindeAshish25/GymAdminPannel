@@ -91,7 +91,7 @@ const CustCard = (props) => {
 
   return (
     <>
-      <div className="CardDiv my-5">
+      <div className="CardDiv my-0">
         <div className="row g-4">
           {rowsToDisplay?.length === 0 ? (
             <p> Record not found </p>
@@ -138,10 +138,10 @@ const CustCard = (props) => {
                       </>
                     ) : null}
                   </div>
-                  <div className="card-body">
-                    <h5 className="card-title">
+                  <div className="card-body p-0">
+                    <h6 className="card-title">
                       {row?.firstName + " " + row?.lastName}
-                    </h5>
+                    </h6>
                     <p className="card-text">{row?.mobileNo}</p>
                     <div className="d-flex  flex-column">
                       <p className="card-text">
@@ -157,7 +157,6 @@ const CustCard = (props) => {
             ))
           )}
         </div>
-
         <TablePagination
           rowsPerPageOptions={[4, 8, 12, 16]}
           component="div"
@@ -167,8 +166,9 @@ const CustCard = (props) => {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
+       
       </div>
-
+      
       {isOpenDialog ? (
         <Form
           data={data}

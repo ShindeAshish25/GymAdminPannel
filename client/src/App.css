@@ -7,6 +7,10 @@ body {
     /* Hide default scrollbar */
 }
 
+.ReactCode{
+    overflow-y: hidden !important;
+}
+
 .adminPannel {
     background-color: #ec1313 !important;
 }
@@ -63,16 +67,21 @@ header {
     background: linear-gradient(to right, #eb3c5a, #f67831) !important;
 }
 
+.CardDiv{
+    height: 320px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
 
 .CardDiv .card-img-top {
-    width: 175px !important;
-    height: 160px !important;
+    width: 100px !important;
+    height: 100px !important;
     object-fit: cover;
     border: 2px solid #afa9a9;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     margin: 0 auto;
     border-radius: 50% !important;
-    transform: translateY(-30%);
+    /* transform: translateY(-30%); */
 }
 
 .CardDiv .card {
@@ -85,7 +94,10 @@ header {
 
 .card-title {
     font-weight: bold;
-    font-size: 1.5em;
+    font-size: 1.1em;
+}
+.card-text { 
+    font-size: 0.8em;
 }
 
 .btn-primary {
@@ -134,7 +146,7 @@ header {
     background-color: #a99c95;
     position: absolute;
     bottom: 0;
-    width: 100vw !important;
+    width: 98vw !important;
     color: #ffffff;
 }
 
@@ -210,15 +222,15 @@ header {
     border-radius: 10px;
     background-color: #dadada;
     margin-top: 45px;
-    max-height: 580px;
-    min-height: 580px;
+    max-height: 500px;
+    min-height: 500px;
 
 }
 
 .cardBox .cardDiv {
     overflow-y: auto;
     overflow-x: hidden;
-    height: 515px;
+    height: 280px;
 
 }
 
@@ -385,7 +397,7 @@ header {
 
 .css-1dc80h3-MuiTableCell-root,
 .css-1plsf6o {
-    padding: 10px !important;
+    padding: 5px !important;
 }
 
 .css-1pk1fka,

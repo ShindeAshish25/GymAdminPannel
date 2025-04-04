@@ -489,7 +489,7 @@ const Report = () => {
               {viewType === "list" && (
                 <CustTable filteredRows={filteredRows} op="reports" />
               )}
-              {viewType === "card" && <CustCard filteredRows={filteredRows} />}
+              {viewType === "card" && <CustCard filteredRows={filteredRows} op="reports" />}
             </div>
           </div>
         </div>

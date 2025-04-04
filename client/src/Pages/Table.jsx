@@ -20,7 +20,7 @@ import Swal from "sweetalert2";
 
 const CustTable = (props) => {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(3);
   const [isOpenDialog, setIsOpenDialog] = React.useState(false);
   const [dialogComp, setDialogComp] = React.useState(false);
   const [data, setData] = useState({});
@@ -102,7 +102,7 @@ const CustTable = (props) => {
       <Paper className="tableDiv" sx={{ width: "100%", overflow: "hidden" }}>
         <TableContainer
           component={Paper}
-          sx={{ minWidth: 650, maxHeight: 450 }}
+          sx={{ minWidth: 650, maxHeight: 250 }}
         >
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
@@ -111,10 +111,10 @@ const CustTable = (props) => {
                 <TableCell>Mobile</TableCell>
                 <TableCell>Address</TableCell>
                 <TableCell>Joining Date</TableCell>
-                <TableCell>Remaining Amount</TableCell>
+                <TableCell>Payment Date</TableCell>
+                <TableCell>Remaining Amt</TableCell>
                 <TableCell>Memberships</TableCell>
-                <TableCell>Batch</TableCell>
-                <TableCell>Renew Memberships</TableCell>
+                <TableCell>Batch</TableCell> 
                 <TableCell>Action</TableCell>
               </TableRow>
             </TableHead>
@@ -128,17 +128,20 @@ const CustTable = (props) => {
               ) : (
                 rowsToDisplay?.map((row, index) => (
                   <TableRow key={index}>
-                    <TableCell className="tableImg">
-                      <img className="me-3" src={row?.photo} alt="IMG" />
+                    <TableCell  style={{ width: '12%' }} className="tableImg">
+                      <img className="me-2" src={row?.photo} alt="IMG" />
                       {row?.firstName + " " + row?.lastName}
                     </TableCell>
-                    <TableCell>{row?.mobileNo}</TableCell>
-                    <TableCell>{row?.address}</TableCell>
-                    <TableCell>
+                    <TableCell style={{ width: '3%' }} className="text-start">{row?.mobileNo}</TableCell>
+                    <TableCell style={{ width: '15%' }}>{row?.address}</TableCell>
+                    <TableCell style={{ width: '5%' }} className="text-center">
                       {dayjs.utc(row?.joiningDate).format("DD-MM-YYYY")}
                     </TableCell>
-                    <TableCell>{row?.remainingAmount}</TableCell>
-                    <TableCell>
+                    <TableCell style={{ width: '5%' }} className="text-center">
+                      {dayjs.utc(row?.paymentDate).format("DD-MM-YYYY")}
+                    </TableCell>
+                    <TableCell style={{ width: '5%' }} className="text-end">{row?.remainingAmount}</TableCell>
+                    <TableCell style={{ width: '1%' }} className="text-center">
                       {row?.memberships == 1
                         ? "1 Month"
                         : row?.memberships == 2
@@ -165,25 +168,24 @@ const CustTable = (props) => {
                         ? "12 Months"
                         : "-"}
                     </TableCell>
-                    <TableCell>
+                    <TableCell style={{ width: '1%' }} className="text-center">
                       {row?.batch === "M"
                         ? "Morning"
                         : row?.batch === "E"
                         ? "Evening"
                         : "-"}
                     </TableCell>
-                    <TableCell>{row?.renew}</TableCell>
-                    <TableCell>
+                    <TableCell style={{ width: '1%' }} className="text-end">
                       {props.op === "customer" ? (
                         <>
                           <EditIcon
                             sx={{ color: "#eb3c5a" }}
-                            className="me-2"
+                            className="me-1"
                             onClick={() => onHandleClick(row, "Update")}
                           />
                           <DeleteIcon
                             sx={{ color: "#eb3c5a" }}
-                            className="me-2"
+                            className="me-1"
                             onClick={() => onHandleDelete(row, "Delete")}
                           />
                         </>
@@ -191,16 +193,31 @@ const CustTable = (props) => {
                         <>
                           <AutorenewIcon
                             sx={{ color: "#eb3c5a" }}
-                            className="me-2"
+                            className="me-1"
                             onClick={() => onHandleClick(row, "Renewal")}
                           />
                           <DeleteIcon
                             sx={{ color: "#eb3c5a" }}
-                            className="me-2"
+                            className="me-1"
                             onClick={() => onHandleDelete(row, "Delete")}
                           />
                         </>
-                      ) : null}
+                      ) 
+                      : props.op === "old" ? (
+                        <>
+                          <AutorenewIcon
+                            sx={{ color: "#eb3c5a" }}
+                            className="me-1"
+                            onClick={() => onHandleClick(row, "Renewal")}
+                          />
+                          <DeleteIcon
+                            sx={{ color: "#eb3c5a" }}
+                            className="me-1"
+                            onClick={() => onHandleDelete(row, "Delete")}
+                          />
+                        </>
+                      ) :
+                       null}
                     </TableCell>
                   </TableRow>
                 ))
