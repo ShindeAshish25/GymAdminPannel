@@ -33,6 +33,8 @@ import CustTable from "./Table";
 import CustCard from "./CustCard";
 import { baseURL } from "./config";
 import axios from "axios";
+import { useLocation, useNavigate } from "react-router-dom";
+import CatchFunction from "./CatchFunction";
 
 const Customer = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -58,6 +60,8 @@ const Customer = () => {
     gender: "",
     photo: "",
   });
+  const location = useLocation();
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     getActiveCust();
@@ -103,15 +107,15 @@ const Customer = () => {
     );
   };
 
-
-
   const headers = {
     "Content-Type": "application/json",
   };
 
   const getActiveCust = async () => {
     try {
-      const response = await axios.get(baseURL + "/getActiveCust", { headers });
+      const response = await axios.get(baseURL + "/getActiveCust", {
+        headers,
+      });
       console.log(response.data.data);
 
       const data = await Promise.all(
@@ -124,6 +128,7 @@ const Customer = () => {
       setActiveCust(data);
     } catch (error) {
       console.log(error);
+      CatchFunction(error, navigate, location?.state);
     }
   };
 
@@ -136,6 +141,7 @@ const Customer = () => {
       return imgURL;
     } catch (err) {
       console.error("Error fetching the image:", err);
+      CatchFunction(err, navigate, location?.state);
     }
   };
 

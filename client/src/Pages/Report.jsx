@@ -20,6 +20,8 @@ import "jspdf-autotable";
 import autoTable from "jspdf-autotable";
 import * as XLSX from "xlsx";
 import logo from "../assets/logo1.png";
+import CatchFunction from "./CatchFunction";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Report = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -241,6 +243,9 @@ const Report = () => {
   const onSeachChange = (e) => setSearchQuery(e.target.value);
   const toggleView = (view) => setViewType(view);
 
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const filteredRows = data.tableData?.filter((row) =>
     [
       row.firstName,
@@ -288,16 +293,9 @@ const Report = () => {
       setAddUpdateViewRecord("");
       setDisabled(false);
     } catch (err) {
-      if (err.response?.status === 409) {
-        handleClickAlertMsg(
-          TransitionTop,
-          "Conflict: Customer already exists."
-        );
-        setDisabled(true);
-      } else {
-        console.error(err);
-        setDisabled(true);
-      }
+      console.error(err);
+      CatchFunction(err, navigate, location?.state);
+      setDisabled(true);
     }
   };
 

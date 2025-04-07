@@ -33,6 +33,8 @@ import axios from "axios";
 import Form from "./Form";
 import CustTable from "./Table";
 import CustCard from "./CustCard";
+import { useLocation, useNavigate } from "react-router-dom";
+import CatchFunction from "./CatchFunction";
 
 const OverdueMemberships = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -55,6 +57,9 @@ const OverdueMemberships = () => {
     paymentMode: "",
     gender: "",
   });
+
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const onSeachChange = (e) => {
     setSearchQuery(e.target.value);
@@ -100,7 +105,9 @@ const OverdueMemberships = () => {
 
   const getOverDueMember = async () => {
     try {
-      const response = await axios.get(baseURL + "/getOverDueMember", { headers });
+      const response = await axios.get(baseURL + "/getOverDueMember", {
+        headers,
+      });
       console.log(response.data.data);
 
       const data = await Promise.all(
@@ -113,8 +120,8 @@ const OverdueMemberships = () => {
       setOverDueMember(data);
     } catch (error) {
       console.log(error);
+      CatchFunction(error, navigate, location?.state);
     }
-
   };
 
   const fetchImage = async (file) => {
@@ -126,6 +133,7 @@ const OverdueMemberships = () => {
       return imgURL;
     } catch (err) {
       console.error("Error fetching the image:", err);
+      CatchFunction(err, navigate, location?.state);
     }
   };
 
