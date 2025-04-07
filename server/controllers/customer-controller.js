@@ -120,7 +120,7 @@ const getAllCustomers = async (req, res) => {
 //list of All Active Customers
 const getActiveCustomers = async (req, res) => {
     try {
-        const customers = await Customer.find({ active: 'Y' }).lean(); // Fetch all customers from DB
+        const customers = await Customer.find({ active: 'Y' }).sort({ _id: -1 }).lean(); // Fetch all customers from DB
         customers.forEach(customer => customer.custId = customer._id);
 
         if (!customers.length) {

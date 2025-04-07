@@ -1,8 +1,16 @@
+const fs = require('fs')
+const path = require('path')
 const multer = require('multer')
 
+const checkAndCreateFolder = (folderPath) => {
+    if (!fs.existsSync(folderPath)) {
+        fs.mkdirSync(folderPath, { recursive: true });
+    }
+};
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
+        checkAndCreateFolder('uploads');
         cb(null, 'uploads/')
     },
     filename: function (req, file, cb) {
