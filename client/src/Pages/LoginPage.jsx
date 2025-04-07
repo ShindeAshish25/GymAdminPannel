@@ -20,6 +20,7 @@ const LoginPage = () => {
 
     if (username === "admin" && password === "admin") {
       navigate("/customer"); // Navigate to the "/customer" page
+      localStorage.setItem("isLoggedIn", "true");
     } else {
       alert("Incorrect username or password");
       setUsername("");
