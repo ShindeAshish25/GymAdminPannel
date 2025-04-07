@@ -18,7 +18,7 @@ import { Close, Home, HomeRepairServiceTwoTone } from "@mui/icons-material";
 import { baseURL } from "./config";
 import axios from "axios";
 
-const pages = ["Customer", "Overdue Memberships", "Old Memberships", "Report"];
+const pages = ["Customer", "Overdue Memberships", "All Memberships", "Report"];
 
 const style = {
   position: "absolute",
@@ -62,85 +62,6 @@ function Navbar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
-  const alertDataa = [
-    {
-      id: "1",
-      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-      firstName: "Ashish ",
-      lastName: "Shinde",
-      mobNo: "9049831815",
-      lastPaymetDate: "27-12-2024",
-      lastMembership: "1 month",
-      membershipDueDate: "27-12-2024",
-    },
-    {
-      id: "2",
-      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-      firstName: "Yogesh ",
-      lastName: "Shinde",
-    },
-    {
-      id: "3",
-      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-      firstName: "Sunny ",
-      lastName: "Shinde",
-    },
-    {
-      id: "1",
-      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-      firstName: "Ashish ",
-      lastName: "Shinde",
-    },
-    {
-      id: "2",
-      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-      firstName: "Yogesh ",
-      lastName: "Shinde",
-    },
-    {
-      id: "3",
-      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-      firstName: "Sunny ",
-      lastName: "Shinde",
-    },
-    {
-      id: "1",
-      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-      firstName: "Ashish ",
-      lastName: "Shinde",
-    },
-    {
-      id: "2",
-      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-      firstName: "Yogesh ",
-      lastName: "Shinde",
-    },
-    {
-      id: "3",
-      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-      firstName: "Sunny ",
-      lastName: "Shinde",
-    },
-    {
-      id: "1",
-      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-      firstName: "Ashish ",
-      lastName: "Shinde",
-    },
-    {
-      id: "2",
-      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-      firstName: "Yogesh ",
-      lastName: "Shinde",
-    },
-    {
-      id: "3",
-      img: "https://codingyaar.com/wp-content/uploads/bootstrap-profile-card-image.jpg",
-      firstName: "Sunny ",
-      lastName: "Shinde",
-    },
-  ];
 
   React.useEffect(() => {
     getAlertData();
@@ -374,7 +295,8 @@ function Navbar() {
 
                 <p>
                   <b className="me-3">Last Paymet Date :</b>
-                  {data.paymentDate}
+                  {/* {data.paymentDate} */}
+                  {new Date(data.paymentDate).toLocaleDateString('en-GB')}
                 </p>
                 <p>
                   <b className="me-3">Last Membership :</b>
@@ -382,7 +304,8 @@ function Navbar() {
                 </p>
                 <p>
                   <b className="me-3"> Due Date:</b>
-                  {data.membershipDueDate}
+                  {/* {data.membershipDueDate} */}
+                  {new Date(data.membershipDueDate).toLocaleDateString('en-GB')}
                 </p>
                 <p>
                   <b className="me-3"> Remaining Amount:</b>

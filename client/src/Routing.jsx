@@ -4,7 +4,7 @@ import "bootstrap/dist/js/bootstrap.min.js";
 import Customer from "./Pages/Customer";
 import Navbar from "./Pages/NavBar";
 import OverdueMemberships from "./Pages/OverdueMemberships";
-import OldMemberships from "./Pages/OldMemberships";
+import AllMemberships from "./Pages/OldMemberships";
 import LoginPage from "./Pages/LoginPage";
 import Report from "./Pages/Report";
 import Footer from "./Pages/Footer";
@@ -53,10 +53,10 @@ export const Routing = () => {
             }
           />
           <Route
-            path="/oldmemberships"
+            path="/allmemberships"
             element={
               <AuthenticatedLayout>
-                <OldMemberships />
+                <AllMemberships />
               </AuthenticatedLayout>
             }
           />

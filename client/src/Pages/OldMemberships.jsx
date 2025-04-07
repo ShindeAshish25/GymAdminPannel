@@ -333,8 +333,7 @@ const OldMemberships = () => {
       row.firstName.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
       row.lastName.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
       row.mobileNo.startsWith(searchQuery) ||
-      row.addresses.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
-      row.joingDate.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
+      row.address.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
       row.remainingAmount.toString().startsWith(searchQuery) ||
       row.memberships.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
       row.batch.toLowerCase().startsWith(searchQuery.toLowerCase())

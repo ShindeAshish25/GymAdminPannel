@@ -210,11 +210,11 @@ const CustTable = (props) => {
                             className="me-1"
                             onClick={() => onHandleClick(row, "Renewal")}
                           />
-                          <DeleteIcon
+                          {/* <DeleteIcon
                             sx={{ color: "#eb3c5a" }}
                             className="me-1"
                             onClick={() => onHandleDelete(row, "Delete")}
-                          />
+                          /> */}
                         </>
                       ) :
                        null}
