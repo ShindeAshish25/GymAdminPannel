@@ -9,7 +9,7 @@ const { log } = require('console');
 const createCustomer = async (req, res) => {
 
     try {
-        const { email, mobileNo, joiningDate, paymentDate } = req.body;
+        const { email, mobileNo, joiningDate, paymentDate, memberships } = req.body;
 
         //check customer is present or not
         const customerExists = await Customer.findOne({ $or: [{ email: email }, { mobileNo: mobileNo }] });
@@ -22,7 +22,9 @@ const createCustomer = async (req, res) => {
         // Convert the date string to a Date object in Asia/Kolkata timezone
         const joiningDateObject = dateStringToDate(joiningDate);
         const paymentDateObject = dateStringToDate(paymentDate);
-        const body = { ...req.body, joiningDate: joiningDateObject, paymentDate: paymentDateObject, photo: imagePath }
+        const alertDate = new Date(new Date(paymentDateObject).setMonth(paymentDateObject.getMonth() + parseInt(memberships)));
+
+        const body = { ...req.body, joiningDate: joiningDateObject, paymentDate: paymentDateObject, alertDate: alertDate, photo: imagePath }
 
         //create customer record
         const createdCustomer = await Customer.create(body)
@@ -39,7 +41,7 @@ const createCustomer = async (req, res) => {
 const updateCustomer = async (req, res) => {
 
     try {
-        const { custId, joiningDate, paymentDate } = req.body;
+        const { custId, joiningDate, paymentDate, memberships } = req.body;
         const body = req.body
         const fileName = req?.file?.filename?.replace(' ', '_') || '';
 
@@ -60,7 +62,12 @@ const updateCustomer = async (req, res) => {
 
         // Convert the date string to a Date object in Asia/Kolkata timezone
         if (joiningDate) body.joiningDate = dateStringToDate(joiningDate);
-        if (paymentDate) body.paymentDate = dateStringToDate(paymentDate);
+        if (paymentDate) {
+            const paymentDateObject = dateStringToDate(paymentDate);
+            body.paymentDate = paymentDateObject;
+            body.alertDate = new Date(new Date(paymentDateObject).setMonth(paymentDateObject.getMonth() + parseInt(memberships)));
+        }
+
         if (fileName) body.photo = `/uploads/${fileName}`;
 
         //update customer 
@@ -142,7 +149,7 @@ const getOverdDueCustomers = async (req, res) => {
         // Get today's date in Asia/Singapore timezone
         const today = moment.tz('Asia/Singapore').startOf('day').toDate(); // Start of the day
 
-        const dueCustomers = await Customer.find({ paymentDate: { $lt: today } }).lean();// Fetch all customers from DB
+        const dueCustomers = await Customer.find({ alertDate: { $lt: today } }).lean();// Fetch all customers from DB
         dueCustomers.forEach(customer => customer.custId = customer._id);
 
         if (!dueCustomers.length) {
@@ -162,7 +169,7 @@ const getOverdDueCustomers = async (req, res) => {
 
 
 
-//renew customer Membership
+//get Alert customer list
 const getAlertData = async (req, res) => {
     try {
         // Get today's date in Asia/Singapore timezone
@@ -172,7 +179,7 @@ const getAlertData = async (req, res) => {
         const twoDaysFromNow = moment(today).add(3, 'days').startOf('day').toDate(); // strat of the day
 
         // Fetch all customers from DB  
-        const customers = await Customer.find({ paymentDate: { $gte: today, $lte: twoDaysFromNow } }).lean();
+        const customers = await Customer.find({ alertDate: { $gte: today, $lte: twoDaysFromNow } }).lean();
         customers.forEach(customer => customer.custId = customer._id);
 
         if (!customers.length) {

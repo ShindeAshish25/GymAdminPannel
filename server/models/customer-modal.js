@@ -40,6 +40,10 @@ const customerSchema = mongoose.Schema({
         type: Date,
         require: true
     },
+    alertDate: {
+        type: Date,
+        require: true
+    },
     memberships: {
         type: String,
         require: true
