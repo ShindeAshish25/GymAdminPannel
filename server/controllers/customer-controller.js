@@ -113,7 +113,7 @@ const getAllCustomers = async (req, res) => {
         customers.forEach(customer => customer.custId = customer._id);
 
         if (!customers.length) {
-            return res.status(404).json({ status: false, message: 'No customers data found' });
+            return res.status(200).json({ status: false, message: 'No customers data found', data: [] });
         }
 
         res.status(200).json({ status: true, message: 'Customers retrieved successfully', data: customers })
@@ -131,7 +131,7 @@ const getActiveCustomers = async (req, res) => {
         customers.forEach(customer => customer.custId = customer._id);
 
         if (!customers.length) {
-            return res.status(404).json({ status: false, message: 'No customers data found' });
+            return res.status(200).json({ status: false, message: 'No customers data found', data: [] });
         }
 
         res.status(200).json({ status: true, message: 'Active customers retrieved successfully', data: customers })
@@ -153,7 +153,7 @@ const getOverdDueCustomers = async (req, res) => {
         dueCustomers.forEach(customer => customer.custId = customer._id);
 
         if (!dueCustomers.length) {
-            return res.status(404).json({ status: false, message: 'No customers data found' });
+            return res.status(200).json({ status: false, message: 'No customers data found', data: [] });
         }
 
         res.status(200).json({ status: true, message: 'OverdDue customers retrieved successfully', data: dueCustomers })
