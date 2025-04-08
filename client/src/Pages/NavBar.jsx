@@ -18,6 +18,7 @@ import { Close, Home, HomeRepairServiceTwoTone } from "@mui/icons-material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { baseURL } from "./config";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 const pages = ["Customer", "Overdue Memberships", "All Memberships", "Report"];
 
@@ -37,6 +38,8 @@ function Navbar() {
   const [open, setOpen] = React.useState(false);
   const [data, setData] = React.useState("");
   const [alertData, setAlertData] = React.useState([]);
+
+  const location = useLocation();
 
   const handleOpen = (data) => {
     console.log(data);
@@ -66,7 +69,7 @@ function Navbar() {
 
   React.useEffect(() => {
     getAlertData();
-  }, []);
+  }, [location]);
 
   const getAlertData = async () => {
     try {

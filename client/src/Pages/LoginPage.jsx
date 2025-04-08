@@ -69,7 +69,7 @@ const LoginPage = () => {
 
             <input type="submit" value="Login" />
           </form>
-          <p className="p-3 text-center error">Only for Admin Use</p>
+          <p className="p-3 text-center errorr">Only for Admin Use</p>
         </div>
       </div>
     </div>

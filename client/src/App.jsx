@@ -4,9 +4,16 @@ import "./App.css";
 import { Routing } from "./Routing";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
-  return <Routing />;
+  return (
+    <>
+      <Routing />
+      <ToastContainer position="top-right" />
+    </>
+  );
 }
 
 export default App;

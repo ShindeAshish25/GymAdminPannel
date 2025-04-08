@@ -281,6 +281,8 @@ const Report = () => {
       return;
     }
 
+    setDisabled(false);
+
     try {
       const response = await axios.post(
         `${baseURL}/report`,
@@ -428,7 +430,21 @@ const Report = () => {
     });
 
     doc.save(
-      `Report from ${addUpdateViewRecord.startDate} TO ${addUpdateViewRecord.endDate}`
+      `Report from ${new Date(addUpdateViewRecord.startDate).toLocaleDateString(
+        "en-GB",
+        {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        }
+      )} TO ${new Date(addUpdateViewRecord.endDate).toLocaleDateString(
+        "en-GB",
+        {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        }
+      )}`
     );
   };
 
