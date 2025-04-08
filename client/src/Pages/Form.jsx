@@ -200,8 +200,8 @@ const Form = (props) => {
       data.append(key, addUpdateViewRecord[key]);
     }
 
-
-    await axios.post(baseURL + "/addCust", data)
+    await axios
+      .post(baseURL + "/addCust", data)
       .then((response) => {
         // console.log(response.data);
         if (response.data.status == true) {
@@ -299,7 +299,7 @@ const Form = (props) => {
     for (const key in addUpdateViewRecord) {
       if (key !== "photo") {
         data.append(key, addUpdateViewRecord[key]);
-      } else if (key === 'photo' && (addUpdateViewRecord[key] instanceof File)) {
+      } else if (key === "photo" && addUpdateViewRecord[key] instanceof File) {
         data.append(key, addUpdateViewRecord[key]);
       }
     }
@@ -385,8 +385,6 @@ const Form = (props) => {
       handleClickAlertMsg(TransitionTop, "Payment Mode' is missing");
       return;
     }
-
-
 
     //Api call - ReNew
 
@@ -568,9 +566,9 @@ const Form = (props) => {
                   label="Email"
                   variant="outlined"
                   name="email"
-                  inputProps={{
-                    maxLength: 25,
-                  }}
+                  // inputProps={{
+                  //   maxLength: 25,
+                  // }}
                   fullWidth
                   onChange={(e) => {
                     const email = e.target.value;
@@ -965,8 +963,8 @@ const Form = (props) => {
                         backgroundImage: image
                           ? `url(${image})`
                           : addUpdateViewRecord.photo
-                            ? `url(${addUpdateViewRecord.photo})`
-                            : "none",
+                          ? `url(${addUpdateViewRecord.photo})`
+                          : "none",
                       }}
                     ></div>
                   </div>
@@ -1036,9 +1034,9 @@ const Form = (props) => {
                   variant="outlined"
                   name="email"
                   value={addUpdateViewRecord.email || ""}
-                  inputProps={{
-                    maxLength: 25,
-                  }}
+                  // inputProps={{
+                  //   maxLength: 25,
+                  // }}
                   fullWidth
                   onChange={(e) => {
                     const email = e.target.value;
@@ -1442,9 +1440,9 @@ const Form = (props) => {
                   name="email"
                   value={addUpdateViewRecord.email || ""}
                   disabled
-                  inputProps={{
-                    maxLength: 25,
-                  }}
+                  // inputProps={{
+                  //   maxLength: 25,
+                  // }}
                   fullWidth
                   onChange={(e) => {
                     const email = e.target.value;

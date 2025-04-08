@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import Customer from "./Pages/Customer";
@@ -12,6 +12,7 @@ import Indexhtml from "./Website/Indexhtml.jsx";
 import Galleryhtml from "./Website/Galleryhtml.jsx";
 import Contacthtml from "./Website/Contacthtml.jsx";
 import "./App.css";
+import Error from "./Pages/Error.jsx";
 
 export const Routing = () => {
   function AuthenticatedLayout({ children }) {
@@ -24,6 +25,12 @@ export const Routing = () => {
     );
   }
 
+  const ProtectedRoute = ({ children }) => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+    return isLoggedIn ? children : <Navigate to="/login" replace />;
+  };
+
   return (
     <>
       <BrowserRouter>
@@ -35,39 +42,53 @@ export const Routing = () => {
         </Routes>
         <Routes className="adminPannel">
           <Route path="/login" element={<LoginPage />} />
-          {/* Authenticated Routes */}
+
+          {/* Protected Routes */}
           <Route
             path="/customer"
             element={
-              <AuthenticatedLayout>
-                <Customer />
-              </AuthenticatedLayout>
+              <ProtectedRoute>
+                <AuthenticatedLayout>
+                  <Customer />
+                </AuthenticatedLayout>
+              </ProtectedRoute>
             }
           />
+
           <Route
             path="/overduememberships"
             element={
-              <AuthenticatedLayout>
-                <OverdueMemberships />
-              </AuthenticatedLayout>
+              <ProtectedRoute>
+                <AuthenticatedLayout>
+                  <OverdueMemberships />
+                </AuthenticatedLayout>
+              </ProtectedRoute>
             }
           />
+
           <Route
             path="/allmemberships"
             element={
-              <AuthenticatedLayout>
-                <AllMemberships />
-              </AuthenticatedLayout>
+              <ProtectedRoute>
+                <AuthenticatedLayout>
+                  <AllMemberships />
+                </AuthenticatedLayout>
+              </ProtectedRoute>
             }
           />
+
           <Route
             path="/report"
             element={
-              <AuthenticatedLayout>
-                <Report />
-              </AuthenticatedLayout>
+              <ProtectedRoute>
+                <AuthenticatedLayout>
+                  <Report />
+                </AuthenticatedLayout>
+              </ProtectedRoute>
             }
           />
+
+          <Route path="/*" element={<Error />} />
         </Routes>
       </BrowserRouter>
     </>

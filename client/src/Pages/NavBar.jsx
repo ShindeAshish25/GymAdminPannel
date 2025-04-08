@@ -15,6 +15,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Modal from "@mui/material/Modal";
 import { Close, Home, HomeRepairServiceTwoTone } from "@mui/icons-material";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { baseURL } from "./config";
 import axios from "axios";
 
@@ -203,21 +204,49 @@ function Navbar() {
               ))}
             </Box>
 
-            <Box sx={{ flexGrow: 0 }}>
-              <IconButton
-                onClick={(e) => {
-                  e.preventDefault(); // Prevent default anchor behavior
-                  navigate("/"); // Navigate programmatically
-                }}
-                sx={{ p: 0 }}
-              >
-                <Home sx={{ color: "white" }} color="action" className="me-3" />
-              </IconButton>
-              <Tooltip title="Over Due Memberships customer">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+            <Box>
+              <Tooltip title="Home">
+                <IconButton
+                  onClick={(e) => {
+                    e.preventDefault(); // Prevent default anchor behavior
+                    navigate("/"); // Navigate programmatically
+                    localStorage.removeItem("isLoggedIn");
+                  }}
+                  sx={{ p: 0 }}
+                >
+                  <Home
+                    sx={{ color: "white" }}
+                    color="action"
+                    className="me-3"
+                  />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Over Due Members">
+                <IconButton
+                  onClick={handleOpenUserMenu}
+                  className="me-3"
+                  sx={{ p: 0 }}
+                >
                   <Badge badgeContent={alertData?.length} color="error">
                     <MailIcon sx={{ color: "white" }} color="action" />
                   </Badge>
+                </IconButton>
+              </Tooltip>
+
+              <Tooltip title="LogOut">
+                <IconButton
+                  onClick={(e) => {
+                    e.preventDefault(); // Prevent default anchor behavior
+                    navigate("/login"); // Navigate programmatically
+                    localStorage.removeItem("isLoggedIn");
+                  }}
+                  sx={{ p: 0 }}
+                >
+                  <LogoutIcon
+                    sx={{ color: "white" }}
+                    color="action"
+                    className="me-3"
+                  />
                 </IconButton>
               </Tooltip>
 
@@ -296,17 +325,16 @@ function Navbar() {
                 <p>
                   <b className="me-3">Last Paymet Date :</b>
                   {/* {data.paymentDate} */}
-                  {new Date(data.paymentDate).toLocaleDateString('en-GB')}
+                  {new Date(data.paymentDate).toLocaleDateString("en-GB")}
                 </p>
                 <p>
                   <b className="me-3">Last Membership :</b>
                   {data.memberships} month
                 </p>
-                <p>
-                  <b className="me-3"> Due Date:</b>
-                  {/* {data.membershipDueDate} */}
-                  {new Date(data.membershipDueDate).toLocaleDateString('en-GB')}
-                </p>
+                {/* <p>
+                  <b className="me-3"> Due Date:</b> 
+                  {new Date(data.membershipDueDate).toLocaleDateString("en-GB")}
+                </p> */}
                 <p>
                   <b className="me-3"> Remaining Amount:</b>
                   {data.remainingAmount}

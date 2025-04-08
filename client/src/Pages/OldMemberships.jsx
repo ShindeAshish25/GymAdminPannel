@@ -33,6 +33,8 @@ import CustTable from "./Table";
 import CustCard from "./CustCard";
 import { baseURL } from "./config";
 import axios from "axios";
+import CatchFunction from "./CatchFunction";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const OldMemberships = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -55,6 +57,9 @@ const OldMemberships = () => {
     paymentMode: "",
     gender: "",
   });
+
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const rows = [
     {
@@ -359,7 +364,7 @@ const OldMemberships = () => {
 
   const getOldMember = async () => {
     try {
-      const response = await axios.get(baseURL + "/getAllMember", { headers, });
+      const response = await axios.get(baseURL + "/getAllMember", { headers });
       console.log(response.data.data);
 
       const data = await Promise.all(
@@ -372,6 +377,7 @@ const OldMemberships = () => {
       setOldMember(data);
     } catch (error) {
       console.log(error);
+      CatchFunction(error, navigate, location?.state);
     }
   };
 
@@ -384,6 +390,7 @@ const OldMemberships = () => {
       return imgURL;
     } catch (err) {
       console.error("Error fetching the image:", err);
+      CatchFunction(err, navigate, location?.state);
     }
   };
 
