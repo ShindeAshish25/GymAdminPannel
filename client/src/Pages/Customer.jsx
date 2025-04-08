@@ -116,7 +116,7 @@ const Customer = () => {
       const response = await axios.get(baseURL + "/getActiveCust", {
         headers,
       });
-      console.log(response.data.data);
+      // console.log(response.data.data);
 
       const data = await Promise.all(
         response.data.data.map(async (ele) => {

@@ -39,11 +39,10 @@ export const Routing = () => {
           <Route path="/" element={<Indexhtml />} />
           <Route path="/gallery" element={<Galleryhtml />} />
           <Route path="/contact" element={<Contacthtml />} />
-        </Routes>
-        <Routes className="adminPannel">
-          <Route path="/login" element={<LoginPage />} />
 
           {/* Protected Routes */}
+          <Route path="/login" element={<LoginPage />} />
+
           <Route
             path="/customer"
             element={
@@ -88,6 +87,7 @@ export const Routing = () => {
             }
           />
 
+          {/* Catch-all Route for Error Page */}
           <Route path="/*" element={<Error />} />
         </Routes>
       </BrowserRouter>
