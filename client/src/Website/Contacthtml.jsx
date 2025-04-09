@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import icon1 from "./img/icon/icon-1.png";
 import icon2 from "./img/icon/icon-2.png";
 import icon3 from "./img/icon/icon-3.png";
-import logo from "./myImg/Logo.png";
+import logo from "./myImg/logo.PNG";
 
 const Contacthtml = () => {
   const navigate = useNavigate();

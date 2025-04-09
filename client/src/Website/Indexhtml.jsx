@@ -46,7 +46,7 @@ import banner_person from "./myImg/banner.png";
 
 import testimonial_1 from "./img/testimonial/testimonial-1.jpg";
 import quote_left from "./img/testimonial/quote-left.png";
-import logo from "./myImg/Logo.png";
+import logo from "./myImg/logo.PNG";
 
 const Indexhtml = () => {
   const navigate = useNavigate();

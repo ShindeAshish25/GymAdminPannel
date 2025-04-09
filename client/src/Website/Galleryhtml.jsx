@@ -36,7 +36,7 @@ import gallery10 from "./myImg/Screenshot_10.png";
 import gallery11 from "./myImg/Screenshot_11.png";
 // import gallery12 from "./myImg/Screenshot_12.png";
 
-import logo from "./myImg/Logo.png";
+import logo from "./myImg/logo.PNG";
 
 const images = [
   gallery1,
