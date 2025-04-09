@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import loginImg from "../assets/loginP.jpg";
 import { IconButton } from "@mui/material";
 import { Home } from "@mui/icons-material";
-import logo from "../assets/Logo.png";
+import logo from "../assets/logo.png";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");

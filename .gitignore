@@ -11,6 +11,7 @@ client/node_modules
 client/dist
 client/dist-ssr
 client/*.local
+client/src/Pages/config.jsx
 
 # Editor directories and files
 .vscode/*
