@@ -17,7 +17,7 @@ const createCustomer = async (req, res) => {
             return res.status(409).json({ status: false, message: 'customer already exists' });
         }
 
-        const fileName = req.file.filename.replaceAll(' ', '_');
+        const fileName = req?.file?.filename.replaceAll(' ', '_') || '';
         const imagePath = `/uploads/${fileName}`;
         // Convert the date string to a Date object in Asia/Kolkata timezone
         const joiningDateObject = dateStringToDate(joiningDate);

@@ -110,12 +110,15 @@ const OverdueMemberships = () => {
       });
       console.log(response.data.data);
 
-      const data = await Promise.all(
-        response.data.data.map(async (ele) => {
-          const imgUrl = await fetchImage(ele.photo);
-          return { ...ele, photo: imgUrl };
-        })
-      );
+      let data = [];
+      if (response.data.data.length > 0) {
+        data = await Promise.all(
+          response.data.data.map(async (ele) => {
+            const imgUrl = await fetchImage(ele.photo);
+            return { ...ele, photo: imgUrl };
+          })
+        );
+      }
 
       setOverDueMember(data);
     } catch (error) {
