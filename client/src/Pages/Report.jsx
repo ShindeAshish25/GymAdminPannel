@@ -31,7 +31,7 @@ const Report = () => {
   const [addUpdateViewRecord, setAddUpdateViewRecord] = useState({});
   const [alertMsg, setAlertMsg] = useState(false);
   const [downloadAnchorEl, setDownloadAnchorEl] = useState(null);
-  const [disabled, setDisabled] = useState(true);
+  const [disabled, setDisabled] = useState(false);
 
   const [data, setData] = useState({
     cards: [
@@ -272,6 +272,7 @@ const Report = () => {
   };
 
   const onHandleSearch = async () => {
+    setDisabled(false);
     if (!addUpdateViewRecord.startDate) {
       handleClickAlertMsg(TransitionTop, "Start Date is missing");
       return;
@@ -296,7 +297,7 @@ const Report = () => {
       setDisabled(false);
     } catch (err) {
       console.error(err);
-      CatchFunction(err, navigate, location?.state);
+      // CatchFunction(err, navigate, location?.state);
       setDisabled(true);
     }
   };
@@ -446,6 +447,8 @@ const Report = () => {
         }
       )}`
     );
+    setDisabled(false);
+    setAddUpdateViewRecord("");
   };
 
   const generateExcel = () => {
@@ -466,6 +469,8 @@ const Report = () => {
       workbook,
       `Report from ${addUpdateViewRecord.startDate} TO ${addUpdateViewRecord.endDate}`
     );
+    setDisabled(false);
+    setAddUpdateViewRecord("");
   };
 
   return (
@@ -509,10 +514,11 @@ const Report = () => {
 
             <div>
               <Button
-                disabled={disabled}
+                disabled={!disabled}
                 style={{
                   cursor: "pointer",
-                  color: disabled === true ? "#b1b4b9" : "#eb3c5a",
+                  // color: disabled === true ? "#b1b4b9" : "#eb3c5a",
+                  color: disabled === true ? "#eb3c5a" : "#b1b4b9",
                   borderRadius: "50%",
                   fontSize: "25px",
                 }}

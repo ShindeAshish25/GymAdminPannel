@@ -638,7 +638,7 @@ const Indexhtml = () => {
                   </li>
                   <li>
                     <p>Personal trainer</p>
-                    <span>00 person</span>
+                    <span>01 person</span>
                   </li>
                   <li>
                     <p>Number of visits</p>
@@ -657,7 +657,7 @@ const Indexhtml = () => {
                   <div className="triangle"></div>
                 </div>
                 <h2 className="mi-price">
-                  ₹ 1800<span></span>
+                  ₹ 1500<span></span>
                 </h2>
                 <ul>
                   <li>
@@ -684,7 +684,7 @@ const Indexhtml = () => {
                   <h4>Premium</h4>
                   <div className="triangle"></div>
                 </div>
-                <h2 className="mi-price">₹ 3500</h2>
+                <h2 className="mi-price">₹ 3000</h2>
                 <ul>
                   <li>
                     <p>Duration</p>

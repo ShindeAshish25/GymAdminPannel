@@ -53,7 +53,9 @@ body {
 }
 
 .tableDiv thead .css-1jxw05q-MuiTableCell-root,
-.tableDiv thead .css-195ypl5 {
+.tableDiv thead .css-195ypl5,
+.tableDiv table th,
+.tableDiv .css-1vfms6x {
     background: linear-gradient(to right, #eb3c5a, #eb3c5a) !important;
     color: #ffff !important;
     font-weight: 700 !important;
@@ -118,9 +120,16 @@ header {
     margin: 0;
 }
 
-.css-1fgcw51-MuiTypography-root-MuiDialogTitle-root {
+.css-1fgcw51-MuiTypography-root-MuiDialogTitle-root,
+.css-yp65k2,
+.modalHeader {
     background: linear-gradient(to right, #eb3c5a, #f67831) !important;
     color: #ffffff !important;
+}
+
+.closeIcon {
+    color: #ffffff !important;
+    font-size: 30px !important;
 }
 
 .alertImg img {
@@ -142,12 +151,13 @@ header {
 }
 
 .Footer {
-    padding: 15px;
-    text-align: center;
-    background-color: #a99c95;
+    padding: 10px;
+    background-color: #8b634d;
     position: absolute;
     bottom: 0;
     width: 98vw !important;
+    display: flex;
+    justify-content: space-between;
     color: #ffffff;
 }
 

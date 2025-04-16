@@ -466,7 +466,11 @@ const Form = (props) => {
           TransitionComponent={Transition}
           maxWidth="lg"
         >
-          <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+          <DialogTitle
+            sx={{ m: 0, p: 2 }}
+            className="modalHeader"
+            id="customized-dialog-title"
+          >
             Add New Customer
           </DialogTitle>
           <IconButton
@@ -478,6 +482,7 @@ const Form = (props) => {
               top: 8,
               color: "#ffff",
             })}
+            className="closeIcon"
           >
             <CloseIcon />
           </IconButton>
@@ -690,12 +695,14 @@ const Form = (props) => {
                     <MenuItem value={"Cardio"}>Cardio</MenuItem>
                     <MenuItem value={"Strength"}>Strength Training</MenuItem>
                     <MenuItem value={"Core"}>Core Workouts</MenuItem>
+                    <MenuItem value={"WeightLoss"}>Weight Loss</MenuItem>
                     <MenuItem value={"Flexibility"}>
                       Flexibility and Mobility
                     </MenuItem>
                     <MenuItem value={"HIIT"}>
                       HIIT (High-Intensity Interval Training)
                     </MenuItem>
+                    <MenuItem value={"Other"}>Other</MenuItem>
                   </Select>
                 </FormControl>
               </div>
@@ -925,10 +932,15 @@ const Form = (props) => {
           TransitionComponent={Transition}
           maxWidth="lg"
         >
-          <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+          <DialogTitle
+            sx={{ m: 0, p: 2 }}
+            className="modalHeader"
+            id="customized-dialog-title"
+          >
             Update Customer
           </DialogTitle>
           <IconButton
+            className="closeIcon"
             aria-label="close"
             onClick={handleClose}
             sx={(theme) => ({
@@ -963,8 +975,8 @@ const Form = (props) => {
                         backgroundImage: image
                           ? `url(${image})`
                           : addUpdateViewRecord.photo
-                          ? `url(${addUpdateViewRecord.photo})`
-                          : "none",
+                            ? `url(${addUpdateViewRecord.photo})`
+                            : "none",
                       }}
                     ></div>
                   </div>
@@ -1164,12 +1176,14 @@ const Form = (props) => {
                     <MenuItem value={"Cardio"}>Cardio</MenuItem>
                     <MenuItem value={"Strength"}>Strength Training</MenuItem>
                     <MenuItem value={"Core"}>Core Workouts</MenuItem>
+                    <MenuItem value={"WeightLoss"}>Weight Loss</MenuItem>
                     <MenuItem value={"Flexibility"}>
                       Flexibility and Mobility
                     </MenuItem>
                     <MenuItem value={"HIIT"}>
                       HIIT (High-Intensity Interval Training)
                     </MenuItem>
+                    <MenuItem value={"Other"}>Other</MenuItem>
                   </Select>
                 </FormControl>
               </div>
@@ -1328,10 +1342,15 @@ const Form = (props) => {
           TransitionComponent={Transition}
           maxWidth="lg"
         >
-          <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+          <DialogTitle
+            sx={{ m: 0, p: 2 }}
+            className="modalHeader"
+            id="customized-dialog-title"
+          >
             Renewal Memberships
           </DialogTitle>
           <IconButton
+            className="closeIcon"
             aria-label="close"
             onClick={handleClose}
             sx={(theme) => ({
@@ -1563,12 +1582,14 @@ const Form = (props) => {
                     <MenuItem value={"Cardio"}>Cardio</MenuItem>
                     <MenuItem value={"Strength"}>Strength Training</MenuItem>
                     <MenuItem value={"Core"}>Core Workouts</MenuItem>
+                    <MenuItem value={"WeightLoss"}>Weight Loss</MenuItem>
                     <MenuItem value={"Flexibility"}>
                       Flexibility and Mobility
                     </MenuItem>
                     <MenuItem value={"HIIT"}>
                       HIIT (High-Intensity Interval Training)
                     </MenuItem>
+                    <MenuItem value={"Other"}>Other</MenuItem>
                   </Select>
                 </FormControl>
               </div>

@@ -128,12 +128,20 @@ const CustCard = (props) => {
                         <AutorenewIcon
                           sx={{ color: "#eb3c5a" }}
                           className="me-2"
-                          onClick={() => onHandleClick?.(row, "Renewal")}
+                          onClick={() => onHandleClick(row, "Renewal")}
                         />
                         <DeleteIcon
                           sx={{ color: "#eb3c5a" }}
                           className="me-2"
                           onClick={() => onHadelDelete(row, "Delete")}
+                        />
+                      </>
+                    ) : props.op === "old" ? (
+                      <>
+                        <AutorenewIcon
+                          sx={{ color: "#eb3c5a" }}
+                          className="me-2"
+                          onClick={() => onHandleClick(row, "Renewal")}
                         />
                       </>
                     ) : null}
@@ -166,9 +174,8 @@ const CustCard = (props) => {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-       
       </div>
-      
+
       {isOpenDialog ? (
         <Form
           data={data}
