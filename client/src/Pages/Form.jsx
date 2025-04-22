@@ -54,10 +54,6 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 const Form = (props) => {
   const [open, setOpen] = React.useState(false);
-  const [isCameraActive, setIsCameraActive] = useState(false);
-  const [imageSrc, setImageSrc] = useState(null);
-  const videoRef = useRef(null);
-  const canvasRef = useRef(null);
   const [addUpdateViewRecord, setAddUpdateViewRecord] = React.useState(
     props.data
   );
@@ -67,6 +63,11 @@ const Form = (props) => {
   const [image, setImage] = React.useState(DemoUser);
   const [printBill, setPrintBill] = React.useState(false);
   const [updateRecord, setUpdateRecord] = React.useState(props.data);
+
+  const [images, setImages] = useState(null);
+  const [showCamera, setShowCamera] = useState(false);
+  const videoRef = useRef(null);
+  const [stream, setStream] = useState(null);
 
   const style = {
     position: "absolute",
@@ -456,6 +457,87 @@ const Form = (props) => {
     setAlertMsg(false);
   };
 
+  // -------------------------------------------------------
+
+  const openCamera = async () => {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      Swal.fire({
+        title: "Oops...",
+        text: "Camera is not supported on this device or browser.",
+        icon: "error",
+      });
+      // alert("Camera is not supported on this device or browser.");
+      return;
+    }
+
+    try {
+      const mediaStream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+      });
+      setStream(mediaStream);
+      setShowCamera(true); // The videoRef will be available after this re-render
+    } catch (err) {
+      console.error("Error accessing camera:", err);
+      // alert(`Camera access failed: ${err.name} - ${err.message}`);
+      Swal.fire({
+        title: "Oops...",
+        text: `Camera access failed: ${err.name} - ${err.message}`,
+        icon: "error",
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (showCamera && videoRef.current && stream) {
+      videoRef.current.srcObject = stream;
+    }
+  }, [showCamera, stream]);
+
+  useEffect(() => {
+    if (showCamera && stream) {
+      console.log("Assigning stream to video");
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      } else {
+        console.warn("videoRef.current is null");
+      }
+    }
+  }, [showCamera, stream]);
+
+  const capturePhoto = () => {
+    const video = videoRef.current;
+    const canvas = document.createElement("canvas");
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const ctx = canvas.getContext("2d");
+
+    ctx.translate(canvas.width, 0); // move to right edge
+    ctx.scale(-1, 1); // flip horizontally
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    const imageDataURL = canvas.toDataURL("image/jpeg");
+
+    // Convert base64 to file object if needed
+    fetch(imageDataURL)
+      .then((res) => res.blob())
+      .then((blob) => {
+        const file = new File([blob], "captured.jpg", { type: "image/jpeg" });
+        const newsearchData = { ...addUpdateViewRecord, photo: file };
+        setAddUpdateViewRecord(newsearchData);
+        setImage(imageDataURL);
+      });
+
+    closeCamera();
+  };
+
+  const closeCamera = () => {
+    if (stream) {
+      stream.getTracks().forEach((track) => track.stop());
+    }
+    setShowCamera(false);
+  };
+  // -------------------------------------------------------
+
   if (props.op == "New") {
     return (
       <>
@@ -488,7 +570,7 @@ const Form = (props) => {
           </IconButton>
           <DialogContent dividers>
             <div className="row g-4 p-3">
-              <div className="col-md-12">
+              {/* <div className="col-md-12">
                 <div className="avatar-upload">
                   <div className="avatar-edit">
                     <input
@@ -507,6 +589,78 @@ const Form = (props) => {
                       id="imagePreview"
                       style={{ backgroundImage: `url(${image})` }}
                     ></div>
+                  </div>
+                </div>
+              </div> */}
+
+              <div className="col-md-12">
+                <div className="avatar-upload">
+                  <div className="avatar-edit">
+                    {/* Upload button */}
+                    <input
+                      type="file"
+                      id="imageUpload"
+                      accept=".png, .jpg, .jpeg"
+                      onChange={(e) => onInputChange(e, "photo")}
+                      style={{ display: "none" }}
+                    />
+                    <label htmlFor="imageUpload" title="Upload Photo">
+                      <EditIcon />
+                    </label>
+
+                    {/* Camera button */}
+                    <button
+                      type="button"
+                      title="Capture Photo"
+                      className="camera-icon"
+                      onClick={openCamera}
+                      style={{
+                        background: "none",
+                        border: "none",
+                        cursor: "pointer",
+                        marginLeft: "10px",
+                      }}
+                    >
+                      📷
+                    </button>
+                  </div>
+
+                  <div className="avatar-preview">
+                    <div
+                      id="imagePreview"
+                      style={{
+                        backgroundImage: `url(${image})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                      }}
+                    ></div>
+                    {/* Video for camera stream */}
+                    {showCamera && (
+                      <div className="camera-modal-overlay">
+                        <div className="camera-modal-content">
+                          <video
+                            ref={videoRef}
+                            autoPlay
+                            playsInline
+                            className="camera-video"
+                          />
+                          <div className="camera-btns">
+                            <button
+                              className="btn capture-btn"
+                              onClick={capturePhoto}
+                            >
+                              📸 Capture
+                            </button>
+                            <button
+                              className="btn cancel-btn"
+                              onClick={closeCamera}
+                            >
+                              ❌ Cancel
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -954,7 +1108,7 @@ const Form = (props) => {
           </IconButton>
           <DialogContent dividers>
             <div className="row g-4 p-3">
-              <div className="col-md-12">
+              {/* <div className="col-md-12">
                 <div className="avatar-upload">
                   <div className="avatar-edit">
                     <input
@@ -981,7 +1135,80 @@ const Form = (props) => {
                     ></div>
                   </div>
                 </div>
+              </div> */}
+
+              <div className="col-md-12">
+                <div className="avatar-upload">
+                  <div className="avatar-edit">
+                    {/* Upload button */}
+                    <input
+                      type="file"
+                      id="imageUpload"
+                      accept=".png, .jpg, .jpeg"
+                      onChange={(e) => onInputChange(e, "photo")}
+                      style={{ display: "none" }}
+                    />
+                    <label htmlFor="imageUpload" title="Upload Photo">
+                      <EditIcon />
+                    </label>
+
+                    {/* Camera button */}
+                    <button
+                      type="button"
+                      title="Capture Photo"
+                      className="camera-icon"
+                      onClick={openCamera}
+                      style={{
+                        background: "none",
+                        border: "none",
+                        cursor: "pointer",
+                        marginLeft: "10px",
+                      }}
+                    >
+                      📷
+                    </button>
+                  </div>
+
+                  <div className="avatar-preview">
+                    <div
+                      id="imagePreview"
+                      style={{
+                        backgroundImage: `url(${image})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                      }}
+                    ></div>
+                    {/* Video for camera stream */}
+                    {showCamera && (
+                      <div className="camera-modal-overlay">
+                        <div className="camera-modal-content">
+                          <video
+                            ref={videoRef}
+                            autoPlay
+                            playsInline
+                            className="camera-video"
+                          />
+                          <div className="camera-btns">
+                            <button
+                              className="btn capture-btn"
+                              onClick={capturePhoto}
+                            >
+                              📸 Capture
+                            </button>
+                            <button
+                              className="btn cancel-btn"
+                              onClick={closeCamera}
+                            >
+                              ❌ Cancel
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
+
               <div className="col-md-3">
                 <TextField
                   id="outlined-basic"

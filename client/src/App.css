@@ -451,3 +451,70 @@ header {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
+
+.camera-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    /* Semi-blur effect */
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.camera-modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.camera-video {
+    /* width: 50vw;
+    height: auto;
+    border-radius: 10px; */
+    width: 50vw;
+    /* max-width: 300px; */
+    height: auto;
+    max-height: 50vh;
+    border-radius: 10px;
+    background: black;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    transform: scaleX(-1);
+}
+
+.camera-btns {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.capture-btn {
+    background-color: #28a745;
+    color: white;
+}
+
+.cancel-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
