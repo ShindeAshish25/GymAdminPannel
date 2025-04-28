@@ -461,11 +461,10 @@ const Form = (props) => {
 
   const openCamera = async () => {
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      Swal.fire({
-        title: "Oops...",
-        text: "Camera is not supported on this device or browser.",
-        icon: "error",
-      });
+      handleClickAlertMsg(
+        TransitionTop,
+        "Camera is not supported on this device or browser."
+      );
       // alert("Camera is not supported on this device or browser.");
       return;
     }
@@ -479,11 +478,10 @@ const Form = (props) => {
     } catch (err) {
       console.error("Error accessing camera:", err);
       // alert(`Camera access failed: ${err.name} - ${err.message}`);
-      Swal.fire({
-        title: "Oops...",
-        text: `Camera access failed: ${err.name} - ${err.message}`,
-        icon: "error",
-      });
+      handleClickAlertMsg(
+        TransitionTop,
+        `Camera access failed: ${err.name} - ${err.message}`
+      );
     }
   };
 
