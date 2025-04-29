@@ -30,6 +30,10 @@ router.post('/renewMemberShip', customerControllers.updateCustomer)
 // getAlertData
 router.get('/getAlertData', customerControllers.getAlertData)
 
+//report
+router.post('/report', customerControllers.report)
+
+
 
 
 module.exports = router;

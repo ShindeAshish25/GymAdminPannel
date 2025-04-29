@@ -195,10 +195,63 @@ const getAlertData = async (req, res) => {
     }
 }
 
+//get report list
+const report = async (req, res) => {
+    try {
+        const { startDate, endDate } = req.body;
 
+        if (!startDate || !endDate) {
+            return res.status(400).json({ status: false, message: 'Start date and end date are required' });
+        }
 
+        const start = moment(startDate).startOf('day').toDate();
+        const end = moment(endDate).endOf('day').toDate();
 
+        const customers = await Customer.find({
+            paymentDate: { $gte: start, $lte: end }
+        }).lean();
 
+        if (!customers.length) {
+            return res.status(200).json({ status: false, message: 'No customers found in this date range', data: [] });
+        }
+
+        // Card statistics
+        const totalMembers = customers.length;
+        const totalRevenue = customers.reduce((sum, c) => sum + Number(c.paidAmount || 0), 0);
+        const remainingAmount = customers.reduce((sum, c) => sum + Number(c.remainingAmount || 0), 0);
+        const newJoiners = customers.filter(c => moment(c.joiningDate).isBetween(start, end, null, '[]')).length;
+        const overDueMembers = customers.filter(c => moment(c.paymentDate).isBefore(start) && c.active === 'Y').length;
+        const unpaidAmountMembers = customers.filter(c => Number(c.remainingAmount) > 0).length;
+
+        const cards = [
+            { id: 1, color: "#0B374D", title: "Total Members", count: totalMembers.toString() },
+            { id: 2, color: "#1286A8", title: "Total Revenue", count: totalRevenue.toString() },
+            { id: 3, color: "#D2B53B", title: "Remaining Amount", count: remainingAmount.toString() },
+            { id: 4, color: "#DA611E", title: "New Joiners", count: newJoiners.toString() },
+            { id: 5, color: "#AC2A1A", title: "Over Due Members", count: overDueMembers.toString() },
+            { id: 6, color: "#7aac1a", title: "Unpaid Amount Members", count: unpaidAmountMembers.toString() },
+        ];
+
+        // tableData includes all fields as-is
+        const tableData = customers.map(customer => ({
+            ...customer,
+            custId: customer._id, // for frontend identification
+        }));
+
+        res.status(200).json({
+            status: true,
+            message: 'Customers retrieved successfully',
+            data: {
+                cards,
+                tableData,
+            },
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ status: false, message: 'Internal server error' });
+    }
+};
 
 
 
@@ -210,5 +263,6 @@ module.exports = {
     getAlertData,
     createCustomer,
     updateCustomer,
-    deleteCustomer
+    deleteCustomer,
+    report
 }
