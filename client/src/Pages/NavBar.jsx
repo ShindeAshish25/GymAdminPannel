@@ -76,7 +76,6 @@ function Navbar() {
       const response = await axios.get(baseURL + "/getAlertData");
 
       if (response?.data?.status === true) {
-
         let data = [];
         if (response.data.data.length > 0) {
           data = await Promise.all(
@@ -97,7 +96,7 @@ function Navbar() {
   const fetchImage = async (file) => {
     const imageURL = baseURL.replace("/api/customers", "") + file;
     return imageURL;
-    
+
     try {
       const response = await axios.get(imageURL, { responseType: "blob" });
       const imgURL = URL.createObjectURL(response.data);

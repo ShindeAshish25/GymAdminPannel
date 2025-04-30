@@ -33,212 +33,7 @@ const Report = () => {
   const [downloadAnchorEl, setDownloadAnchorEl] = useState(null);
   const [disabled, setDisabled] = useState(false);
 
-  const [data, setData] = useState({
-    // cards: [
-    //   { id: 1, color: "#0B374D", title: "Total Members", count: "0" },
-    //   { id: 2, color: "#1286A8", title: "Total Revenue", count: "0" },
-    //   { id: 3, color: "#D2B53B", title: "Remaining Amount", count: "0" },
-    //   { id: 4, color: "#DA611E", title: "New Joiners", count: "0" },
-    //   { id: 5, color: "#AC2A1A", title: "Over Due Members", count: "0" },
-    //   { id: 6, color: "#7aac1a", title: "Unpaid Amount Members", count: "0" },
-    // ],
-    // tableData: [
-    //   {
-    //     _id: "67f02f4f7d17412745c588a1",
-    //     photo: "/uploads/1743793999401-820932774-Photo_ID.jpg",
-    //     firstName: "Ashish",
-    //     lastName: "Shinde",
-    //     mobileNo: "9049381815",
-    //     email: "ashishshinde485@gmail.com",
-    //     gender: "male",
-    //     address: "Hujur galli kolhapur Hujur galli kolhapur Hujur ga",
-    //     joiningDate: "2025-03-05T00:00:00.000Z",
-    //     paymentDate: "2025-03-05T00:00:00.000Z",
-    //     memberships: "1",
-    //     batch: "M",
-    //     training: "Cardio",
-    //     totalAmount: "500",
-    //     remainingAmount: "100",
-    //     paidAmount: "400",
-    //     paymentMode: "Cash",
-    //     active: "Y",
-    //     createdAt: "2025-04-04T19:13:19.877Z",
-    //     updatedAt: "2025-04-04T19:32:59.966Z",
-    //     __v: 0,
-    //     custId: "67f02f4f7d17412745c588a1",
-    //   },
-    //   {
-    //     _id: "67f02fe77d17412745c588a8",
-    //     photo: "/uploads/1743794151876-556609999-CK_ID_Photo.jpeg",
-    //     firstName: "chaianya",
-    //     lastName: "kovale",
-    //     mobileNo: "7884077077",
-    //     email: "ck24@gmail.com",
-    //     gender: "male",
-    //     address: "kolhapur",
-    //     joiningDate: "2025-03-04T00:00:00.000Z",
-    //     paymentDate: "2025-03-04T00:00:00.000Z",
-    //     memberships: "1",
-    //     batch: "E",
-    //     training: "Strength",
-    //     totalAmount: "1200",
-    //     remainingAmount: "200",
-    //     paidAmount: "1000",
-    //     paymentMode: "UPI",
-    //     active: "Y",
-    //     createdAt: "2025-04-04T19:15:51.883Z",
-    //     updatedAt: "2025-04-04T19:15:51.883Z",
-    //     __v: 0,
-    //     custId: "67f02fe77d17412745c588a8",
-    //   },
-    //   {
-    //     _id: "67f030857d17412745c588ac",
-    //     photo:
-    //       "/uploads/1743794308957-711412300-ab2827f1-a2ea-469f-874f-de59c41af595.jpeg",
-    //     firstName: "yogesh",
-    //     lastName: "Shinde",
-    //     mobileNo: "7878787878",
-    //     email: "sunny@gmail.com",
-    //     gender: "male",
-    //     address: "Somvar peth",
-    //     joiningDate: "2025-03-07T00:00:00.000Z",
-    //     paymentDate: "2025-03-07T00:00:00.000Z",
-    //     memberships: "1",
-    //     batch: "E",
-    //     training: "Cardio",
-    //     totalAmount: "500",
-    //     remainingAmount: "100",
-    //     paidAmount: "400",
-    //     paymentMode: "UPI",
-    //     active: "Y",
-    //     createdAt: "2025-04-04T19:18:29.021Z",
-    //     updatedAt: "2025-04-04T20:54:27.664Z",
-    //     __v: 0,
-    //     custId: "67f030857d17412745c588ac",
-    //   },
-    //   {
-    //     _id: "67f031f17d17412745c588b6",
-    //     photo:
-    //       "/uploads/1743794673030-587452850-man-listening-music-cellphone-gym.jpg",
-    //     firstName: "Aditya",
-    //     lastName: "Dalvi",
-    //     mobileNo: "8789878897",
-    //     email: "adit@gmail.com",
-    //     gender: "male",
-    //     address: "kolhapur",
-    //     joiningDate: "2025-04-05T00:00:00.000Z",
-    //     paymentDate: "2025-04-05T00:00:00.000Z",
-    //     memberships: "1",
-    //     batch: "M",
-    //     training: "Flexibility",
-    //     totalAmount: "900",
-    //     remainingAmount: "100",
-    //     paidAmount: "800",
-    //     paymentMode: "Cash",
-    //     active: "Y",
-    //     createdAt: "2025-04-04T19:24:33.530Z",
-    //     updatedAt: "2025-04-04T19:24:33.530Z",
-    //     __v: 0,
-    //     custId: "67f031f17d17412745c588b6",
-    //   },
-    //   {
-    //     _id: "67f032757d17412745c588ba",
-    //     photo: "/uploads/1743794805840-381005556-15620878_835_programmer.jpg",
-    //     firstName: "Yugant",
-    //     lastName: "More",
-    //     mobileNo: "3333333333",
-    //     email: "yugant@gmail.com",
-    //     gender: "male",
-    //     address: "Somvar peth",
-    //     joiningDate: "2025-04-04T00:00:00.000Z",
-    //     paymentDate: "2025-04-04T00:00:00.000Z",
-    //     memberships: "2",
-    //     batch: "M",
-    //     training: "Strength",
-    //     totalAmount: "700",
-    //     remainingAmount: "250",
-    //     paidAmount: "450",
-    //     paymentMode: "Cash",
-    //     active: "Y",
-    //     createdAt: "2025-04-04T19:26:45.898Z",
-    //     updatedAt: "2025-04-04T19:26:45.898Z",
-    //     __v: 0,
-    //     custId: "67f032757d17412745c588ba",
-    //   },
-    //   {
-    //     _id: "67f03c937d17412745c588c9",
-    //     photo: "/uploads/1743797395491-660533472-output-onlinepngtools.png",
-    //     firstName: "Prathamesh",
-    //     lastName: "Kumbhar",
-    //     mobileNo: "6598578798",
-    //     email: "prathamesh@gmail.com",
-    //     gender: "male",
-    //     address: "Somvar peth",
-    //     joiningDate: "2025-04-03T00:00:00.000Z",
-    //     paymentDate: "2025-03-14T00:00:00.000Z",
-    //     memberships: "2",
-    //     batch: "M",
-    //     training: "Core",
-    //     totalAmount: "700",
-    //     remainingAmount: "500",
-    //     paidAmount: "200",
-    //     paymentMode: "Cash",
-    //     active: "Y",
-    //     createdAt: "2025-04-04T20:09:55.996Z",
-    //     updatedAt: "2025-04-04T20:09:55.996Z",
-    //     __v: 0,
-    //     custId: "67f03c937d17412745c588c9",
-    //   },
-    //   {
-    //     _id: "67f03ced7d17412745c588cd",
-    //     photo: "/uploads/1743797485570-747921403-CK_ID_Photo.jpeg",
-    //     firstName: "ashish",
-    //     lastName: "shinde",
-    //     mobileNo: "9878548925",
-    //     email: "ashish@gmail.com",
-    //     gender: "male",
-    //     address: "Hujur galli kolhapur Hujur galli kolhapur Hujur ga",
-    //     joiningDate: "2025-03-12T00:00:00.000Z",
-    //     paymentDate: "2025-03-14T00:00:00.000Z",
-    //     memberships: "1",
-    //     batch: "E",
-    //     training: "Strength",
-    //     totalAmount: "800",
-    //     remainingAmount: "500",
-    //     paidAmount: "300",
-    //     paymentMode: "Cash",
-    //     active: "Y",
-    //     createdAt: "2025-04-04T20:11:25.581Z",
-    //     updatedAt: "2025-04-04T20:11:25.581Z",
-    //     __v: 0,
-    //     custId: "67f03ced7d17412745c588cd",
-    //   },
-    //   {
-    //     _id: "67f2abea1e7d86c49066a80d",
-    //     photo: "/uploads/1743956970609-976889434-O3_White.PNG",
-    //     firstName: "FristName",
-    //     lastName: "LastName",
-    //     mobileNo: "9513589775",
-    //     email: "example@gmail.com",
-    //     gender: "male",
-    //     address: "Address",
-    //     joiningDate: "2025-03-06T00:00:00.000Z",
-    //     paymentDate: "2025-03-06T00:00:00.000Z",
-    //     memberships: "1",
-    //     batch: "E",
-    //     training: "Core",
-    //     totalAmount: "1000",
-    //     remainingAmount: "310",
-    //     paidAmount: "690",
-    //     paymentMode: "Cash",
-    //     active: "Y",
-    //     createdAt: "2025-04-06T16:29:30.943Z",
-    //     updatedAt: "2025-04-06T16:29:30.943Z",
-    //     __v: 0,
-    //     custId: "67f2abea1e7d86c49066a80d",
-    //   },
-    // ],
-  });
+  const [reportData, setReportData] = useState([]);
 
   const onSeachChange = (e) => setSearchQuery(e.target.value);
   const toggleView = (view) => setViewType(view);
@@ -246,7 +41,7 @@ const Report = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const filteredRows = data.tableData?.filter((row) =>
+  const filteredRows = reportData.tableData?.filter((row) =>
     [
       row.firstName,
       row.lastName,
@@ -292,8 +87,7 @@ const Report = () => {
           headers: { "Content-Type": "application/json" },
         }
       );
-      setData(response?.data?.data);
-      setAddUpdateViewRecord("");
+      setReportData(response?.data?.data);
       setDisabled(false);
     } catch (err) {
       console.error(err);
@@ -358,7 +152,7 @@ const Report = () => {
     );
 
     // Cards summary
-    const summary = data?.cards?.map((card) => [card.title, card.count]);
+    const summary = reportData?.cards?.map((card) => [card.title, card.count]);
     autoTable(doc, {
       head: [["Title", "Count"]],
       body: summary,
@@ -383,7 +177,7 @@ const Report = () => {
     });
 
     // Table Data
-    const tableBody = data?.tableData.map((row) => [
+    const tableBody = reportData?.tableData.map((row) => [
       row.firstName + " " + row.lastName,
       row.mobileNo,
       row.batch,
@@ -558,20 +352,47 @@ const Report = () => {
               />
             </div>
           </div>
-
           <div className="CardBody">
-            <div className="reportDiv">
+            {/* <div className="reportDiv">
               <div className="p-6 mx-auto">
                 <ul>
-                  {data?.cards?.map((card) => (
-                    <li key={card.id} style={{ "--accent-color": card.color }}>
-                      <div className="title">{card.title}</div>
-                      <div className="title">{card.count}</div>
-                    </li>
-                  ))}
+                  <li style={{ "--accent-color": "#0B374D" }}>
+                    <div className="title">Total Members</div>
+                    <div className="title">
+                      {data?.cards?.TotalMembers || 0}
+                    </div>
+                  </li>
+                  <li style={{ "--accent-color": "#1286A8" }}>
+                    <div className="title">Total Revenue</div>
+                    <div className="title">
+                      {data?.cards?.TotalRevenue || 0}
+                    </div>
+                  </li>
+                  <li style={{ "--accent-color": "#D2B53B" }}>
+                    <div className="title">Remaining Amount</div>
+                    <div className="title">
+                      {data?.cards?.RemainingAmount || 0}
+                    </div>
+                  </li>
+                  <li style={{ "--accent-color": "#DA611E" }}>
+                    <div className="title">New Joiners</div>
+                    <div className="title">{data?.cards?.NewJoiners || 0}</div>
+                  </li>
+                  <li style={{ "--accent-color": "#AC2A1A" }}>
+                    <div className="title">Over Due Members</div>
+                    <div className="title">
+                      {data?.cards?.OverDueMembers || 0}
+                    </div>
+                  </li>
+                  <li style={{ "--accent-color": "#7aac1a" }}>
+                    <div className="title">Unpaid Amount Members</div>
+                    <div className="title">
+                      {data?.cards?.UnpaidAmountMembers || 0}
+                    </div>
+                  </li>
                 </ul>
               </div>
-            </div>
+            </div> */}
 
             <div className="row justify-content-end align-items-center">
               <div className="col-md-4">
@@ -586,12 +407,12 @@ const Report = () => {
               </div>
             </div>
 
-            <div className="scollDiv">
+            <div className="scollfDiv">
               {viewType === "list" && (
-                <CustTable filteredRows={filteredRows} op="reports" />
+                <CustTable filteredRows={filteredRows} op={"reports"} />
               )}
               {viewType === "card" && (
-                <CustCard filteredRows={filteredRows} op="reports" />
+                <CustCard filteredRows={filteredRows} op={"reports"} />
               )}
             </div>
           </div>

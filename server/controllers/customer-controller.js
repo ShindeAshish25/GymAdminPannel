@@ -215,27 +215,27 @@ const report = async (req, res) => {
             return res.status(200).json({ status: false, message: 'No customers found in this date range', data: [] });
         }
 
-        // Card statistics
-        const totalMembers = customers.length;
-        const totalRevenue = customers.reduce((sum, c) => sum + Number(c.paidAmount || 0), 0);
-        const remainingAmount = customers.reduce((sum, c) => sum + Number(c.remainingAmount || 0), 0);
-        const newJoiners = customers.filter(c => moment(c.joiningDate).isBetween(start, end, null, '[]')).length;
-        const overDueMembers = customers.filter(c => moment(c.paymentDate).isBefore(start) && c.active === 'Y').length;
-        const unpaidAmountMembers = customers.filter(c => Number(c.remainingAmount) > 0).length;
+        // Prepare metrics
+        const TotalMembers = customers.length;
+        const TotalRevenue = customers.reduce((sum, c) => sum + Number(c.paidAmount || 0), 0);
+        const RemainingAmount = customers.reduce((sum, c) => sum + Number(c.remainingAmount || 0), 0);
+        const NewJoiners = customers.filter(c => moment(c.joiningDate).isBetween(start, end, null, '[]')).length;
+        const OverDueMembers = customers.filter(c => moment(c.paymentDate).isBefore(start) && c.active === 'Y').length;
+        const UnpaidAmountMembers = customers.filter(c => Number(c.remainingAmount) > 0).length;
 
-        const cards = [
-            { id: 1, color: "#0B374D", title: "Total Members", count: totalMembers.toString() },
-            { id: 2, color: "#1286A8", title: "Total Revenue", count: totalRevenue.toString() },
-            { id: 3, color: "#D2B53B", title: "Remaining Amount", count: remainingAmount.toString() },
-            { id: 4, color: "#DA611E", title: "New Joiners", count: newJoiners.toString() },
-            { id: 5, color: "#AC2A1A", title: "Over Due Members", count: overDueMembers.toString() },
-            { id: 6, color: "#7aac1a", title: "Unpaid Amount Members", count: unpaidAmountMembers.toString() },
-        ];
+        // Replaced cards array with key-value object
+        const cards = {
+            TotalMembers,
+            TotalRevenue,
+            RemainingAmount,
+            NewJoiners,
+            OverDueMembers,
+            UnpaidAmountMembers,
+        };
 
-        // tableData includes all fields as-is
         const tableData = customers.map(customer => ({
             ...customer,
-            custId: customer._id, // for frontend identification
+            custId: customer._id,
         }));
 
         res.status(200).json({

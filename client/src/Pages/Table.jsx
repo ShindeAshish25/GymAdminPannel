@@ -54,33 +54,33 @@ const CustTable = (props) => {
         headers,
       })
       .then((response) => {
-        console.log(response.data);
-        if (response.data.status === true) {
+        console.log(response?.data);
+        if (response?.data?.status === true) {
           // handleClickAlertMsg(TransitionTop, response.data.message);
           Swal.fire({
             title: "Success",
             icon: "success",
-            text: response.data.message,
+            text: response?.data?.message,
             draggable: true,
             timer: 2000,
           });
           props.getActiveCustomer();
           // setPrintBill(true);
-        } else if (response.data.status === false) {
+        } else if (response?.data?.status === false) {
           Swal.fire({
             title: "error",
             icon: "Oppss..",
-            text: response.data.message,
+            text: response?.data?.message,
             draggable: true,
             timer: 2000,
           });
-          handleClickAlertMsg(TransitionTop, response.data.message);
+          handleClickAlertMsg(TransitionTop, response?.data?.message);
         }
       })
       .catch((err) => {
         // Explicitly handle 409 Conflict
         console.log(err);
-        if (err.response && err.response.status === 409) {
+        if (err?.response && err?.response?.status === 409) {
           console.log("Conflict: The customer might already exist.");
           handleClickAlertMsg(
             TransitionTop,
@@ -160,35 +160,35 @@ const CustTable = (props) => {
                       {row?.memberships == 1
                         ? "1 Month"
                         : row?.memberships == 2
-                        ? "2 Months"
-                        : row?.memberships == 3
-                        ? "3 Months"
-                        : row?.memberships == 4
-                        ? "4 Months"
-                        : row?.memberships == 5
-                        ? "5 Months"
-                        : row?.memberships == 6
-                        ? "6 Months"
-                        : row?.memberships == 7
-                        ? "7 Months"
-                        : row?.memberships == 8
-                        ? "8 Months"
-                        : row?.memberships == 9
-                        ? "9 Months"
-                        : row?.memberships == 10
-                        ? "10 Months"
-                        : row?.memberships == 11
-                        ? "11 Months"
-                        : row?.memberships == 12
-                        ? "12 Months"
-                        : "-"}
+                          ? "2 Months"
+                          : row?.memberships == 3
+                            ? "3 Months"
+                            : row?.memberships == 4
+                              ? "4 Months"
+                              : row?.memberships == 5
+                                ? "5 Months"
+                                : row?.memberships == 6
+                                  ? "6 Months"
+                                  : row?.memberships == 7
+                                    ? "7 Months"
+                                    : row?.memberships == 8
+                                      ? "8 Months"
+                                      : row?.memberships == 9
+                                        ? "9 Months"
+                                        : row?.memberships == 10
+                                          ? "10 Months"
+                                          : row?.memberships == 11
+                                            ? "11 Months"
+                                            : row?.memberships == 12
+                                              ? "12 Months"
+                                              : "-"}
                     </TableCell>
                     <TableCell style={{ width: "1%" }} className="text-center">
                       {row?.batch === "M"
                         ? "Morning"
                         : row?.batch === "E"
-                        ? "Evening"
-                        : "-"}
+                          ? "Evening"
+                          : "-"}
                     </TableCell>
                     <TableCell style={{ width: "1%" }} className="text-end">
                       {props.op === "customer" ? (
