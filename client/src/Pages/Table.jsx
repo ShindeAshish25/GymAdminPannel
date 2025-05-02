@@ -116,7 +116,7 @@ const CustTable = (props) => {
                 <TableCell>Remaining Amt</TableCell>
                 <TableCell>Memberships</TableCell>
                 <TableCell>Batch</TableCell>
-                <TableCell>Action</TableCell>
+                {props.op === "reports" ? "" : <TableCell>Action</TableCell>}
               </TableRow>
             </TableHead>
             <TableBody>
