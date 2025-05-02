@@ -92,6 +92,7 @@ const CustTable = (props) => {
       });
   };
 
+  console.log(props?.filteredRows);
   // Calculate the rows to display based on the current page and rows per page
   const rowsToDisplay = props?.filteredRows?.slice(
     page * rowsPerPage,
@@ -119,7 +120,9 @@ const CustTable = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rowsToDisplay?.length === 0 ? (
+              {rowsToDisplay?.length === 0 ||
+              rowsToDisplay?.length == undefined ||
+              rowsToDisplay?.length == null ? (
                 <TableRow>
                   <TableCell colSpan={9} align="center">
                     Record not found
@@ -239,9 +242,9 @@ const CustTable = (props) => {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 15]}
+          rowsPerPageOptions={[3, 5, 10, 15]}
           component="div"
-          count={props?.filteredRows?.length}
+          count={props?.filteredRows?.length || 0}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

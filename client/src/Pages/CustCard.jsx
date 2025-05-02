@@ -93,8 +93,15 @@ const CustCard = (props) => {
     <>
       <div className="CardDiv my-0">
         <div className="row g-4">
-          {rowsToDisplay?.length === 0 ? (
-            <p> Record not found </p>
+          {rowsToDisplay?.length === 0 ||
+          rowsToDisplay?.length === undefined ||
+          rowsToDisplay?.length === null ? (
+            <div
+              className="p-4 d-flex justify-content-center align-items-center"
+              style={{ background: "#ffff" }}
+            >
+              <p>Record not found </p>
+            </div>
           ) : (
             rowsToDisplay?.map((row, index) => (
               <div className="col-md-4 col-sm-12 col-lg-4 col-xl-3" key={index}>
@@ -168,7 +175,7 @@ const CustCard = (props) => {
         <TablePagination
           rowsPerPageOptions={[4, 8, 12, 16]}
           component="div"
-          count={props?.filteredRows?.length}
+          count={props?.filteredRows?.length || 0}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

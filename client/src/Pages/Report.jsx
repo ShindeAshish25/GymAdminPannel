@@ -13,8 +13,12 @@ import axios from "axios";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { FileDownload } from "@mui/icons-material";
+import {
+  ClearIcon,
+  DatePicker,
+  LocalizationProvider,
+} from "@mui/x-date-pickers";
+import { Clear, ClearAll, FileDownload, Search } from "@mui/icons-material";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import autoTable from "jspdf-autotable";
@@ -41,20 +45,23 @@ const Report = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const filteredRows = reportData.tableData?.filter((row) =>
-    [
-      row.firstName,
-      row.lastName,
-      row.mobileNo,
-      row.address,
-      row.paymentDate,
-      row.remainingAmount,
-      row.memberships,
-      row.batch,
-    ].some((field) =>
-      field?.toString().toLowerCase().startsWith(searchQuery.toLowerCase())
-    )
+  const reportDataLocal = JSON.parse(
+    localStorage.getItem("reportDataLocal") || "[]"
   );
+
+  console.log(reportDataLocal);
+
+  const filteredRows = reportData?.tableData?.filter((row) => {
+    return (
+      row.firstName.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
+      row.lastName.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
+      row.mobileNo.startsWith(searchQuery) ||
+      row.address.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
+      row.remainingAmount.toString().startsWith(searchQuery) ||
+      row.memberships.toLowerCase().startsWith(searchQuery.toLowerCase()) ||
+      row.batch.toLowerCase().startsWith(searchQuery.toLowerCase())
+    );
+  });
 
   const onInputChange = (e, field) => {
     let newData = { ...addUpdateViewRecord };
@@ -66,8 +73,14 @@ const Report = () => {
     setAddUpdateViewRecord(newData);
   };
 
+  React.useEffect(() => {
+    const savedData = localStorage.getItem("reportDataLocal");
+    if (savedData) {
+      setReportData(JSON.parse(savedData));
+    }
+  }, []);
+
   const onHandleSearch = async () => {
-    setDisabled(false);
     if (!addUpdateViewRecord.startDate) {
       handleClickAlertMsg(TransitionTop, "Start Date is missing");
       return;
@@ -77,8 +90,6 @@ const Report = () => {
       return;
     }
 
-    setDisabled(false);
-
     try {
       const response = await axios.post(
         `${baseURL}/report`,
@@ -87,8 +98,16 @@ const Report = () => {
           headers: { "Content-Type": "application/json" },
         }
       );
-      setReportData(response?.data?.data);
-      setDisabled(false);
+      if (response?.data?.message == "Customers retrieved successfully") {
+        setReportData(response?.data?.data);
+        localStorage.setItem(
+          "reportDataLocal",
+          JSON.stringify(response?.data?.data)
+        );
+        setDisabled(true);
+      } else {
+        handleClickAlertMsg(TransitionTop, response?.data?.message);
+      }
     } catch (err) {
       console.error(err);
       // CatchFunction(err, navigate, location?.state);
@@ -264,6 +283,13 @@ const Report = () => {
       `Report from ${addUpdateViewRecord.startDate} TO ${addUpdateViewRecord.endDate}`
     );
     setDisabled(false);
+    // setAddUpdateViewRecord("");
+  };
+
+  const handleClearReport = () => {
+    localStorage.removeItem("reportDataLocal"); // Clear local storage
+    setReportData([]); // Reset local state
+    setDisabled(false);
     setAddUpdateViewRecord("");
   };
 
@@ -299,10 +325,21 @@ const Report = () => {
 
               <Button
                 variant="contained"
+                color="success"
+                startIcon={<Search />}
                 onClick={onHandleSearch}
                 className="me-3"
               >
                 Search
+              </Button>
+              <Button
+                variant="contained"
+                color="error"
+                startIcon={<ClearIcon />}
+                onClick={handleClearReport}
+                className="me-3"
+              >
+                Clear
               </Button>
             </div>
 
@@ -353,46 +390,48 @@ const Report = () => {
             </div>
           </div>
           <div className="CardBody">
-            {/* <div className="reportDiv">
+            <div className="reportDiv">
               <div className="p-6 mx-auto">
                 <ul>
                   <li style={{ "--accent-color": "#0B374D" }}>
                     <div className="title">Total Members</div>
                     <div className="title">
-                      {data?.cards?.TotalMembers || 0}
+                      {reportData?.cards?.TotalMembers || 0}
                     </div>
                   </li>
                   <li style={{ "--accent-color": "#1286A8" }}>
                     <div className="title">Total Revenue</div>
                     <div className="title">
-                      {data?.cards?.TotalRevenue || 0}
+                      {reportData?.cards?.TotalRevenue || 0}
                     </div>
                   </li>
                   <li style={{ "--accent-color": "#D2B53B" }}>
                     <div className="title">Remaining Amount</div>
                     <div className="title">
-                      {data?.cards?.RemainingAmount || 0}
+                      {reportData?.cards?.RemainingAmount || 0}
                     </div>
                   </li>
                   <li style={{ "--accent-color": "#DA611E" }}>
                     <div className="title">New Joiners</div>
-                    <div className="title">{data?.cards?.NewJoiners || 0}</div>
+                    <div className="title">
+                      {reportData?.cards?.NewJoiners || 0}
+                    </div>
                   </li>
                   <li style={{ "--accent-color": "#AC2A1A" }}>
                     <div className="title">Over Due Members</div>
                     <div className="title">
-                      {data?.cards?.OverDueMembers || 0}
+                      {reportData?.cards?.OverDueMembers || 0}
                     </div>
                   </li>
                   <li style={{ "--accent-color": "#7aac1a" }}>
                     <div className="title">Unpaid Amount Members</div>
                     <div className="title">
-                      {data?.cards?.UnpaidAmountMembers || 0}
+                      {reportData?.cards?.UnpaidAmountMembers || 0}
                     </div>
                   </li>
                 </ul>
               </div>
-            </div> */}
+            </div>
 
             <div className="row justify-content-end align-items-center">
               <div className="col-md-4">

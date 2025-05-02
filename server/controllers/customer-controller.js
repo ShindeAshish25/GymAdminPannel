@@ -5,6 +5,7 @@ const fs = require('fs')
 const { dateStringToDate } = require('../utils/helper');
 const { log } = require('console');
 
+const BASE_URL = process.env.BASE_URL || 'http://localhost:5000';
 //createCustomer
 const createCustomer = async (req, res) => {
 
@@ -215,7 +216,6 @@ const report = async (req, res) => {
             return res.status(200).json({ status: false, message: 'No customers found in this date range', data: [] });
         }
 
-        // Prepare metrics
         const TotalMembers = customers.length;
         const TotalRevenue = customers.reduce((sum, c) => sum + Number(c.paidAmount || 0), 0);
         const RemainingAmount = customers.reduce((sum, c) => sum + Number(c.remainingAmount || 0), 0);
@@ -223,19 +223,55 @@ const report = async (req, res) => {
         const OverDueMembers = customers.filter(c => moment(c.paymentDate).isBefore(start) && c.active === 'Y').length;
         const UnpaidAmountMembers = customers.filter(c => Number(c.remainingAmount) > 0).length;
 
-        // Replaced cards array with key-value object
-        const cards = {
-            TotalMembers,
-            TotalRevenue,
-            RemainingAmount,
-            NewJoiners,
-            OverDueMembers,
-            UnpaidAmountMembers,
-        };
+        const cards = [
+            {
+                id: 1,
+                color: "#0B374D",
+                title: "Total Members",
+                count: TotalMembers,
+                TotalMembers
+            },
+            {
+                id: 2,
+                color: "#1286A8",
+                title: "Total Revenue",
+                count: TotalRevenue,
+                TotalRevenue
+            },
+            {
+                id: 3,
+                color: "#D2B53B",
+                title: "Remaining Amount",
+                count: RemainingAmount,
+                RemainingAmount
+            },
+            {
+                id: 4,
+                color: "#DA611E",
+                title: "New Joiners",
+                count: NewJoiners,
+                NewJoiners
+            },
+            {
+                id: 5,
+                color: "#AC2A1A",
+                title: "Over Due Members",
+                count: OverDueMembers,
+                OverDueMembers
+            },
+            {
+                id: 6,
+                color: "#7aac1a",
+                title: "Unpaid Amount Members",
+                count: UnpaidAmountMembers,
+                UnpaidAmountMembers
+            }
+        ];
 
         const tableData = customers.map(customer => ({
             ...customer,
             custId: customer._id,
+            photo: customer.photo || null
         }));
 
         res.status(200).json({
@@ -243,8 +279,8 @@ const report = async (req, res) => {
             message: 'Customers retrieved successfully',
             data: {
                 cards,
-                tableData,
-            },
+                tableData
+            }
         });
 
     } catch (error) {
@@ -252,6 +288,7 @@ const report = async (req, res) => {
         res.status(500).json({ status: false, message: 'Internal server error' });
     }
 };
+
 
 
 
