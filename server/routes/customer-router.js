@@ -21,7 +21,7 @@ router.get('/getOverDueMember', customerControllers.getOverdDueCustomers)
 //Update Customer
 router.post('/updateCust', upload.single('photo'), customerControllers.updateCustomer)
 
-//Update Customer
+//Delete Customer
 router.post('/deleteCust', customerControllers.deleteCustomer)
 
 //renewMemberShip

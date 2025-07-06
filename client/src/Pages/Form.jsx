@@ -836,16 +836,15 @@ const Form = (props) => {
                   <InputLabel id="demo-simple-select-label">
                     Training
                   </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    name="training"
+                  <Select labelId="demo-simple-select-label"
+                    id="demo-simple-select" name="training"
                     // value={addData}
                     label="Training"
                     onChange={(e) => onInputChange(e)}
                   >
                     <MenuItem value={"Cardio"}>Cardio</MenuItem>
                     <MenuItem value={"Strength"}>Strength Training</MenuItem>
+                    <MenuItem value={"Personal"}>Personal Training</MenuItem>
                     <MenuItem value={"Core"}>Core Workouts</MenuItem>
                     <MenuItem value={"WeightLoss"}>Weight Loss</MenuItem>
                     <MenuItem value={"Flexibility"}>
@@ -1400,6 +1399,7 @@ const Form = (props) => {
                   >
                     <MenuItem value={"Cardio"}>Cardio</MenuItem>
                     <MenuItem value={"Strength"}>Strength Training</MenuItem>
+                    <MenuItem value={"Personal"}>Personal Training</MenuItem>
                     <MenuItem value={"Core"}>Core Workouts</MenuItem>
                     <MenuItem value={"WeightLoss"}>Weight Loss</MenuItem>
                     <MenuItem value={"Flexibility"}>
@@ -1806,6 +1806,7 @@ const Form = (props) => {
                   >
                     <MenuItem value={"Cardio"}>Cardio</MenuItem>
                     <MenuItem value={"Strength"}>Strength Training</MenuItem>
+                    <MenuItem value={"Personal"}>Personal Training</MenuItem>
                     <MenuItem value={"Core"}>Core Workouts</MenuItem>
                     <MenuItem value={"WeightLoss"}>Weight Loss</MenuItem>
                     <MenuItem value={"Flexibility"}>

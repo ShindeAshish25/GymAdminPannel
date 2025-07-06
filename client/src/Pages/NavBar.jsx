@@ -96,14 +96,6 @@ function Navbar() {
   const fetchImage = async (file) => {
     const imageURL = baseURL.replace("/api/customers", "") + file;
     return imageURL;
-
-    try {
-      const response = await axios.get(imageURL, { responseType: "blob" });
-      const imgURL = URL.createObjectURL(response.data);
-      return imgURL;
-    } catch (err) {
-      console.error("Error fetching the image:", err);
-    }
   };
 
   return (

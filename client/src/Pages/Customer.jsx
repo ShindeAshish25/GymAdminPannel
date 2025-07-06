@@ -1,33 +1,9 @@
 import * as React from "react";
-import { useState, useRef } from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import { useState } from "react";
 import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import Slide from "@mui/material/Slide";
-import { styled } from "@mui/material/styles";
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
 import TextField from "@mui/material/TextField";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { FormControlLabel, FormLabel, Radio, RadioGroup } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import GridViewIcon from "@mui/icons-material/GridView";
-import AutorenewIcon from "@mui/icons-material/Autorenew";
 import Form from "./Form";
 import CustTable from "./Table";
 import CustCard from "./CustCard";
@@ -138,15 +114,6 @@ const Customer = () => {
   const fetchImage = async (file) => {
     const imageURL = baseURL.replace("/api/customers", "") + file;
     return imageURL;
-
-    try {
-      const response = await axios.get(imageURL, { responseType: "blob" });
-      const imgURL = URL.createObjectURL(response.data);
-      return imgURL;
-    } catch (err) {
-      console.error("Error fetching the image:", err);
-      CatchFunction(err, navigate, location?.state);
-    }
   };
 
   return (

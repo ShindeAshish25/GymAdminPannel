@@ -13,11 +13,7 @@ import axios from "axios";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import {
-  ClearIcon,
-  DatePicker,
-  LocalizationProvider,
-} from "@mui/x-date-pickers";
+import { ClearIcon, DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { Clear, ClearAll, FileDownload, Search } from "@mui/icons-material";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
@@ -91,19 +87,12 @@ const Report = () => {
     }
 
     try {
-      const response = await axios.post(
-        `${baseURL}/report`,
-        addUpdateViewRecord,
-        {
-          headers: { "Content-Type": "application/json" },
-        }
+      const response = await axios.post(`${baseURL}/report`, addUpdateViewRecord,
+        { headers: { "Content-Type": "application/json" }, }
       );
       if (response?.data?.message == "Customers retrieved successfully") {
         setReportData(response?.data?.data);
-        localStorage.setItem(
-          "reportDataLocal",
-          JSON.stringify(response?.data?.data)
-        );
+        localStorage.setItem("reportDataLocal", JSON.stringify(response?.data?.data));
         setDisabled(true);
       } else {
         handleClickAlertMsg(TransitionTop, response?.data?.message);
@@ -308,6 +297,17 @@ const Report = () => {
                     format="DD-MM-YYYY"
                     onChange={(val) => onInputChange(val, "startDate")}
                     className="me-3"
+                    slotProps={{
+                      textField: {
+                        sx: {
+                          '& label': {
+                            color: '#000',
+                            fontSize: '20px',
+                            fontWeight: '600',
+                          },
+                        },
+                      },
+                    }}
                   />
                 </DemoContainer>
               </LocalizationProvider>
@@ -319,6 +319,17 @@ const Report = () => {
                     format="DD-MM-YYYY"
                     onChange={(val) => onInputChange(val, "endDate")}
                     className="me-3"
+                    slotProps={{
+                      textField: {
+                        sx: {
+                          '& label': {
+                            color: '#000',
+                            fontSize: '20px',
+                            fontWeight: '600',
+                          },
+                        },
+                      },
+                    }}
                   />
                 </DemoContainer>
               </LocalizationProvider>

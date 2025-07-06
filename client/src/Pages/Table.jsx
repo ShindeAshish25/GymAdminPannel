@@ -48,7 +48,25 @@ const CustTable = (props) => {
     "Content-Type": "application/json",
   };
 
+  //fun to handle actin delete click
   const onHandleDelete = async (row) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you really want to delete this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Call the delete function
+        onDelete(row);
+      }
+    });
+  };
+  //fun to call delete api
+  const onDelete = async (row) => {
     axios
       .post(baseURL + "/deleteCust", row, {
         headers,
@@ -90,7 +108,7 @@ const CustTable = (props) => {
           console.log(err);
         }
       });
-  };
+  }
 
   console.log(props?.filteredRows);
   // Calculate the rows to display based on the current page and rows per page
@@ -121,8 +139,8 @@ const CustTable = (props) => {
             </TableHead>
             <TableBody>
               {rowsToDisplay?.length === 0 ||
-              rowsToDisplay?.length == undefined ||
-              rowsToDisplay?.length == null ? (
+                rowsToDisplay?.length == undefined ||
+                rowsToDisplay?.length == null ? (
                 <TableRow>
                   <TableCell colSpan={9} align="center">
                     Record not found

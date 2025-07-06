@@ -71,7 +71,8 @@ const updateCustomer = async (req, res) => {
 
         if (fileName) body.photo = `/uploads/${fileName}`;
 
-        //update customer 
+        //update customer query
+        body.active = 'Y';
         const updatedCustomer = await Customer.findByIdAndUpdate(custId, body, { new: true });
 
         res.status(200).json({
@@ -110,7 +111,7 @@ const deleteCustomer = async (req, res) => {
 //list of All Customers
 const getAllCustomers = async (req, res) => {
     try {
-        const customers = await Customer.find().lean(); // Fetch all customers from DB
+        const customers = await Customer.find().sort({ _id: -1 }).lean(); // Fetch all customers from DB
         customers.forEach(customer => customer.custId = customer._id);
 
         if (!customers.length) {
@@ -150,7 +151,7 @@ const getOverdDueCustomers = async (req, res) => {
         // Get today's date in Asia/Singapore timezone
         const today = moment.tz('Asia/Singapore').startOf('day').toDate(); // Start of the day
 
-        const dueCustomers = await Customer.find({ alertDate: { $lt: today } }).lean();// Fetch all customers from DB
+        const dueCustomers = await Customer.find({ alertDate: { $lt: today } }).sort({ _id: -1 }).lean();// Fetch all customers from DB
         dueCustomers.forEach(customer => customer.custId = customer._id);
 
         if (!dueCustomers.length) {
@@ -180,7 +181,7 @@ const getAlertData = async (req, res) => {
         const twoDaysFromNow = moment(today).add(3, 'days').startOf('day').toDate(); // strat of the day
 
         // Fetch all customers from DB  
-        const customers = await Customer.find({ alertDate: { $gte: today, $lte: twoDaysFromNow } }).lean();
+        const customers = await Customer.find({ alertDate: { $gte: today, $lte: twoDaysFromNow } }).sort({ _id: -1 }).lean();
         customers.forEach(customer => customer.custId = customer._id);
 
         if (!customers.length) {
