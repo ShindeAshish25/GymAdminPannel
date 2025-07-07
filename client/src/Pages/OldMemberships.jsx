@@ -86,19 +86,6 @@ const OldMemberships = () => {
     );
   });
 
-  const onHadelClick = (data, operation) => {
-    setIsOpenDialog((isOpenDialog) => !isOpenDialog);
-    setDialogComp(<Form data={data} op={operation} />);
-    console.log(data + operation);
-  };
-  const onHadelDelete = (row) => {
-    console.log(row);
-  };
-
-  const headers = {
-    "Content-Type": "application/json",
-  };
-
   React.useEffect(() => {
     getOldMember();
   }, []);
@@ -123,6 +110,22 @@ const OldMemberships = () => {
       console.log(error);
       CatchFunction(error, navigate, location?.state);
     }
+  };
+
+  const onHadelClick = (data, operation) => {
+    console.log("getOldMember()");
+    console.log(getOldMember());
+    setIsOpenDialog((isOpenDialog) => !isOpenDialog);
+    setDialogComp(
+      <Form data={data} op={operation} getAllMembers={getOldMember} />
+    );
+  };
+  const onHadelDelete = (row) => {
+    console.log(row);
+  };
+
+  const headers = {
+    "Content-Type": "application/json",
   };
 
   const fetchImage = async (file) => {
@@ -176,6 +179,7 @@ const OldMemberships = () => {
                   filteredRows={filteredRows}
                   onHadelClick={onHadelClick}
                   onHadelDelete={onHadelDelete}
+                  getAllMembers={getOldMember}
                   op={"old"}
                 />
               </div>
@@ -188,6 +192,7 @@ const OldMemberships = () => {
                   filteredRows={filteredRows}
                   onHadelClick={onHadelClick}
                   onHadelDelete={onHadelDelete}
+                  getAllMembers={getOldMember}
                   op={"old"}
                 />
               </div>
