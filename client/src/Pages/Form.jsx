@@ -156,10 +156,12 @@ const Form = (props) => {
     } else if (isNotValid(addUpdateViewRecord.mobileNo)) {
       handleClickAlertMsg(TransitionTop, "Mobile No' is missing");
       return;
-    } else if (isNotValid(addUpdateViewRecord.email)) {
-      handleClickAlertMsg(TransitionTop, "Email' is missing");
-      return;
-    } else if (isNotValid(addUpdateViewRecord.batch)) {
+    }
+    //  if (isNotValid(addUpdateViewRecord.email)) {
+    //   handleClickAlertMsg(TransitionTop, "Email' is missing");
+    //   return;
+    // } else
+    else if (isNotValid(addUpdateViewRecord.batch)) {
       handleClickAlertMsg(TransitionTop, "Batch' is missing");
       return;
     } else if (isNotValid(addUpdateViewRecord.memberships)) {
@@ -257,10 +259,12 @@ const Form = (props) => {
     } else if (isNotValid(addUpdateViewRecord.mobileNo)) {
       handleClickAlertMsg(TransitionTop, "Mobile No' is missing");
       return;
-    } else if (isNotValid(addUpdateViewRecord.email)) {
-      handleClickAlertMsg(TransitionTop, "Email' is missing");
-      return;
-    } else if (isNotValid(addUpdateViewRecord.batch)) {
+    }
+    // if (isNotValid(addUpdateViewRecord.email)) {
+    //   handleClickAlertMsg(TransitionTop, "Email' is missing");
+    //   return;
+    // } else
+    else if (isNotValid(addUpdateViewRecord.batch)) {
       handleClickAlertMsg(TransitionTop, "Batch' is missing");
       return;
     } else if (isNotValid(addUpdateViewRecord.memberships)) {
@@ -411,8 +415,8 @@ const Form = (props) => {
     await axios
       .post(baseURL + "/renewMemberShip", renewMembership)
       .then((response) => {
-        // console.log(response.data);
-        if (response.data.respMsg === "success") {
+        console.log(response.data);
+        if (response.data.status == true) {
           // handleClickAlertMsg(TransitionTop, response.data.message);
           Swal.fire({
             title: "Success",
@@ -422,12 +426,13 @@ const Form = (props) => {
             timer: 2000,
           });
           setOpen(false);
-          props.setIsOpenDialog(false);
+          props.getAllMembers();
           props.getActiveCustomer();
+          props.setIsOpenDialog(false);
         } else {
           Swal.fire({
             title: "Oops...",
-            icon: "success",
+            icon: "error",
             text: response.data.message,
             draggable: true,
             timer: 2000,
@@ -836,8 +841,10 @@ const Form = (props) => {
                   <InputLabel id="demo-simple-select-label">
                     Training
                   </InputLabel>
-                  <Select labelId="demo-simple-select-label"
-                    id="demo-simple-select" name="training"
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    name="training"
                     // value={addData}
                     label="Training"
                     onChange={(e) => onInputChange(e)}

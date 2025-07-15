@@ -13,7 +13,11 @@ import axios from "axios";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { ClearIcon, DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import {
+  ClearIcon,
+  DatePicker,
+  LocalizationProvider,
+} from "@mui/x-date-pickers";
 import { Clear, ClearAll, FileDownload, Search } from "@mui/icons-material";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
@@ -87,12 +91,18 @@ const Report = () => {
     }
 
     try {
-      const response = await axios.post(`${baseURL}/report`, addUpdateViewRecord,
-        { headers: { "Content-Type": "application/json" }, }
+      const response = await axios.post(
+        `${baseURL}/report`,
+        addUpdateViewRecord,
+        { headers: { "Content-Type": "application/json" } }
       );
       if (response?.data?.message == "Customers retrieved successfully") {
+        console.log(response?.data?.data);
         setReportData(response?.data?.data);
-        localStorage.setItem("reportDataLocal", JSON.stringify(response?.data?.data));
+        localStorage.setItem(
+          "reportDataLocal",
+          JSON.stringify(response?.data?.data)
+        );
         setDisabled(true);
       } else {
         handleClickAlertMsg(TransitionTop, response?.data?.message);
@@ -300,10 +310,10 @@ const Report = () => {
                     slotProps={{
                       textField: {
                         sx: {
-                          '& label': {
-                            color: '#000',
-                            fontSize: '20px',
-                            fontWeight: '600',
+                          "& label": {
+                            color: "#000",
+                            fontSize: "20px",
+                            fontWeight: "600",
                           },
                         },
                       },
@@ -322,10 +332,10 @@ const Report = () => {
                     slotProps={{
                       textField: {
                         sx: {
-                          '& label': {
-                            color: '#000',
-                            fontSize: '20px',
-                            fontWeight: '600',
+                          "& label": {
+                            color: "#000",
+                            fontSize: "20px",
+                            fontWeight: "600",
                           },
                         },
                       },
@@ -404,6 +414,20 @@ const Report = () => {
             <div className="reportDiv">
               <div className="p-6 mx-auto">
                 <ul>
+                  {console.log(reportData.cards)}
+                  {reportData?.cards?.map((item) => {
+                    return (
+                      <>
+                        <li style={{ "--accent-color": item.color }}>
+                          <div className="title">{item.title || "title"}</div>
+                          <div className="title">{item.count || 0}</div>
+                        </li>
+                        ;
+                      </>
+                    );
+                  })}
+                </ul>
+                {/* <ul>
                   <li style={{ "--accent-color": "#0B374D" }}>
                     <div className="title">Total Members</div>
                     <div className="title">
@@ -440,7 +464,7 @@ const Report = () => {
                       {reportData?.cards?.UnpaidAmountMembers || 0}
                     </div>
                   </li>
-                </ul>
+                </ul> */}
               </div>
             </div>
 
