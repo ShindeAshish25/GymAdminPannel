@@ -4,9 +4,9 @@ const Footer = () => {
   return (
     <>
       <div className="Footer">
-        <span>02 May 2025</span>
+        <span>15 July 2025</span>
         <span>Copyright ©2025 O3 Fitness</span>
-        <span>Version 1.1</span>
+        <span>Version 1.2</span>
       </div>
     </>
   );
